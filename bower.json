@@ -30,7 +30,7 @@
     "angular-ui-bootstrap3": "educarm/angular-ui-bootstrap3#v0.11.0",
     "bootstrap": "educarm/bootstrap#v3.2.0",
     "textAngular": "educarm/textAngular#v1.2.2",
-    "Font-Awesome": "educarm/Font-Awesome#v4.1.0",
+    "Font-Awesome": "educarm/Font-Awesome#v4.2.0",
     "angular-file-upload": "educarm/angular-file-upload#v1.0.2"
   },
   "devDependencies": {
