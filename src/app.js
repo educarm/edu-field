@@ -33,7 +33,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
      $scope.fields=[
 	                {key: 'oculto',type: 'hidden',value:"campo oculto",name:"nombre",id:"id" },
 					{key: 'literal',type: 'literal',col:'col-md-12',label:'campo literal',text:"*Nota: campo literal para que podamos colocar textos en cualquier parte del formulario",id:"id" },
-					{key: 'button',type: 'button',col:'col-md-3',label:'button',state:"danger",size:"",disabled:false,onClick:function(){ 
+					{key: 'button',type: 'button',col:'col-md-3',label:'botón',text:'texto',state:"danger",size:"",disabled:false,onClick:function(){ 
 																									console.log("botón clickado")
 																								   } },
 					
@@ -52,9 +52,8 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 							}
 						},col:'col-md-4',label: 'Texto',placeholder: 'Texto',autofocus:'',required: true },
 					{key: 'upload',type: 'upload',multiple:true,showprogressbar:true,showbuttons:false,url:"/api/v1/upload",col:'col-md-12',label: 'Subida fichero',placeholder: 'Upload',autofocus:'',required: false },
-					{key: 'numeroentero',type: 'number',col:'col-md-4',min:1,max:12,pattern:"",label: 'Número entero',placeholder: 'Número entero',autofocus:'',required: true },
-					{key: 'numerodecimal',type: 'number',col:'col-md-4',min:1,max:12,pattern:"/^-?[0-9]+([,\.][0-9]*)?$/",label: 'Número decimal',placeholder: 'Número decimal',autofocus:'',required: true },
-					
+					{key: 'numero',type: 'number',col:'col-md-4',min:1,max:100000,step:'1',label: 'Número',placeholder: 'Número',autofocus:'',required: true },
+						
 					{key: 'email',type: 'email',col:'col-md-4',label: 'Email',placeholder: 'Email',autofocus:'',required: true },
 					{key: 'url',type: 'url',col:'col-md-4',label: 'Url',placeholder: 'Url',autofocus:'',required: true },
 					{key: 'password',type: 'password',col:'col-md-4',label: 'Password',placeholder: 'Password',autofocus:'',required: true },

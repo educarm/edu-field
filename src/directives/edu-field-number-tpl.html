@@ -3,14 +3,16 @@
 		{{options.label || 'Number'}}
 		{{options.required ? '*' : ''}}
 	</label>
-	<input type="text"
+	<input type="number"
 		class="form-control"
 		id="{{id}}"
 		placeholder="{{options.placeholder}}"
 		autofocus="{{options.autofocus}}"
 		ng-required="{{options.required}}"
 		ng-disabled="{{options.disabled}}"
-		ng-pattern="{{options.pattern?options.pattern:'/^-?[0-9]+$/'}}"
+		ng-min="{{options.min}}"
+		ng-max="{{options.max}}"
+		ng-step="{{options.step}}"
 		ng-model="value"
 		ng-blur="onBlur()"
 		ng-focus="onFocus()"
