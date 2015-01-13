@@ -1,5 +1,5 @@
 /*
- edu-field v0.0.5
+ edu-field v0.0.6
  (c) Educarm, http://www.educarm.es
  License: MIT
 */
@@ -550,6 +550,11 @@ eduFieldDirectives.directive('eduField', [
               $scope.refreshSelect(value);
             }
           };
+          $scope.internalControl.clean = function (value) {
+            if ($scope.options.type = 'select') {
+              $scope.optionsSelect = [];
+            }
+          };
           if (!$scope.options.hasOwnProperty('loadOnInit') && $scope.options.type == 'select') {
             $scope.options.loadOnInit = true;
           }
@@ -669,33 +674,32 @@ eduFieldDirectives.directive('eduField', [
               if (typeof value != 'undefined') {
                 sUrl = sUrl + '&' + value;
               }
-              if ($scope.options.loadOnInit) {
-                $http.get(sUrl).success(function (data, status, headers, config) {
-                  $scope.optionsSelect = data;
-                  for (var i = 0; i < $scope.optionsSelect.length; i++) {
-                    if (!$scope.optionsSelect[i].hasOwnProperty('value')) {
-                      $scope.optionsSelect[i].value = $scope.optionsSelect[i][$scope.options.optionvalue];
-                    }
-                    if (!$scope.optionsSelect[i].hasOwnProperty('name')) {
-                      if ($scope.options.selectconcatvaluename) {
-                        $scope.optionsSelect[i].name = $scope.optionsSelect[i][$scope.options.optionvalue] + ' - ' + $scope.optionsSelect[i][$scope.options.optionname];
-                      } else {
-                        $scope.optionsSelect[i].name = $scope.optionsSelect[i][$scope.options.optionname];
-                      }
-                      delete $scope.optionsSelect[i][$scope.options.optionname];
-                      delete $scope.optionsSelect[i][$scope.options.optionvalue];
+              //if ($scope.options.loadOnInit){
+              $http.get(sUrl).success(function (data, status, headers, config) {
+                $scope.optionsSelect = data;
+                for (var i = 0; i < $scope.optionsSelect.length; i++) {
+                  if (!$scope.optionsSelect[i].hasOwnProperty('value')) {
+                    $scope.optionsSelect[i].value = $scope.optionsSelect[i][$scope.options.optionvalue];
+                  }
+                  if (!$scope.optionsSelect[i].hasOwnProperty('name')) {
+                    if ($scope.options.selectconcatvaluename) {
+                      $scope.optionsSelect[i].name = $scope.optionsSelect[i][$scope.options.optionvalue] + ' - ' + $scope.optionsSelect[i][$scope.options.optionname];
                     } else {
-                      if ($scope.options.selectconcatvaluename) {
-                        $scope.optionsSelect[i].name = $scope.optionsSelect[i]['value'] + ' - ' + $scope.optionsSelect[i]['name'];
-                      } else {
-                        $scope.optionsSelect[i].name = $scope.optionsSelect[i][$scope.options.optionname];
-                      }
+                      $scope.optionsSelect[i].name = $scope.optionsSelect[i][$scope.options.optionname];
+                    }
+                    delete $scope.optionsSelect[i][$scope.options.optionname];
+                    delete $scope.optionsSelect[i][$scope.options.optionvalue];
+                  } else {
+                    if ($scope.options.selectconcatvaluename) {
+                      $scope.optionsSelect[i].name = $scope.optionsSelect[i]['value'] + ' - ' + $scope.optionsSelect[i]['name'];
+                    } else {
+                      $scope.optionsSelect[i].name = $scope.optionsSelect[i][$scope.options.optionname];
                     }
                   }
-                  $scope.onInit();
-                }).error(function (data, status, headers, config) {
-                });
-              }
+                }
+                $scope.onInit();
+              }).error(function (data, status, headers, config) {
+              });  //}
             } else if ($scope.options.selecttypesource == 'array') {
               $scope.optionsSelect = $scope.options.selectsource;
               $scope.$watchCollection('optionsSelect', function () {

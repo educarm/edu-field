@@ -274,6 +274,12 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				}
 			}
 			
+			$scope.internalControl.clean = function(value) {
+				if($scope.options.type="select"){
+					$scope.optionsSelect=[];
+				}
+			}
+			
 			if (!$scope.options.hasOwnProperty('loadOnInit')&&$scope.options.type=='select'){
 				$scope.options.loadOnInit=true;
 			}
@@ -404,7 +410,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				    if(typeof value!='undefined'){
 						sUrl=sUrl+ "&" + value;
 					}
-					if ($scope.options.loadOnInit){
+					//if ($scope.options.loadOnInit){
 						$http.get(sUrl).
 							success(function(data, status, headers, config) {
 							  $scope.optionsSelect=data;
@@ -433,7 +439,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 							error(function(data, status, headers, config) {
 								
 							});
-					 }
+					 //}
 				}else if($scope.options.selecttypesource=='array'){
 				
 					$scope.optionsSelect=$scope.options.selectsource;

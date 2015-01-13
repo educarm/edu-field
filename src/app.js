@@ -97,6 +97,8 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					{key: 'CODIGO_TEMA',
 						fieldListeners:{
 							onChange:function(value){
+								// There are a method 'clean' for empty select options.  Example:
+								// $scope.fields[23].fieldControl.clean();
 								console.log("cambio tema:"+value);
 								$scope.fields[23].fieldControl.refresh("fieldFk=TEMA&valueFk="+value);
 							}
