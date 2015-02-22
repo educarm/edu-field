@@ -4,6 +4,7 @@
 		{{options.required ? '*' : ''}}
 	</label>
 	<div edu-select-remote 
+	        inputclass="form-control {{options.inputSizeClass}}"
 			ng-model="value"
 			autofocus="{{options.autofocus}}"
 			ng-required="{{options.required}}"
