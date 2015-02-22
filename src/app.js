@@ -87,11 +87,11 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					{key: 'semana',type: 'week',col:'col-md-4',label: 'Semana',placeholder: 'Semana',autofocus:'',required: true },
 					{key: 'hora',type: 'time',col:'col-md-4',label: 'Hora',placeholder: 'Hora',autofocus:'',required: true },
 					
-					{key: 'autocompletelocal',type: 'autocomplete',autofocus:'autofocus',col:'col-md-4',required:true,label: 'Autocomplete datos locales',autoclocaldata:$scope.municipios,autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300},
+					{key: 'autocompletelocal',type: 'autocomplete',inputSize:"sm",autofocus:'autofocus',col:'col-md-4',required:true,label: 'Autocomplete datos locales',autoclocaldata:$scope.municipios,autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300},
 				    {key: 'autocompleteremoto',type: 'autocomplete',col:'col-md-4',required:true,label: 'Autocomplete datos remotos',autocurldata: 'api/v1/municipios?filter=',autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300},											   
 					{key: 'autocompleteremotoloadall',type: 'autocomplete',col:'col-md-4',required:true,label: 'Autocomplete datos remotos load all',autocurldataloadall: 'api/v1/municipios',autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300},											   
 				   
-					{key: 'selectlocal',type: 'select',col:'col-md-4',required:true,label: 'Select datos locales',selecttypesource:'array',selectsource: $scope.municipios,optionname:"name",optionvalue:"value",selectconcatvaluename:true},
+					{key: 'selectlocal',type: 'select',inputSize:"sm",col:'col-md-4',required:true,label: 'Select datos locales',selecttypesource:'array',selectsource: $scope.municipios,optionname:"name",optionvalue:"value",selectconcatvaluename:true},
 					{key: 'selectremoto', type: 'select',col:'col-md-4',required:true,label: 'Select datos remotos',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
 					
 					{key: 'CODIGO_TEMA',
