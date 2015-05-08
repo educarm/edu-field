@@ -264,18 +264,18 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 			// ---  
 			$scope.internalControl.upload = function(idxFile) {
 				console.log("llamada a file upload file:"+idxFile);
-				if($scope.options.type="upload"){
+				if($scope.options.type=="upload"){
 					$scope.uploader.queue[idxFile-1].upload();
 				}
 			}
 			$scope.internalControl.refresh = function(value) {
-				if($scope.options.type="select"){
+				if($scope.options.type=="select"){
 					$scope.refreshSelect(value);
 				}
 			}
 			
 			$scope.internalControl.clean = function(value) {
-				if($scope.options.type="select"){
+				if($scope.options.type=="select"){
 					$scope.optionsSelect=[];
 				}
 			}
