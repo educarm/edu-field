@@ -268,6 +268,14 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					$scope.uploader.queue[idxFile-1].upload();
 				}
 			}
+			$scope.internalControl.filesInQueue = function() {
+				
+				if($scope.options.type=="upload"){
+					return $scope.uploader.queue.length;
+				}else{
+					return 0;
+				}
+			}
 			$scope.internalControl.refresh = function(value) {
 				if($scope.options.type=="select"){
 					$scope.refreshSelect(value);
