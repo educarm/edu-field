@@ -68,7 +68,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 								console.log("salida del control:"+value);
 							}
 						},col:'col-md-6',label: 'Texto',placeholder: 'Texto',autofocus:'',required: true },
-					{key: 'upload',type: 'upload',multiple:true,showprogressbar:true,showbuttons:true,url:"/api/v1/upload",iconButton:'folder-open',labelButton:'Sel. fichero',col:'col-md-12',label: 'Subida fichero',placeholder: 'Upload',autofocus:'' },
+					{key: 'upload',type: 'upload',typeButton:'info',inputSize:'lg',showprogressbar:true,showbuttons:true,url:"/api/v1/upload",iconButton:'folder-open',labelButton:'Sel. fichero',col:'col-md-12',label: 'Subida fichero',placeholder: 'Upload',autofocus:'' },
 					{key: 'numeroentero',type: 'number',col:'col-md-4',min:1,max:12,pattern:"",label: 'Número entero',placeholder: 'Número entero',autofocus:'',required: true },
 					{key: 'numerodecimal',type: 'number',col:'col-md-4',min:1,max:12,pattern:"/^-?[0-9]+([,\.][0-9]*)?$/",label: 'Número decimal',placeholder: 'Número decimal',autofocus:'',required: true },
 					

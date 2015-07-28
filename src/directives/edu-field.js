@@ -357,6 +357,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					}
 				};
 				uploader.onAfterAddingFile = function(fileItem) {
+					$scope.value=uploader.queue[0].file.name
 					if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onAfterAddingFile == 'function'){
 						$scope.options.fieldListeners.onAfterAddingFile(fileItem);
 					}

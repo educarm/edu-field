@@ -6,13 +6,13 @@
 
 	
 	<div id="{{id}}"> 
-        <!-- <input ng-if="options.multiple" type="file" class="jfilestyle" nv-file-select="" uploader="uploader"   id="jfilestyle-2" style="position: fixed; left: -500px;">-->
-		<input ng-if="!options.multiple" multiple type="file" class="jfilestyle" nv-file-select="" uploader="uploader"  data-buttontext="Find file" id="jfilestyle-2" style="position: fixed; left: -500px;">
+        <!-- <input ng-if="options.multiple" multiple type="file" class="jfilestyle" nv-file-select="" uploader="uploader"   id="jfilestyle-2" style="position: fixed; left: -500px;">-->
+		<input ng-if="!options.multiple"  type="file" class="jfilestyle" nv-file-select="" uploader="uploader"  data-buttontext="Find file" id="jfilestyle-2" style="position: fixed; left: -500px;">
 		
 		 <div class="input-group" >
-			<input type="text" class="form-control" aria-describedby="basic-addon1" value="{{uploader.queue[0].file.name}}" readonly>
+			<input type="text" class="form-control input-{{options.inputSize}}" aria-describedby="basic-addon1"  readonly  ng-model="value">
 			<span class="input-group-btn">
-				<label  for="jfilestyle-2" class="btn btn-{{options.typebutton || 'default'}} btn-{{options.inputSize || 'default'}}" type="button"><i class="fa fa-{{options.iconButton}}"></i>  {{options.labelButton}}</label>
+				<label  for="jfilestyle-2" class="btn btn-{{options.typeButton || 'default'}} btn-{{options.inputSize}}" type="button"><i class="fa fa-{{options.iconButton}}"></i>  {{options.labelButton}}</label>
 			</span>
 		</div>
 	 
