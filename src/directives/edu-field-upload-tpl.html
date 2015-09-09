@@ -10,7 +10,16 @@
 		<input ng-if="!options.multiple"  type="file" class="jfilestyle" nv-file-select="" uploader="uploader"  data-buttontext="Find file" id="jfilestyle-2" style="position: fixed; left: -500px;">
 		
 		 <div class="input-group" >
-			<input type="text" class="form-control input-{{options.inputSize}}" aria-describedby="basic-addon1"  readonly  ng-model="value">
+			<input type="text" class="form-control input-{{options.inputSize}}" aria-describedby="basic-addon1"
+				readonly 
+				ng-model="value"
+				autofocus="{{options.autofocus}}"
+			    ng-required="{{options.required}}"
+			    ng-disabled="{{options.disabled}}"
+			    ng-blur="onBlur()"
+			    ng-focus="onFocus()"
+			    ng-change="onChange()">
+			   
 			<span class="input-group-btn">
 				<label  for="jfilestyle-2" class="btn btn-{{options.typeButton || 'default'}} btn-{{options.inputSize}}" type="button"><i class="fa fa-{{options.iconButton}}"></i>  {{options.labelButton}}</label>
 			</span>
