@@ -102,6 +102,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 			case 'date':
 				templateUrl = 'directives/edu-field-date-tpl.html';
 				break;
+			case 'date-ag-ui':
+				templateUrl = 'directives/edu-field-date-ag-ui-tpl.html';
+				break;
 			case 'date-time':
 				templateUrl = 'directives/edu-field-date-time-tpl.html';
 				break;
@@ -276,6 +279,17 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					return 0;
 				}
 			}
+			
+			$scope.internalControl.clearQueue = function() {
+				
+				if($scope.options.type=="upload"){
+					return $scope.uploader.clearQueue();
+				}else{
+					return 0;
+				}
+			}
+			
+			
 			$scope.internalControl.refresh = function(value) {
 				if($scope.options.type=="select"){
 					$scope.refreshSelect(value);
@@ -291,6 +305,18 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 			if (!$scope.options.hasOwnProperty('loadOnInit')&&$scope.options.type=='select'){
 				$scope.options.loadOnInit=true;
 			}
+			
+			
+			// ---
+			// CONTROL TYPE= date
+		    // ---
+			//$scope.options.showPopupCalendar=true;
+			
+			$scope.internalControl.showCalendar = function() {
+				
+				$scope.options.showPopupCalendar=true;
+			};
+			
 			// ---
 			// CONTROL TYPE= iban
 		    // ---

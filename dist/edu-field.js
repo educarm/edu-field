@@ -1,5 +1,5 @@
 /*
- edu-field v0.0.15
+ edu-field v0.0.16
  (c) Educarm, http://www.educarm.es
  License: MIT
 */
@@ -396,6 +396,9 @@ eduFieldDirectives.directive('eduField', [
       case 'date':
         templateUrl = 'directives/edu-field-date-tpl.html';
         break;
+      case 'date-ag-ui':
+        templateUrl = 'directives/edu-field-date-ag-ui-tpl.html';
+        break;
       case 'date-time':
         templateUrl = 'directives/edu-field-date-time-tpl.html';
         break;
@@ -552,6 +555,13 @@ eduFieldDirectives.directive('eduField', [
               return 0;
             }
           };
+          $scope.internalControl.clearQueue = function () {
+            if ($scope.options.type == 'upload') {
+              return $scope.uploader.clearQueue();
+            } else {
+              return 0;
+            }
+          };
           $scope.internalControl.refresh = function (value) {
             if ($scope.options.type == 'select') {
               $scope.refreshSelect(value);
@@ -565,6 +575,13 @@ eduFieldDirectives.directive('eduField', [
           if (!$scope.options.hasOwnProperty('loadOnInit') && $scope.options.type == 'select') {
             $scope.options.loadOnInit = true;
           }
+          // ---
+          // CONTROL TYPE= date
+          // ---
+          //$scope.options.showPopupCalendar=true;
+          $scope.internalControl.showCalendar = function () {
+            $scope.options.showPopupCalendar = true;
+          };
           // ---
           // CONTROL TYPE= iban
           // ---
@@ -793,9 +810,10 @@ angular.module('edu-field.tpl').run([
   function ($templateCache) {
     'use strict';
     $templateCache.put('directives/edu-field-autocomplete-tpl.html', '<div class="form-group {{options.col}}" ng-class="{\'has-error\':  $invalid, \'has-success\': !$invalid && $dirty}" style=position:relative><label for={{id}}>{{options.label}} {{options.required ? \'*\' : \'\'}}</label><edu-complete id_={{id}} name={{name}} onblur=onBlur() onfocus=onFocus() autofocus required placeholder={{options.placeholder}} pause={{autocpause}} selectedobject=value url={{options.autocurldata}} urldataloadall={{options.autocurldataloadall}} localdata=options.autoclocaldata searchfields={{options.autocsearchfields}} datafield={{options.autocfieldvalue}} titlefield={{options.autocfieldtitle}} descriptionfield={{options.autocdescriptionfield}} imagefield={{options.autocfieldimg}} minlength={{options.autocminlength}} inputclass="form-control input-{{options.inputSize}}"><div class="help-block has-error" ng-show=$invalid style=position:absolute;top:50px><small class=error ng-show=$invalidRequired>Campo obligatorio. Introduzca un valor</small> <small class=error ng-show=$invalidMinlength>Debe tener al menos {{options.min}} caracteres</small> <small class=error ng-show=$invalidMaxlength>No puede tener m\xe1s de {{options.max}} caracteres</small> <small class=error ng-show=$invalidPattern>Introduzca un valor v\xe1lido</small></div></div>');
-    $templateCache.put('directives/edu-field-button-tpl.html', '<div class="form-group {{options.col}}"><button type=button ng-click=options.onClick() class="btn btn-{{options.state}} btn-{{options.size}}" ng-disabled=options.disabled>{{options.label}}</button></div>');
+    $templateCache.put('directives/edu-field-button-tpl.html', '<div class="form-group {{options.col}}"><button type=button ng-click=options.onClick() class="btn btn-{{options.state}} btn-{{options.size}}" ng-disabled=options.disabled><i class={{options.icon}}></i>{{options.label}}</button></div>');
     $templateCache.put('directives/edu-field-checkbox-tpl.html', '<div class="checkbox {{options.col}}" ng-class="{\'has-error\':  $invalid, \'has-success\': !$invalid && $dirty}" style=position:relative><label><input type=checkbox id={{id}} name=name autofocus ng-false-value="\'N\'" ng-true-value="\'S\'" ng-disabled={{options.disabled}} ng-model=value ng-blur=onBlur() ng-focus=onFocus() ng-change=onChange()> {{options.label}} {{options.required ? \'*\' : \'\'}}</label><div class="help-block has-error" ng-show=$invalid style=position:absolute;top:50px><small class=error ng-show=$invalidRequired>Campo obligatorio. Introduzca un valor</small></div></div>');
     $templateCache.put('directives/edu-field-cif-tpl.html', '<div class="form-group {{options.col}}" ng-class="{\'has-error\':  $invalid, \'has-success\': !$invalid && $dirty}" style=position:relative><label for={{id}}>{{options.label}} {{options.required ? \'*\' : \'\'}}</label><div class=input-group><span class=input-group-btn><button class="btn btn-{{options.typebutton || \'default\'}} btn-{{options.inputSize || \'default\'}}" type=button>CIF</button></span><div class=input-group><input style=min-width:250px class="form-control input-{{options.inputSize || \'default\'}}" id={{id}} name={{name}} autofocus placeholder={{options.placeholder}} autofocus ng-required={{options.required}} ng-disabled={{options.disabled}} ng-minlength={{options.min}} ng-maxlength={{options.max}} ng-pattern="nifniecifValidator(\'cif\')" ng-model=value ng-blur=onBlur() ng-focus=onFocus() ng-change=onChange()></div></div><div class="help-block has-error" ng-show=$invalid style=position:absolute;top:50px><small class=error ng-show=$invalidRequired>Campo obligatorio. Introduzca un CIF</small> <small class=error ng-show=$invalidMinlength>Debe tener al menos {{options.min}} caracteres</small> <small class=error ng-show=$invalidMaxlength>No puede tener m\xe1s de {{options.max}} caracteres</small> <small class=error ng-show=$invalidPattern>Introduzca un NIF/NIE v\xe1lido</small></div></div>');
+    $templateCache.put('directives/edu-field-date-ag-ui-tpl.html', '<div class="form-group {{options.col}}" ng-class="{\'has-error\':  $invalid, \'has-success\': !$invalid && $dirty}" style=position:relative><label for={{id}}>{{options.label}} {{options.required ? \'*\' : \'\'}}</label><div class="input-group date-group"><input class="form-control input-{{options.sizeSuffix || \'sm\'}}" datepicker-popup="{{options.format || dd-MM-yyyy}}" ng-model=value is-open=options.showPopupCalendar datepicker-options=options.dateOptions current-text=Hoy clear-text=Borrar close-text="Cerrar"> <span class=input-group-btn><button type=button class="btn btn-{{sizeSuffix || \'sm\'}} btn-info" ng-click=internalControl.showCalendar()><i class="glyphicon glyphicon-calendar"></i></button></span></div><div class="help-block has-error" ng-show=$invalid style=position:absolute;top:50px><small class=error ng-show=$invalidRequired>Campo obligatorio. Introduzca una fecha</small> <small class=error ng-show=$invalidPattern>Introduzca un fecha v\xe1lida (dd-mm-aaaa)</small></div></div>');
     $templateCache.put('directives/edu-field-date-time-tpl.html', '<div class="form-group {{options.col}}" ng-class="{\'has-error\':  $invalid, \'has-success\': !$invalid && $dirty}" style=position:relative><label for={{id}}>{{options.label}} {{options.required ? \'*\' : \'\'}}</label><input date-time-input class="form-control {{options.inputSize}}" id={{id}} name={{name}} placeholder={{options.placeholder}} autofocus ng-required={{options.required}} ng-disabled={{options.disabled}} ng-model=value ng-blur=onBlur() ng-focus=onFocus() ng-change=onChange()><div class="help-block has-error" ng-show=$invalid style=position:absolute;top:50px><small class=error ng-show=$invalidRequired>Campo obligatorio. Introduzca una fecha y una hora</small> <small class=error ng-show=$invalidPattern>Introduzca un fecha y una hora v\xe1lida</small></div></div>');
     $templateCache.put('directives/edu-field-date-tpl.html', '<div class="form-group {{options.col}}" ng-class="{\'has-error\':  $invalid, \'has-success\': !$invalid && $dirty}" style=position:relative><label for={{id}}>{{options.label}} {{options.required ? \'*\' : \'\'}}</label><input type=date date-input class="form-control {{options.inputSize}}" id={{id}} name={{name}} placeholder={{options.placeholder}} autofocus ng-model=value ng-blur=onBlur() ng-focus=onFocus() ng-change=onChange() ng-required={{options.required}} ng-disabled={{options.disabled}}><div class="help-block has-error" ng-show=$invalid style=position:absolute;top:50px><small class=error ng-show=$invalidRequired>Campo obligatorio. Introduzca una fecha</small> <small class=error ng-show=$invalidPattern>Introduzca un fecha v\xe1lida (dd-mm-aaaa)</small></div></div>');
     $templateCache.put('directives/edu-field-email-tpl.html', '<div class="form-group {{options.col}}" ng-class="{\'has-error\':  $invalid, \'has-success\': !$invalid && $dirty}" style=position:relative><label for={{id}}>{{options.label}} {{options.required ? \'*\' : \'\'}}</label><input class="form-control input-{{options.inputSize}}" id={{id}} name={{name}} placeholder={{options.placeholder}} autofocus ng-required={{options.required}} ng-disabled={{options.disabled}} ng-pattern="/^[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+(?:[A-Z]{2}|es|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)\\b$/" ng-minlength={{options.min}} ng-maxlength={{options.max}} ng-model=value ng-blur=onBlur() ng-focus=onFocus() ng-change=onChange()><div class="help-block has-error" ng-show=$invalid style=position:absolute;top:50px><small class=error ng-show=$invalidRequired>Campo obligatorio. Introduzca un email</small> <small class=error ng-show=$invalidMinlength>Debe tener al menos {{options.min}} caracteres</small> <small class=error ng-show=$invalidMaxlength>No puede tener m\xe1s de {{options.max}} caracteres</small> <small class=error ng-show=$invalidPattern>Introduzca un email v\xe1lido</small></div></div>');
