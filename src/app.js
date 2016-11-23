@@ -6,6 +6,10 @@ var app = angular.module('app', [
 
 app.controller('appController', ['$scope','$http', function ($scope,$http) {
      $scope.selectedTema=(typeof $scope.result!=='undefined' ?$scope.result.CODIGO_TEMA:'');
+	 
+	 $scope.enter=function(){
+		 alert("hola capullo");
+	 }
 	
      $scope.result={};
 	 $scope.municipios=[
@@ -58,6 +62,9 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 							},
 							onBlur:function(value){
 								console.log("salida del control:"+value);
+							},
+							onKeypress:function(event){
+								console.log("pulsada la tecla con código:"+event.keyCode);
 							}
 						},col:'col-md-6',label: 'Texto',placeholder: 'Texto',autofocus:'',required: true },
 					{key: 'textobtn',type: 'textbutton',inputSize:"lg",default:'texto por def.',showbutton:true,typebutton:'info',icon:'search',textbutton:'texto',

@@ -19,7 +19,8 @@
 			   ng-model="value"
 			   ng-blur="onBlur()"
 			   ng-focus="onFocus()"
-			   ng-change="onChange()">
+			   ng-change="onChange()"
+			   ng-keypress="onKeypress($event)">
 
 		   
 	<div class="help-block has-error" ng-show="$invalid"  style="position:absolute;top:50px">

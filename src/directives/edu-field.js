@@ -200,6 +200,12 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				}
 			}
 			
+			$scope.onKeypress=function($event) {
+				if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onKeypress == 'function'){
+					$scope.options.fieldListeners.onKeypress($event);
+				}
+			}
+			
 			$scope.onInit=function() {
 				 var callInit=function(){
 							    	$scope.options.fieldListeners.onInit($scope.value);
