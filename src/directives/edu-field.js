@@ -99,10 +99,10 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 			case 'month':
 				templateUrl = 'directives/edu-field-month-tpl.html';
 				break;
-			case 'date':
+			case 'date<13':
 				templateUrl = 'directives/edu-field-date-tpl.html';
 				break;
-			case 'date-ag-ui':
+			case 'date':
 				templateUrl = 'directives/edu-field-date-ag-ui-tpl.html';
 				break;
 			case 'date-time':
@@ -318,8 +318,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 		    // ---
 			//$scope.options.showPopupCalendar=true;
 			
-			$scope.internalControl.showCalendar = function() {
-				
+			$scope.internalControl.showCalendar = function($event) {
+				$event.preventDefault();
+                $event.stopPropagation();
 				$scope.options.showPopupCalendar=true;
 			};
 			
