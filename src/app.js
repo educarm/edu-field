@@ -101,6 +101,28 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 																	}
 																	}
 							,type: 'upload',typeButton:'info',inputSize:'lg',showprogressbar:true,showbuttons:true,url:"/api/v1/upload",iconButton:'folder-open',labelButton:'Sel. fichero',col:'col-md-12',label: 'Subida fichero',placeholder: 'Upload',autofocus:'' },
+					
+					{key: 'upload15x',fieldListeners:{
+																onErrorItem:function(item){
+																	alert("Ha ocurrido un error subiendo el fichero "+ item.name)
+																},
+																onAfterAddingFile:function(item){
+																	var a = item;
+																},onSuccessItem:function(item){
+																	if(typeof item!=='undefined'){
+																		if($scope.fields[10].fieldControl.filesInQueue()>0){
+																			
+																			$scope.optionsCrud.formFields.tabs[10].fieldControl.clearQueue();
+																		    var c=$scope.fields[4].fieldControl.filesInQueue();
+																		}
+																	}
+																	
+																	}
+																	}
+							,type: 'upload15x',typeButton:'info',inputSize:'lg',showprogressbar:true,showbuttons:true,url:"/api/v1/upload",iconButton:'folder-open',labelButton:'Sel. fichero',col:'col-md-12',label: 'Subida fichero',placeholder: 'Upload',autofocus:'' },
+					
+					
+					
 					{key: 'numeroentero',type: 'number',col:'col-md-4',min:1,max:12,pattern:"",label: 'Número entero',placeholder: 'Número entero',autofocus:'',required: true },
 					{key: 'numerodecimal',type: 'number',col:'col-md-4',min:1,max:12,pattern:"/^-?[0-9]+([,\.][0-9]*)?$/",label: 'Número decimal',placeholder: 'Número decimal',autofocus:'',required: true },
 					

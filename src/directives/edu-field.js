@@ -72,6 +72,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 			case 'upload':
 				templateUrl = 'directives/edu-field-upload-tpl.html';
 				break;
+			case 'upload15x':
+				templateUrl = 'directives/edu-field-upload15x-tpl.html';
+				break;
 		    case 'nifniecif':
 				templateUrl = 'directives/edu-field-nifniecif-tpl.html';
 				break;
@@ -363,6 +366,45 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					}
 				};
 			})();
+			// ---
+			// CONTROL TYPE= uploader15x
+		    // ---
+			
+			//CALLBACKS
+			$scope.onAddedItem= function ($file, $event, $flow) {
+			  //event.preventDefault();//prevent file from uploading
+			  $flow.opts.target=$scope.options.url;
+			  if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onAfterAddingFile == 'function'){
+					$scope.options.fieldListeners.onAfterAddingFile($file);
+			  }
+			  
+			};
+			
+			$scope.onSuccessItem= function ($file, $message, $flow) {
+			 // event.preventDefault();//prevent file from uploading
+			  $scope.value=$file.name;
+			  $flow.files=[];
+			  if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onSuccesItem == 'function'){
+					$scope.options.fieldListeners.onSuccessItem($file);
+			  }
+			  
+			};
+			
+			$scope.onErrorItem= function ($file, $message, $flow ) {
+			  //event.preventDefault();//prevent file from uploading
+			  $flow.files=[];
+			  if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onErrorItem == 'function'){
+					$scope.options.fieldListeners.onErrorItem($file);
+			  }
+			  
+			};
+			
+			$scope.onRetryItem= function ($file, $flow) {
+			  //event.preventDefault();//prevent file from uploading
+			  if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onCancelItem == 'function'){
+					$scope.options.fieldListeners.onRetryItem($file);
+			  }  
+			};
 			
 			// ---
 			// CONTROL TYPE= uploader
@@ -390,7 +432,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					}
 				};
 				uploader.onAfterAddingFile = function(fileItem) {
-					$scope.value=uploader.queue[0].file.name
+					$scope.value=uploader.queue[0]._file.name
 					if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onAfterAddingFile == 'function'){
 						$scope.options.fieldListeners.onAfterAddingFile(fileItem);
 					}
