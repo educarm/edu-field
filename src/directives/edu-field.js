@@ -264,7 +264,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 		
 		
 		
-		controller: function fieldController($scope,FileUploader) {
+		controller: function fieldController($scope,Upload,FileUploader) {
 			
 			// component control
 			$scope.options.fieldControl={};
@@ -278,6 +278,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				console.log("llamada a file upload file:"+idxFile);
 				if($scope.options.type=="upload"){
 					$scope.uploader.queue[idxFile-1].upload();
+				}
+				if($scope.options.type=="upload15x"){
+					$scope.ngfupload();
 				}
 			}
 			$scope.internalControl.filesInQueue = function() {
@@ -366,45 +369,51 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					}
 				};
 			})();
+			
+			
 			// ---
-			// CONTROL TYPE= uploader15x
+			// CONTROL TYPE= uploader15x -- plugin ng-file-upload
 		    // ---
-			
-			//CALLBACKS
-			$scope.onAddedItem= function ($file, $event, $flow) {
-			  //event.preventDefault();//prevent file from uploading
-			  $flow.opts.target=$scope.options.url;
-			  if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onAfterAddingFile == 'function'){
-					$scope.options.fieldListeners.onAfterAddingFile($file);
+			$scope.ngfselect=function(file){
+				if(file){
+					$scope.value=file.$ngfName || file.name;
+					if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onAfterAddingFile == 'function'){
+					$scope.options.fieldListeners.onAfterAddingFile(file);
 			  }
-			  
-			};
+				}
+			}
+			$scope.uploading=false;
+			$scope.ngfupload=function(){
+				$scope.uploading=true;
+				if($scope.file){
+					Upload.upload({
+						url: $scope.options.url,
+						data: {file: $scope.file}
+					}).then(function (resp) {
+						//console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+						$scope.uploading=false;
+						if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onSuccessItem == 'function'){
+							$scope.options.fieldListeners.onSuccessItem(resp.config.data.file);
+						}
+					}, function (resp) {
+						//console.log('Error status: ' + resp.status);
+						$scope.uploading=false;
+						if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onErrorItem == 'function'){
+							$scope.options.fieldListeners.onErrorItem(resp.status);
+						}
+					}, function (evt) {
+						$scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+						//console.log('progress: ' + $scope.progressPercentage + '% ' + evt.config.data.file.name);
+						if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onProgressItem == 'function'){
+							$scope.options.fieldListeners.onProgressItem($scope.progressPercentage,evt.config.data.file.name);
+						}
+					});
+				}
+				
+				
+				
+			}
 			
-			$scope.onSuccessItem= function ($file, $message, $flow) {
-			 // event.preventDefault();//prevent file from uploading
-			  $scope.value=$file.name;
-			  $flow.files=[];
-			  if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onSuccesItem == 'function'){
-					$scope.options.fieldListeners.onSuccessItem($file);
-			  }
-			  
-			};
-			
-			$scope.onErrorItem= function ($file, $message, $flow ) {
-			  //event.preventDefault();//prevent file from uploading
-			  $flow.files=[];
-			  if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onErrorItem == 'function'){
-					$scope.options.fieldListeners.onErrorItem($file);
-			  }
-			  
-			};
-			
-			$scope.onRetryItem= function ($file, $flow) {
-			  //event.preventDefault();//prevent file from uploading
-			  if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onCancelItem == 'function'){
-					$scope.options.fieldListeners.onRetryItem($file);
-			  }  
-			};
 			
 			// ---
 			// CONTROL TYPE= uploader

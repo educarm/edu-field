@@ -8,7 +8,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
      $scope.selectedTema=(typeof $scope.result!=='undefined' ?$scope.result.CODIGO_TEMA:'');
 	 
 	 $scope.enter=function(){
-		 alert("hola capullo");
+		 alert("hola");
 	 }
 	
      $scope.result={};
@@ -98,28 +98,24 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 																		}
 																	}
 																	
-																	}
-																	}
+																},onProgressItem:function(progressPercentage,filemane){
+																	console.log("progress upload file "+filename+":"+progresssPercentage+'%');
+																	
+																}
+													}
 							,type: 'upload',typeButton:'info',inputSize:'lg',showprogressbar:true,showbuttons:true,url:"/api/v1/upload",iconButton:'folder-open',labelButton:'Sel. fichero',col:'col-md-12',label: 'Subida fichero',placeholder: 'Upload',autofocus:'' },
 					
 					{key: 'upload15x',fieldListeners:{
-																onErrorItem:function(item){
-																	alert("Ha ocurrido un error subiendo el fichero "+ item.name)
+																onErrorItem:function(error){
+																	alert("Ha ocurrido un error subiendo el fichero "+ error)
 																},
 																onAfterAddingFile:function(item){
 																	var a = item;
 																},onSuccessItem:function(item){
-																	if(typeof item!=='undefined'){
-																		if($scope.fields[10].fieldControl.filesInQueue()>0){
-																			
-																			$scope.optionsCrud.formFields.tabs[10].fieldControl.clearQueue();
-																		    var c=$scope.fields[4].fieldControl.filesInQueue();
-																		}
-																	}
-																	
-																	}
-																	}
-							,type: 'upload15x',typeButton:'info',inputSize:'lg',showprogressbar:true,showbuttons:true,url:"/api/v1/upload",iconButton:'folder-open',labelButton:'Sel. fichero',col:'col-md-12',label: 'Subida fichero',placeholder: 'Upload',autofocus:'' },
+																	var a=item;
+																}
+													}
+							,type: 'upload15x',typeButton:'info',inputSize:'',showprogressbar:true,showbuttons:true,url:'/api/v1/upload',maxsize:'20MB',pattern:'.pdf,.jpg,video,image',iconButtonSelectFile:'folder-open',labelButtonSelectFile:'',iconButtonUploadFile:'upload',labelButtonUploadFile:'',col:'col-md-6',label: 'Subida fichero',placeholder: 'Upload',autofocus:'' },
 					
 					
 					

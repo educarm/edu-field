@@ -5,10 +5,11 @@
 	</label>
 	
 	<div class="input-group date-group">
-		<input type="text" class="form-control input-{{options.sizeSuffix || 'sm'}}"
+		<input type="text" class="form-control input-{{options.sizeSuffix}}"
 		ng-click="internalControl.showCalendar($event)"
 		datepicker-popup="{{options.format || 'dd-MM-yyyy'}}"
 		ng-model="value"
+		ng-required="{{options.required}}"
 		ng-disabled="{{options.disabled}}"
 		is-open="options.showPopupCalendar"
 		datepicker-options="options.dateOptions"
