@@ -192,7 +192,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				stringPattern = '';
 				break;
 			case 'month':
-				stringPattern = '';
+				stringPattern = '^(19|20)\d\d[- \/](0[1-9]|1[012])$';
 				break;
 			case 'date<13':
 				stringPattern = '';
@@ -225,7 +225,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				stringPattern = '';
 				break;
 			case 'email':
-				stringPattern = '';
+				stringPattern = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|es|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)\b$";
 				break;
 			case 'text':
 				stringPattern = '';
