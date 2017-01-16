@@ -257,6 +257,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				throw new Error('options are required!');
             }
 			
+			
 		
 		    // load the correct template
 			var templateUrl = $scope.options.templateUrl || getTemplateUrl($scope.options.type);
