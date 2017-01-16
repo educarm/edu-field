@@ -119,7 +119,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					
 					
 					
-					{key: 'numeroentero',type: 'number',col:'col-md-4',min:1,max:12,pattern:"",label: 'Número entero',placeholder: 'Número entero',autofocus:'',required: true },
+					{key: 'numeroentero',type: 'number',col:'col-md-4',min:1,max:12,label: 'Número entero',placeholder: 'Número entero',autofocus:'',required: true },
 					{key: 'numerodecimal',type: 'number',col:'col-md-4',min:1,max:12,pattern:"/^-?[0-9]+([,\.][0-9]*)?$/",label: 'Número decimal',placeholder: 'Número decimal',autofocus:'',required: true },
 					
 					{key: 'email',type: 'email',col:'col-md-4',label: 'Email',placeholder: 'Email',autofocus:'',required: true },

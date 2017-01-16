@@ -145,7 +145,98 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 
 		return templateUrl;
 	};
-	
+	var getStringPattern = function(type) {
+		var stringPattern = '';
+
+		switch(type) {
+		    case 'textbutton':
+				stringPattern = '';
+				break;
+			case 'button':
+				stringPattern = '';
+				break;
+			case 'hidden':
+				stringPattern = '';
+				break;
+			case 'literal':
+				stringPattern = '';
+				break;
+			case 'upload':
+				stringPattern = '';
+				break;
+			case 'upload15x':
+				stringPattern = '';
+				break;
+		    case 'nifniecif':
+				stringPattern = '';
+				break;
+			case 'iban':
+				stringPattern = '';
+				break;
+			case 'autocomplete':
+				stringPattern = '';
+				break;
+			case 'range':
+				stringPattern = '';
+				break;
+			case 'textedit':
+				stringPattern = '';
+				break;
+			case 'url':
+				stringPattern = '';
+				break;
+			case 'time':
+				stringPattern = '';
+				break;
+			case 'week':
+				stringPattern = '';
+				break;
+			case 'month':
+				stringPattern = '';
+				break;
+			case 'date<13':
+				stringPattern = '';
+				break;
+			case 'date':
+				stringPattern = '';
+				break;
+			case 'date-time':
+				stringPattern = '';
+				break;
+			case 'textarea':
+				stringPattern = '';
+				break;
+			case 'radio':
+				stringPattern = '';
+				break;
+			case 'select':
+				stringPattern = '';
+				break;
+			case 'number':
+				stringPattern = '^-?[0-9]+$';
+				break;
+			case 'checkbox':
+				stringPattern = '';
+				break;
+			case 'password' :
+				stringPattern = '';
+				break;
+			case 'hidden' :
+				stringPattern = '';
+				break;
+			case 'email':
+				stringPattern = '';
+				break;
+			case 'text':
+				stringPattern = '';
+				break;
+			default :
+				stringPattern = '';
+				break;
+		}
+
+		return stringPattern;
+	};
 	return {
 		restrict: 'AE',
 		transclude: true,
@@ -161,12 +252,15 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 		
 		
 		link: function fieldLink($scope, $element, $attr,ctrl) {
+			
 			if (!$scope.hasOwnProperty('options')) {
 				throw new Error('options are required!');
             }
 			
+		
 		    // load the correct template
 			var templateUrl = $scope.options.templateUrl || getTemplateUrl($scope.options.type);
+			
 			if (templateUrl) {
 				$http.get(templateUrl, {
 					cache: $templateCache
@@ -265,6 +359,18 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 		
 		
 		controller: function fieldController($scope,Upload,FileUploader) {
+			
+			//apply pattern to types. For fix change to 1.5.x
+			if($scope.options.hasOwnProperty("pattern")){
+				var tmpPattern=$scope.options.pattern;
+				if(tmpPattern.substr(0,1)=='/')tmpPattern=tmpPattern.substr(1);
+				if(tmpPattern.substr(tmpPattern.length-1,1)=='/')tmpPattern=tmpPattern.substr(0,tmpPattern.length-1);
+				$scope.options.pattern=tmpPattern;
+			}else{
+				if(getStringPattern($scope.options.type)!=''){
+					$scope.options.pattern=getStringPattern($scope.options.type);
+				}
+			}
 			
 			// component control
 			$scope.options.fieldControl={};

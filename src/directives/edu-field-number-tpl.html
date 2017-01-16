@@ -2,6 +2,7 @@
 	<label for="{{id}}">
 		{{options.label}}
 		{{options.required ? '*' : ''}}
+		{{options.pattern}}
 	</label>
 	<input type="text"
 		class="form-control  input-{{options.inputSize}}"
@@ -10,7 +11,7 @@
 		autofocus="{{options.autofocus}}"
 		ng-required="{{options.required}}"
 		ng-disabled="{{options.disabled}}"
-		ng-pattern="{{options.pattern?options.pattern:'/^-?[0-9]+$/'}}"
+		pattern="{{options.pattern}}"
 		ng-model="value"
 		ng-blur="onBlur()"
 		ng-focus="onFocus()"
