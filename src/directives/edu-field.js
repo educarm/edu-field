@@ -361,18 +361,6 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 		
 		controller: function fieldController($scope,Upload,FileUploader) {
 			
-			//apply pattern to types. For fix change to 1.5.x
-			if($scope.options.hasOwnProperty("pattern")){
-				var tmpPattern=$scope.options.pattern;
-				if(tmpPattern.substr(0,1)=='/')tmpPattern=tmpPattern.substr(1);
-				if(tmpPattern.substr(tmpPattern.length-1,1)=='/')tmpPattern=tmpPattern.substr(0,tmpPattern.length-1);
-				$scope.options.pattern=tmpPattern;
-			}else{
-				if(getStringPattern($scope.options.type)!=''){
-					$scope.options.pattern=getStringPattern($scope.options.type);
-				}
-			}
-			
 			// component control
 			$scope.options.fieldControl={};
 		   
@@ -425,6 +413,25 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				$scope.options.loadOnInit=true;
 			}
 			
+			//apply pattern to types. For fix change to 1.5.x
+			$scope.pattern_validator = (function() {
+				var regexp = '';
+				if($scope.options.hasOwnProperty("pattern")){
+					regexp=$scope.options.pattern;
+					if(regexp.substr(0,1)=='/'){
+						regexp=regexp.substr(1);
+					}
+					if(regexp.substr(regexp.length-1,1)=='/'){
+						regexp=regexp.substr(0,regexp.length-1);
+					}
+					
+				}else{
+					regexp=getStringPattern($scope.options.type);
+				}
+				return regexp;
+			})();
+			
+			//Especific validator
 			
 			// ---
 			// CONTROL TYPE= date

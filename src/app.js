@@ -35,7 +35,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 						}
 				];		
      $scope.fields=[
-	                {key: 'oculto',type: 'hidden',value:"campo oculto",name:"nombre",id:"id" },
+	                  {key: 'oculto',type: 'hidden',value:"campo oculto",name:"nombre",id:"id" },
 					//{key: 'fecha',type: 'date-ag-ui',col:'col-md-2',lines: 5,label:'Fecha',placeholder: 'Fecha',autofocus:'',required: true,showPopupCalendar:true,format:"dd/MM/yyyy"}, 
 					{key: 'literal',type: 'literal',col:'col-md-12',label:'campo literal',text:"*Nota: campo literal para que podamos colocar textos en cualquier parte del formulario",id:"id" },
 					{key: 'button',type: 'button',col:'col-md-3',label:'button',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 
@@ -66,7 +66,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 							onKeypress:function(event){
 								console.log("pulsada la tecla con código:"+event.keyCode);
 							}
-						},col:'col-md-6',label: 'Texto',placeholder: 'Texto',autofocus:'',required: true },
+						},col:'col-md-6',label: 'Texto',placeholder: 'Texto',autofocus:'',required:false },
 					{key: 'textobtn',type: 'textbutton',inputSize:"lg",default:'texto por def.',showbutton:true,typebutton:'info',icon:'search',textbutton:'texto',
 						fieldListeners:{
 						    onClick:function(value){
@@ -119,12 +119,13 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					
 					
 					
-					{key: 'numeroentero',type: 'number',col:'col-md-4',min:1,max:12,label: 'Número entero',placeholder: 'Número entero',autofocus:'',required: true },
+					{key: 'numeroentero',type: 'number',col:'col-md-4',min:1,max:12,label: 'Número entero',placeholder: 'Número entero',autofocus:'',required: false },
+					
 					{key: 'numerodecimal',type: 'number',col:'col-md-4',min:1,max:12,pattern:"/^-?[0-9]+([,\.][0-9]*)?$/",label: 'Número decimal',placeholder: 'Número decimal',autofocus:'',required: true },
 					
-					{key: 'email',type: 'email',col:'col-md-4',label: 'Email',placeholder: 'Email',autofocus:'',required: true },
+					{key: 'email',type: 'email',col:'col-md-4',label: 'Email',placeholder: 'Email',autofocus:'',required: false },
 					{key: 'url',type: 'url',col:'col-md-4',label: 'Url',placeholder: 'Url',autofocus:'',required: true },
-					{key: 'password',type: 'password',col:'col-md-4',label: 'Password',placeholder: 'Password',autofocus:'',required: true },
+					{key: 'password',type: 'password',pattern:"/^123456$/",col:'col-md-4',label: 'Password (123456)',placeholder: 'Password',autofocus:'',required: true },
 				   
 					{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:'',disabled:false,required: true },
 					{key: 'radio',type: 'radio',col:'col-md-4',inputSizeClass:"input-sm",label: 'Radio',options:[{"name":"perro","value":"1"},{"name":"gato","value":"2"}],placeholder: 'Checkbox',autofocus:'',required: true },
