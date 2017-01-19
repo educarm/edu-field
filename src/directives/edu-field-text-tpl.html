@@ -2,7 +2,6 @@
 	<label for="{{id}}">
 		{{options.label}}
 		{{options.required ? '*' : ''}} 
-		
 	</label>
 	
 		
@@ -14,7 +13,7 @@
 			   autofocus="options.autofocus"
 			   ng-required="options.required"
 			   ng-disabled="options.disabled"
-			   ng-pattern="options.pattern_"
+			   ng-pattern="pattern_validator"
 			   
 			   ng-minlength="options.min"
 			   ng-maxlength="options.max"
