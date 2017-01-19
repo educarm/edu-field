@@ -3,7 +3,7 @@
 		{{options.label}}
 		{{options.required ? '*' : ''}}
 	</label>
-	
+	<!-- date-disabled="options.disabled"  -->
 	<div class="input-group date-group">
 		<input type="text" class="form-control input-{{options.sizeSuffix}}"
 		ng-click="internalControl.showCalendar($event)"
@@ -13,12 +13,12 @@
 		ng-disabled="options.disabled"
 		is-open="options.showPopupCalendar"
 		datepicker-options="options.dateOptions"
-		date-disabled="options.disabled"
+		
 		current-text="Hoy"
 		clear-text="Borrar"
 		close-text="Cerrar"/>
 		<span class="input-group-btn" ng-show="options.showButtonCalendar">
-			<button type="button" class="btn btn-{{options.sizeSuffix || 'sm'}} btn-info" ng-click="internalControl.showCalendar($event)">
+			<button type="button" ng-disabled="options.disabled" class="btn btn-{{options.sizeSuffix || 'sm'}} btn-info" ng-click="internalControl.showCalendar($event)">
 				<i class="glyphicon glyphicon-calendar"></i>
 			</button>
 		</span>
