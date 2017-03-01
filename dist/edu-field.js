@@ -1,5 +1,5 @@
 /*
- edu-field v0.0.30
+ edu-field v0.0.31
  (c) Educarm, http://www.educarm.es
  License: MIT
 */
@@ -585,7 +585,16 @@ eduFieldDirectives.directive('eduField', [
         };
         $scope.onChange = function () {
           if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChange == 'function') {
-            $scope.options.fieldListeners.onChange($scope.value);
+            var item = {};
+            if ($scope.options.type == 'select') {
+              for (var i = 0; i < $scope.optionsSelect.length; i++) {
+                if ($scope.optionsSelect[i][$scope.options.optionvalue] == $scope.value) {
+                  item = $scope.optionsSelect[i];
+                  break;
+                }
+              }
+            }
+            $scope.options.fieldListeners.onChange($scope.value, item);
           }
         };
         $scope.onKeypress = function ($event) {
@@ -886,9 +895,8 @@ eduFieldDirectives.directive('eduField', [
                       $scope.optionsSelect[i].name = $scope.optionsSelect[i][$scope.options.optionvalue] + ' - ' + $scope.optionsSelect[i][$scope.options.optionname];
                     } else {
                       $scope.optionsSelect[i].name = $scope.optionsSelect[i][$scope.options.optionname];
-                    }
-                    delete $scope.optionsSelect[i][$scope.options.optionname];
-                    delete $scope.optionsSelect[i][$scope.options.optionvalue];
+                    }  //delete $scope.optionsSelect[i][$scope.options.optionname];
+                       //delete $scope.optionsSelect[i][$scope.options.optionvalue];
                   } else {
                     if ($scope.options.selectconcatvaluename) {
                       $scope.optionsSelect[i].name = $scope.optionsSelect[i]['value'] + ' - ' + $scope.optionsSelect[i]['name'];
@@ -934,9 +942,8 @@ eduFieldDirectives.directive('eduField', [
                         $scope.optionsSelect[i].name = $scope.optionsSelect[i][$scope.options.optionvalue] + ' - ' + $scope.optionsSelect[i][$scope.options.optionname];
                       } else {
                         $scope.optionsSelect[i].name = $scope.optionsSelect[i][$scope.options.optionname];
-                      }
-                      delete $scope.optionsSelect[i][$scope.options.optionname];
-                      delete $scope.optionsSelect[i][$scope.options.optionvalue];
+                      }  //delete $scope.optionsSelect[i][$scope.options.optionname];
+                         //delete $scope.optionsSelect[i][$scope.options.optionvalue];
                     } else {
                       if ($scope.options.selectconcatvaluename) {
                         $scope.optionsSelect[i].name = $scope.optionsSelect[i]['value'] + ' - ' + $scope.optionsSelect[i]['name'];
