@@ -6,11 +6,13 @@
 	<!-- date-disabled="options.disabled"  -->
 	<div class="input-group date-group">
 		<input type="text" class="form-control input-{{options.inputSize}}"
-		ng-click="internalControl.showCalendar($event)"
+		datepicker-localdate
+		ng-click="(options.disabled || options.readonly)?angular.noop():internalControl.showCalendar($event)"
 		datepicker-popup="{{options.format || 'dd-MM-yyyy'}}"
 		ng-model="value"
 		ng-required="options.required"
 		ng-disabled="options.disabled"
+		ng-readonly="options.readonly"
 		is-open="options.showPopupCalendar"
 		datepicker-options="options.dateOptions"
 		
@@ -18,7 +20,7 @@
 		clear-text="Borrar"
 		close-text="Cerrar"/>
 		<span class="input-group-btn" ng-show="options.showButtonCalendar">
-			<button type="button" ng-disabled="options.disabled" class="btn btn-{{options.inputSize || 'sm'}} btn-info" ng-click="internalControl.showCalendar($event)">
+			<button type="button" ng-disabled="options.disabled" class="btn btn-{{options.inputSize || 'sm'}} btn-info" ng-click="(options.disabled || options.readonly)?angular.noop():internalControl.showCalendar($event)">
 				<i class="glyphicon glyphicon-calendar"></i>
 			</button>
 		</span>

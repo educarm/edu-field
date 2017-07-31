@@ -82,7 +82,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 						
 					{key: 'nif',type: 'nifniecif',col:'col-md-4',inputSize:"sm",label: 'NIF',textbutton:'NIF',placeholder: 'NIF',autofocus:'',required: true },
 					{key: 'nie',type: 'nifniecif',col:'col-md-4',inputSize:"sm",label: 'NIE',textbutton:'NIE',placeholder: 'NIE',autofocus:'',required: true },
-					{key: 'cif',type: 'nifniecif',col:'col-md-4',inputSize:"sm",typebutton:"danger",label: 'CIF',textbutton:'Cif',placeholder: 'CIF',autofocus:'',required: true },
+					{key: 'cif',type: 'nifniecif',col:'col-md-4',inputSize:"sm",typebutton:"danger",label: 'CIF',textbutton:'Cif',placeholder: 'CIF',autofocus:'',required: true ,disabled:true},
 	                {key: 'texto',type: 'text',default:'texto por defecto',
 						fieldListeners:{
 							onChange:function(value){
@@ -97,7 +97,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 							onKeypress:function(event){
 								console.log("pulsada la tecla con código:"+event.keyCode);
 							}
-						},col:'col-md-6',label: 'Texto',placeholder: 'Texto',autofocus:'',required:false },
+						},col:'col-md-6',label: 'Texto',placeholder: 'Texto',autofocus:'',required:false,readonly:true },
 					{key: 'textobtn',type: 'textbutton',inputSize:"lg",default:'texto por def.',showbutton:true,typebutton:'info',icon:'search',textbutton:'texto',
 						fieldListeners:{
 						    onClick:function(value){
@@ -158,20 +158,20 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					{key: 'url',type: 'url',col:'col-md-4',label: 'Url',placeholder: 'Url',autofocus:'',required: true },
 					{key: 'password',type: 'password',pattern:"/^123456$/",col:'col-md-4',label: 'Password (123456)',placeholder: 'Password',autofocus:'',required: true },
 				   
-					{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:'',disabled:false,required: true,default:'N' },
+					{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:'',disabled:false,required: true,default:'N'},
 					{key: 'radio',type: 'radio',col:'col-md-4',inputSizeClass:"input-sm",label: 'Radio',options:[{"name":"perro","value":"1"},{"name":"gato","value":"2"}],placeholder: 'Checkbox',autofocus:'',required: true },
 					{key: 'rango',type: 'range',col:'col-md-6',label: 'Slider',min:100,max:500,placeholder: 'Slider',autofocus:'',required: true },
 					
 					
-					{key: 'fecha',type: 'date',col:'col-md-4',lines: 5,inputSize:'sm',label:'Fecha',placeholder: 'Fecha',autofocus:'',required: true,showButtonCalendar:true,format:'dd/MM/yyyy',disabled:false}, 
+					{key: 'fecha',type: 'date',col:'col-md-4',lines: 5,inputSize:'sm',label:'Fecha',placeholder: 'Fecha',autofocus:'',required: true,showButtonCalendar:true,format:'dd/MM/yyyy',disabled:true,readonly:true}, 
 					{key: 'fechahora',type: 'date-time',col:'col-md-4',label:'Fecha Hora',placeholder: 'Fecha Hora',autofocus:'',required: true,disabled:false},					 
 					{key: 'mes',type: 'month',col:'col-md-4',label: 'Fecha mes',placeholder: 'Fecha mes',autofocus:'',required: true },
 					{key: 'semana',type: 'week',col:'col-md-4',label: 'Semana',placeholder: 'Semana',autofocus:'',required: true },
-					{key: 'hora',type: 'time',col:'col-md-4',label: 'Hora',placeholder: 'Hora',autofocus:'',required: true },
+					{key: 'hora',type: 'time',col:'col-md-4',label: 'Hora',placeholder: 'Hora',autofocus:'',required: true ,disabled:false,readonly:false},
 					
-					{key: 'autocompletelocal',type: 'autocomplete',inputSize:"sm",autofocus:'autofocus',col:'col-md-4',required:true,label: 'Autocomplete datos locales',autoclocaldata:$scope.municipios,autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300},
-				    {key: 'autocompleteremoto',type: 'autocomplete',col:'col-md-4',required:true,label: 'Autocomplete datos remotos',autocurldata: 'api/v1/municipios?filter=',autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300},											   
-					{key: 'autocompleteremotoloadall',type: 'autocomplete',col:'col-md-4',required:true,label: 'Autocomplete datos remotos load all',autocurldataloadall: 'api/v1/municipios',autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300},											   
+					{key: 'autocompletelocal',type: 'autocomplete',inputSize:"sm",autofocus:'autofocus',col:'col-md-4',required:true,label: 'Autocomplete datos locales',autoclocaldata:$scope.municipios,autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300,disabled:false,readonly:false},
+				    {key: 'autocompleteremoto',type: 'autocomplete',col:'col-md-4',required:true,label: 'Autocomplete datos remotos',autocurldata: 'api/v1/municipios?filter=',autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300,disabled:false,readonly:false},											   
+					{key: 'autocompleteremotoloadall',type: 'autocomplete',col:'col-md-4',required:true,label: 'Autocomplete datos remotos load all',autocurldataloadall: 'api/v1/municipios',autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300,disabled:false,readonly:false},											   
 				    {key: 'button2',type: 'button',col:'col-md-3',label:'show loading select',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 
 																									console.log("botón clickado");
 																										$scope.fields[28].loading=true;
@@ -182,7 +182,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 																										$scope.fields[28].loading=false;
 																								   } 
 					}, 
-					{key: 'selectlocal',type: 'select',inputSize:"sm",loading:false,col:'col-md-4',required:true,label: 'Select datos locales',selecttypesource:'array',selectsource: $scope.municipios,optionname:"name",optionvalue:"value",selectconcatvaluename:true},
+					{key: 'selectlocal',type: 'select',inputSize:"sm",loading:false,col:'col-md-4',required:true,label: 'Select datos locales',selecttypesource:'array',selectsource: $scope.municipios,optionname:"name",optionvalue:"value",selectconcatvaluename:true,disabled:false,readonly:false},
 					{key: 'selectremoto', type: 'select',col:'col-md-4',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
 					
 					{key: 'CODIGO_TEMA',
@@ -200,8 +200,8 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					{key: 'CODIGO_SUBTEMA',type: 'select',autoload:false,col:'col-md-6',label: 'Subtema depende de tema',selecttypesource:'url', selectsource:'services/subtemasservice/subtemas?limit=100000&offset=0&order=asc&orderby=DESCRIPCION',optionvalue:'SUBTEMA',optionname:'DESCRIPCION',selectconcatvaluename:true,placeholder: '',autofocus:'',required: false,disabled:false },
 											
 					
-					{key: 'areatexto',type: 'textarea',col:'col-md-4',rows: 5,label: 'Área de texto',placeholder: 'Área de texto',autofocus:'',required: true,minlength:5,maxlength:20	},
-    	            {key: 'areatextoedit',type: 'textedit',col:'col-md-4',rows: 5,toolbar:[['bold','italics']],  label: 'Área de texto rico',placeholder: 'Área de texto rico',autofocus:'',required: true	}
+					{key: 'areatexto',type: 'textarea',col:'col-md-4',rows: 5,label: 'Área de texto',placeholder: 'Área de texto',autofocus:'',required: true,minlength:5,maxlength:100,disabled:false,readonly:false	},
+    	            {key: 'areatextoedit',type: 'textedit',col:'col-md-4',rows: 5,toolbar:[['bold','italics']],  label: 'Área de texto rico',placeholder: 'Área de texto rico',autofocus:'',required: true,disabled:false,readonly:false	}
     	                     
 					
 					
