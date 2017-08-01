@@ -28,9 +28,11 @@ eduFieldDirectives.directive('datepickerLocaldate', ['$parse', function ($parse)
 
         // called with a JavaScript Date object when picked from the datepicker
         ngModelController.$parsers.push(function (viewValue) {
-            console.log(viewValue);console.log(viewValue);console.log(viewValue);
             // undo the timezone adjustment we did during the formatting
-            viewValue.setMinutes(viewValue.getMinutes() - viewValue.getTimezoneOffset());
+			var minutes=viewValue.getMinutes();
+			if(typeof(minutes)!='undefined'){
+				viewValue.setMinutes(minutes - viewValue.getTimezoneOffset());
+			}
             // we just want a local date in ISO format
             return viewValue.toISOString().substring(0, 10);
         });
