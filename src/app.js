@@ -182,7 +182,13 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 																										$scope.fields[28].loading=false;
 																								   } 
 					}, 
-					{key: 'selectlocal',type: 'select',inputSize:"sm",loading:false,col:'col-md-4',required:true,label: 'Select datos locales',selecttypesource:'array',selectsource: $scope.municipios,groupBy:"value",optionname:"name",optionvalue:"value",selectconcatvaluename:true,disabled:false,readonly:false},
+					{key: 'selectlocal',type: 'select',inputSize:"sm",loading:false,col:'col-md-4',required:true,label: 'Select datos locales',selecttypesource:'array',selectsource: $scope.municipios,groupBy:"value",
+																																																				fieldListeners:{
+																																																					onChange:function(value,item){
+																																																						console.log("cambio selelct:"+value);
+																																																						
+																																																					}
+																																																				},optionname:"name",optionvalue:"value",selectconcatvaluename:true,disabled:false,readonly:false},
 					{key: 'selectremoto', type: 'select',col:'col-md-4',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
 					
 					{key: 'CODIGO_TEMA',
