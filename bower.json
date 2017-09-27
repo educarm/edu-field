@@ -1,6 +1,6 @@
 {
   "name": "edu-field",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "authors": [
     "educarm"
   ],
@@ -33,7 +33,8 @@
     "textAngular": "educarm/textAngular#~1.2.2",
     "Font-Awesome": "educarm/Font-Awesome#~4.7.0",
     "angular-file-upload": "educarm/angular-file-upload#~1.0.2",
-	"ng-file-upload":""
+	"ng-file-upload":"",
+	"angular-xeditable":""
   },
   "devDependencies": {
      "angular-mocks": "educarm/angular-mocks#~1.2.17"

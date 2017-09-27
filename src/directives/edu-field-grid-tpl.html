@@ -1,0 +1,73 @@
+<div class="form-group   {{options.col}}" ng-class="{'has-error':  $invalid, 'has-success': !$invalid && $dirty}" style="position:relative">
+	<label for="{{id}}">
+		{{options.label}}
+		{{options.required ? '*' : ''}}
+	</label>
+	
+	<div style="height:{{options.height}}; overflow-x:scroll">
+		<table>
+			<thead>
+				<tr>
+					<th ng-repeat="field in options.fields" class="noFixedColumn" width="{{field.weight}}%" title="&nbsp" style="text-align: center" id="{{$index}}">
+						<span  ng-click="changeOrder(field, field.orderByValue, 'desc')" ng-show="field.order=='asc'" class="header-column"  title="Ordenar por {{field.label}}">
+							<i class="glyphicon glyphicon-sort-by-alphabet"></i>
+							<a>&nbsp{{field.label}}</a>
+					    </span>
+						<span  ng-click="changeOrder(field, field.orderByValue, 'asc')" ng-show="field.order=='desc'" class="header-column" title="Ordenar por {{field.label}}">
+							<i class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
+							<a>&nbsp{{field.label}}</a>
+						</span>
+						<span ng-click="changeOrder(field, field.orderByValue, 'desc')" ng-hide="field.order.length>0" class="header-column" title="Ordenar por {{field.label}}">
+							<a>&nbsp{{field.label}}</a>
+						</span>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in options.gridItems" ng-click="options.gridOnRowClick(item)">
+				    <!-- buttons pre user -->    
+				    <form name="formGrid" ng-show="options.gridEditMode" class="form-buttons form-inline" shown="item.inserted">
+							  <button type="submit" ng-disabled="formGrid.$waiting" class="btn btn-sm btn-warning">
+								 <span class="fa fa-save">
+							  </button>
+							  <button type="button" ng-disabled="formGrid.$waiting" ng-click="formGrid.$cancel()" class="btn btn-sm btn-default">
+								 <span class="fa fa-undo">
+							  </button>
+					</form>
+					<div class="buttons" ng-show="!options.gridEditMode">
+						  <button class="btn btn-sm btn-primary" ng-click="options.gridOnClickEdit($index,item)"> <span class="fa fa-edit"></button>
+						  <button class="btn btn-sm btn-danger" ng-click="options.gridOnClickDelete($index,item)"> <span class="fa fa-remove"></button>
+					</div>  
+				    
+				    <!-- fields -->
+				    <td ng-repeat="field in options.listFields" ng-click="options.gridOnRowClick()" ng-class="{'nowrap_overflow_hidden_ellipsis':options.overflow_hidden}">
+					   <div ng-if="field.type!='number' && field.type!='date' && field.type!='date-time'  && field.type!='checkbox' && field.type!='input-text' && field.type!='input-date' && field.type!='input-select' && field.type!='input-radio'">
+							{{item[field.column]}}
+					    </div>
+					    <div ng-if="field.type=='number'"  class="pull-right">
+					        {{field.renderer(item[field.column], item, field.column,field.type)}}
+					    </div>
+					    <div ng-if="field.type=='date'">
+							{{item[field.column] | date:field.format ||'dd/MM/yyyy'}}
+					    </div>
+					    <div ng-if="field.type=='checkbox'">
+							<input type="checkbox" ng-model="item[field.column]" ng-false-value="'N'" ng-true-value="'S'" onclick="javascript: return false;" >
+					    </div>
+					    <div ng-if="field.type=='input-text'">
+							<input type="text" ng-model="item[field.column]">
+					    </div>
+					    <div ng-if="field.type=='input-date'">
+							<input type="date"  ng-model="item[field.column]">
+					    </div>
+					    <div ng-if="field.type=='input-select'">
+							<select> <option>1</option><option>2</option></select>
+					    </div>
+				    </td>
+			   </tr>
+			</tbody>
+		</table>
+			
+	</div>
+
+		
+</div>

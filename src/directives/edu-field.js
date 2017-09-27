@@ -115,84 +115,7 @@ eduFieldDirectives.directive("validateIban",function($compile){
 				}
 				ctrl.$parsers.push(myValidation);
 				
-			 /* ctrl.$validators.validateIban = function(modelValue, viewValue) {
-				 if(modelValue && viewValue){ 
-				  
-				  var prefId=attrs.id.substring(0,attrs.id.indexOf("-"));
-				  
-				  var pais=angular.element("input#"+prefId+"-pais");
-				  var entidad=angular.element("input#"+prefId+"-entidad");
-				  var oficina=angular.element("input#"+prefId+"-oficina");
-				  var control2=angular.element("input#"+prefId+"-control2");
-				  var cuenta=angular.element("input#"+prefId+"-cuenta");
-				  
-				  var iban=pais.val()+entidad.val()+oficina.val()+control2.val()+cuenta.val();
-				  
-				  
-				  var valid=IBAN.isValid(iban);
-				  
-				  if(!pais.attr('class') && !entidad.attr('class') && !oficina.attr('class') && !control2.attr('class') && !cuenta.attr('class')){
-					valid=true;  
-				  } 
-				  var a=pais.attr('class');
-				  console.log(prefId + " class:" +a);
-				  
-				  if(attrs.name==pais.attr("name")){
-					if (valid) {
-						//scope.border={"border-color":"#3c763d"};  
-					}else{
-						//scope.border={"border-color":"#a94442"};
-					}
-					if(pais.val().length==pais.attr("maxlength")){
-						entidad.focus();
-					}
-				  }else if(attrs.name==entidad.attr("name")){
-					if (valid) {
-						//scope.border={"border-color":"#3c763d"};  
-					}else{
-						//scope.border={"border-color":"#a94442"};
-					}
-					if(entidad.val().length==entidad.attr("maxlength")){
-						oficina.focus();
-					}
-					  
-				  }else if(attrs.name==oficina.attr("name")){
-					if (valid) {
-						//scope.border={"border-color":"#3c763d"};  
-					}else{
-						//scope.border={"border-color":"#a94442"};
-					}
-					if(oficina.val().length==oficina.attr("maxlength")){
-						control2.focus();
-					}
-					  
-				  }else if(attrs.name==control2.attr("name")){
-					if(control2.val().length==control2.attr("maxlength")){
-						  cuenta.focus();
-					}
-					if (valid) {
-						//scope.border={"border-color":"#3c763d"};  
-					}else{
-						//scope.border={"border-color":"#a94442"};
-					}
-					  
-				  }else if(attrs.name==cuenta.attr("name")){
-					  if(cuenta.val().length==cuenta.attr("maxlength")){
-						if (valid) {
-							//scope.border={"border-color":"#3c763d"};  
-						}else{
-							//scope.border={"border-color":"#a94442"};
-						}
-					  }
-				  }
-				  
-				//scope.border={"border-color":"#66afe9"};  
-				//return true;
-				return valid; 
-
-			  };
-			 }
-			 */
+			
 			}
 		};
 	});
@@ -274,6 +197,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				break;
 		    case 'nifniecif':
 				templateUrl = 'directives/edu-field-nifniecif-tpl.html';
+				break;
+			case 'grid':
+				templateUrl = 'directives/edu-field-grid-tpl.html';
 				break;
 			case 'iban':
 				templateUrl = 'directives/edu-field-iban-tpl.html';
@@ -368,6 +294,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				stringPattern = '';
 				break;
 		    case 'nifniecif':
+				stringPattern = '';
+				break;
+			case 'grid':
 				stringPattern = '';
 				break;
 			case 'iban':
@@ -762,7 +691,19 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					});
 				}
 			}
-			
+			// ---
+			// CONTROL TYPE= grid
+		    // ---
+			 if ($scope.options.type == 'grid') {
+				if ($scope.options.selecttypesource == 'url' && (typeof $scope.options.autoload == 'undefined' || $scope.options.autoload == true)) {
+					var sUrl = $scope.options.selectsource;
+					if ($scope.options.loadOnInit) {
+						$http.get(sUrl).success(function (data, status, headers, config) {
+						  $scope.optionsSelect = data;
+						});
+					}
+				}
+			 }
 			
 			// ---
 			// CONTROL TYPE= uploader

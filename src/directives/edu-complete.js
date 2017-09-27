@@ -29,7 +29,22 @@ eduFieldDirectives.directive('eduComplete', function ($parse, $http, $sce, $time
 			"disabled":"@disabled",
 		    "readonly": "@readonly"
         },
-template: '<div class="eduComplete-holder"><input id="{{id}}" name="{{name}}" ng-disabled="{{disabled}}" ng-readonly={{readonly}} autofocus="{{autofocus}}" ng-blur="onblur()" ng-focus="onfocus()" ng-change="onchange()" ng-required="{{required}}" ng-model="searchStr" type="text" placeholder="{{placeholder}}" class="{{inputClass}}" onmouseup="this.select();" ng-focus="resetHideResults()" ng-blur="hideResults()" /><div id="{{id}}_dropdown" class="eduComplete-dropdown" ng-if="showDropdown"><div class="eduComplete-searching" ng-show="searching">Buscando...</div><div class="eduComplete-searching" ng-show="!searching && (!results || results.length == 0)">No hay resultados</div><div class="eduComplete-row" ng-repeat="result in results" ng-click="selectResult(result)" ng-mouseover="hoverRow()" ng-class="{\'eduComplete-selected-row\': $index == currentIndex}"><div ng-if="imageField" class="eduComplete-image-holder"><img ng-if="result.image && result.image != \'\'" ng-src="{{result.image}}" class="eduComplete-image"/><div ng-if="!result.image && result.image != \'\'" class="eduComplete-image-default"></div></div><div class="eduComplete-title" ng-if="matchClass" ng-bind-html="result.title"></div><div class="eduComplete-title" ng-if="!matchClass">{{ result.title }}</div><div ng-if="result.description && result.description != \'\'" class="eduComplete-description">{{result.description}}</div></div></div></div>',
+template:  '<div class="eduComplete-holder">'+
+		   '	<input id="{{id}}" name="{{name}}" ng-disabled="{{disabled}}" ng-readonly={{readonly}} autofocus="{{autofocus}}" ng-blur="onblur()" ng-focus="onfocus()" ng-change="onchange()" ng-required="{{required}}" ng-model="searchStr" type="text" placeholder="{{placeholder}}" class="{{inputClass}}" onmouseup="this.select();" ng-focus="resetHideResults()" ng-blur="hideResults()" />' +
+           '	<div id="{{id}}_dropdown" class="eduComplete-dropdown" ng-if="showDropdown">'+
+		   '		<div class="eduComplete-searching" ng-show="searching">Buscando...</div>'+
+		   '		<div class="eduComplete-searching" ng-show="!searching && (!results || results.length == 0)">No hay resultados</div>'+
+		   '		<div class="eduComplete-row" ng-repeat="result in results" ng-click="selectResult(result)" ng-mouseover="hoverRow()" ng-class="{\'eduComplete-selected-row\': $index == currentIndex}">'+
+		   '			<div ng-if="imageField" class="eduComplete-image-holder">'+
+		   '				<img ng-if="result.image && result.image != \'\'" ng-src="{{result.image}}" class="eduComplete-image"/>'+
+		   '				<div ng-if="!result.image && result.image != \'\'" class="eduComplete-image-default"></div>'+
+		   '			</div>'+
+		   '			<div class="eduComplete-title" ng-if="matchClass" ng-bind-html="result.title"></div>'+
+		   '			<div class="eduComplete-title" ng-if="!matchClass">{{ result.title }}</div>'+
+		   '			<div ng-if="result.description && result.description != \'\'" class="eduComplete-description">{{result.description}}</div>'+
+		   '		</div>'+
+		   '	</div>'+
+		   '</div>',
 
         link: function($scope, elem, attrs) {
             $scope.lastSearchTerm = null;

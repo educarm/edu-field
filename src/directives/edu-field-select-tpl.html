@@ -4,7 +4,26 @@
 		{{options.label}}
 		{{options.required ? '*' : ''}}
 	</label>
-	<select ng-class="{'loadinggif':options.loading}"
+	<select ng-if="options.groupBy" ng-class="{'loadinggif':options.loading}"
+			class="form-control input-{{options.inputSize}}"
+			id="{{id}}"
+			autofocus="options.autofocus"
+			dependent-control="options.dependentControl"
+			
+			ng-blur="onBlur()"
+			ng-focus="onFocus()"
+			ng-change="onChange()"
+			ng-model="value"
+     		ng-required="options.required"
+			
+			ng-disabled="options.disabled"
+			ng-init="value = options.options[options.default]"
+			ng-options="option.value as option.name group by option.{{options.groupBy}} for option in optionsSelect">
+		 
+		<option value="">{{options.emptyOptionText}}</option> 
+                 
+	</select>
+	<select ng-if="!options.groupBy" ng-class="{'loadinggif':options.loading}"
 			class="form-control input-{{options.inputSize}}"
 			id="{{id}}"
 			autofocus="options.autofocus"
