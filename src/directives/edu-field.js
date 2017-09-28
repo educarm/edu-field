@@ -792,7 +792,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
               if (typeof value != 'undefined') {
                 sUrl = sUrl + '&' + value;
               }
-            
+              $scope.options.loading=true;
               $http.get(sUrl).success(function (data, status, headers, config) {
                 $scope.optionsSelect = data;
                 for (var i = 0; i < $scope.optionsSelect.length; i++) {
@@ -817,7 +817,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
                   }
                 }
                 $scope.onInit();
+				$scope.options.loading=false;
               }).error(function (data, status, headers, config) {
+				  $scope.options.loading=false;
               }); 
             } else if ($scope.options.selecttypesource == 'array') {
               $scope.optionsSelect = $scope.options.selectsource;
@@ -848,6 +850,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
             if ($scope.options.selecttypesource == 'url' && (typeof $scope.options.autoload == 'undefined' || $scope.options.autoload == true)) {
               var sUrl = $scope.options.selectsource;
               if ($scope.options.loadOnInit) {
+				$scope.options.loading=true;
                 $http.get(sUrl).success(function (data, status, headers, config) {
                   $scope.optionsSelect = data;
                   for (var i = 0; i < $scope.optionsSelect.length; i++) {
@@ -871,7 +874,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
                     }
                   }
                   $scope.onInit();
+				  $scope.options.loading=false;
                 }).error(function (data, status, headers, config) {
+					$scope.options.loading=false;
                 });
               }
             } else if ($scope.options.selecttypesource == 'array') {

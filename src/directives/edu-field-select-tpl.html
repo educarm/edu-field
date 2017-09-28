@@ -18,7 +18,7 @@
 			
 			ng-disabled="options.disabled"
 			ng-init="value = options.options[options.default]"
-			ng-options="option.value as option.name group by option.{{options.groupBy}} for option in optionsSelect">
+			ng-options="option.value as option.name group by option[options.groupBy] for option in optionsSelect">
 		 
 		<option value="">{{options.emptyOptionText}}</option> 
                  
