@@ -28,7 +28,7 @@ eduFieldDirectives.directive('datepickerLocaldate', ['$parse', function ($parse)
 
         // called with a JavaScript Date object when picked from the datepicker
         ngModelController.$parsers.push(function (viewValue) {
-            // undo the timezone adjustment we did during the formatting--
+            // undo the timezone adjustment we did during the formatting----
 			if(viewValue!=null){
 				var minutes=viewValue.getMinutes();
 				if(typeof(minutes)!='undefined'){
