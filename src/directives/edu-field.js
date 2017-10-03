@@ -29,12 +29,16 @@ eduFieldDirectives.directive('datepickerLocaldate', ['$parse', function ($parse)
         // called with a JavaScript Date object when picked from the datepicker
         ngModelController.$parsers.push(function (viewValue) {
             // undo the timezone adjustment we did during the formatting
-			var minutes=viewValue.getMinutes();
-			if(typeof(minutes)!='undefined'){
-				viewValue.setMinutes(minutes - viewValue.getTimezoneOffset());
+			if(viewValue!=null){
+				var minutes=viewValue.getMinutes();
+				if(typeof(minutes)!='undefined'){
+					viewValue.setMinutes(minutes - viewValue.getTimezoneOffset());
+				}
+				// we just want a local date in ISO format
+				return viewValue.toISOString().substring(0, 10);
+			}else{
+				return viewValue;
 			}
-            // we just want a local date in ISO format
-            return viewValue.toISOString().substring(0, 10);
         });
     }
 }]);
@@ -420,8 +424,12 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					$scope.options.fieldListeners.onClick($scope.value);
 				}
 			}
+			
 			$scope.onChange=function(subitem) {
-				
+				if($scope.options.type=='autocomplete'){
+					console.log('onChange()- edu-field.js -- subitem:'+subitem);
+					return;
+				}
 				
 				if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChange == 'function'){
 					var item={};
@@ -593,6 +601,40 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				}
 				return regexp;
 			})();
+			
+			
+			
+			
+			$scope.onChange=function(subitem) {
+				if($scope.options.type=='autocomplete'){
+					console.log('onChange()- edu-field.js -- subitem:'+subitem);
+					return;
+				}
+				
+				if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChange == 'function'){
+					var item={};
+					var value="";
+					if($scope.options.type=='select'){
+						for(var i=0;i<$scope.optionsSelect.length;i++){
+							if($scope.optionsSelect[i][$scope.options.optionvalue]==$scope.value){
+								item=$scope.optionsSelect[i];
+								value=$scope.value;
+								break;
+							}
+						}
+					}else if($scope.options.type=='iban2'){
+						value=$scope.value[subitem];
+						item=subitem;
+						
+					}
+					$scope.options.fieldListeners.onChange(value,item);
+				}
+			}
+			
+			
+			
+			
+			
 			
 			//Especific validator
 			

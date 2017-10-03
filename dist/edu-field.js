@@ -1,5 +1,5 @@
 /*
- edu-field v0.0.37
+ edu-field v0.0.38
  (c) Educarm, http://www.educarm.es
  License: MIT
 */
@@ -54,7 +54,7 @@ eduFieldDirectives.directive('eduComplete', [
         'disabled': '@disabled',
         'readonly': '@readonly'
       },
-      template: '<div class="eduComplete-holder">' + '\t<input id="{{id}}" name="{{name}}" ng-disabled="{{disabled}}" ng-readonly={{readonly}} autofocus="{{autofocus}}" ng-blur="onblur()" ng-focus="onfocus()" ng-change="onchange()" ng-required="{{required}}" ng-model="searchStr" type="text" placeholder="{{placeholder}}" class="{{inputClass}}" onmouseup="this.select();" ng-focus="resetHideResults()" ng-blur="hideResults()" />' + '\t<div id="{{id}}_dropdown" class="eduComplete-dropdown" ng-if="showDropdown">' + '\t\t<div class="eduComplete-searching" ng-show="searching">Buscando...</div>' + '\t\t<div class="eduComplete-searching" ng-show="!searching && (!results || results.length == 0)">No hay resultados</div>' + '\t\t<div class="eduComplete-row" ng-repeat="result in results" ng-click="selectResult(result)" ng-mouseover="hoverRow()" ng-class="{\'eduComplete-selected-row\': $index == currentIndex}">' + '\t\t\t<div ng-if="imageField" class="eduComplete-image-holder">' + '\t\t\t\t<img ng-if="result.image && result.image != \'\'" ng-src="{{result.image}}" class="eduComplete-image"/>' + '\t\t\t\t<div ng-if="!result.image && result.image != \'\'" class="eduComplete-image-default"></div>' + '\t\t\t</div>' + '\t\t\t<div class="eduComplete-title" ng-if="matchClass" ng-bind-html="result.title"></div>' + '\t\t\t<div class="eduComplete-title" ng-if="!matchClass">{{ result.title }}</div>' + '\t\t\t<div ng-if="result.description && result.description != \'\'" class="eduComplete-description">{{result.description}}</div>' + '\t\t</div>' + '\t</div>' + '</div>',
+      template: '<div class="eduComplete-holder">' + '\t<input id="{{id}}" name="{{name}}" ng-disabled="{{disabled}}" ng-readonly={{readonly}} autofocus="{{autofocus}}" ng-blur="onblur()"  ng-focus="onfocus()"  ng-required="{{required}}" ng-model="searchStr" type="text" placeholder="{{placeholder}}" class="{{inputClass}}" onmouseup="this.select();" ng-focus="resetHideResults()" ng-blur="hideResults()" />' + '\t<div id="{{id}}_dropdown" class="eduComplete-dropdown" ng-if="showDropdown">' + '\t\t<div class="eduComplete-searching" ng-show="searching">Buscando...</div>' + '\t\t<div class="eduComplete-searching" ng-show="!searching && (!results || results.length == 0)">No hay resultados</div>' + '\t\t<div class="eduComplete-row" ng-repeat="result in results" ng-click="selectResult(result)" ng-mouseover="hoverRow()" ng-class="{\'eduComplete-selected-row\': $index == currentIndex}">' + '\t\t\t<div ng-if="imageField" class="eduComplete-image-holder">' + '\t\t\t\t<img ng-if="result.image && result.image != \'\'" ng-src="{{result.image}}" class="eduComplete-image"/>' + '\t\t\t\t<div ng-if="!result.image && result.image != \'\'" class="eduComplete-image-default"></div>' + '\t\t\t</div>' + '\t\t\t<div class="eduComplete-title" ng-if="matchClass" ng-bind-html="result.title"></div>' + '\t\t\t<div class="eduComplete-title" ng-if="!matchClass">{{ result.title }}</div>' + '\t\t\t<div ng-if="result.description && result.description != \'\'" class="eduComplete-description">{{result.description}}</div>' + '\t\t</div>' + '\t</div>' + '</div>',
       link: function ($scope, elem, attrs) {
         $scope.lastSearchTerm = null;
         $scope.currentIndex = null;
@@ -189,7 +189,7 @@ eduFieldDirectives.directive('eduComplete', [
             }
           } else {
             event.preventDefault();
-          }
+          }  //$scope.onchange();
         };
         //cuando hay cambios en el value del control autocomplete
         $scope.$watch('selectedObject', function (value) {
@@ -248,7 +248,8 @@ eduFieldDirectives.directive('eduComplete', [
           $scope.searchStr = $scope.lastSearchTerm = result.title;
           $scope.selectedObject = result.data;
           $scope.showDropdown = false;
-          $scope.results = [];
+          $scope.results = [];  //$scope.value=result;
+                                //$scope.onchange(result);
         };
         var inputField = elem.find('input');
         inputField.on('keyup', $scope.keyPressed);
@@ -289,7 +290,20 @@ eduFieldDirectives.directive('eduComplete', [
             $scope.$apply();
           }
         });
-      }
+        $scope.onXX = function () {
+          console.log('edu-complete.js link--> onXX');
+        };
+      },
+      controller: [
+        '$scope',
+        'Upload',
+        'FileUploader',
+        function fieldController($scope, Upload, FileUploader) {
+          $scope.onXX = function () {
+            console.log('edu-complete.js controller--> onXX');
+          };
+        }
+      ]
     };
   }
 ]);
@@ -324,12 +338,16 @@ eduFieldDirectives.directive('datepickerLocaldate', [
       // called with a JavaScript Date object when picked from the datepicker
       ngModelController.$parsers.push(function (viewValue) {
         // undo the timezone adjustment we did during the formatting
-        var minutes = viewValue.getMinutes();
-        if (typeof minutes != 'undefined') {
-          viewValue.setMinutes(minutes - viewValue.getTimezoneOffset());
+        if (viewValue != null) {
+          var minutes = viewValue.getMinutes();
+          if (typeof minutes != 'undefined') {
+            viewValue.setMinutes(minutes - viewValue.getTimezoneOffset());
+          }
+          // we just want a local date in ISO format
+          return viewValue.toISOString().substring(0, 10);
+        } else {
+          return viewValue;
         }
-        // we just want a local date in ISO format
-        return viewValue.toISOString().substring(0, 10);
       });
     }
   }
@@ -677,6 +695,10 @@ eduFieldDirectives.directive('eduField', [
           }
         };
         $scope.onChange = function (subitem) {
+          if ($scope.options.type == 'autocomplete') {
+            console.log('onChange()- edu-field.js -- subitem:' + subitem);
+            return;
+          }
           if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChange == 'function') {
             var item = {};
             var value = '';
@@ -833,6 +855,29 @@ eduFieldDirectives.directive('eduField', [
             }
             return regexp;
           }();
+          $scope.onChange = function (subitem) {
+            if ($scope.options.type == 'autocomplete') {
+              console.log('onChange()- edu-field.js -- subitem:' + subitem);
+              return;
+            }
+            if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChange == 'function') {
+              var item = {};
+              var value = '';
+              if ($scope.options.type == 'select') {
+                for (var i = 0; i < $scope.optionsSelect.length; i++) {
+                  if ($scope.optionsSelect[i][$scope.options.optionvalue] == $scope.value) {
+                    item = $scope.optionsSelect[i];
+                    value = $scope.value;
+                    break;
+                  }
+                }
+              } else if ($scope.options.type == 'iban2') {
+                value = $scope.value[subitem];
+                item = subitem;
+              }
+              $scope.options.fieldListeners.onChange(value, item);
+            }
+          };
           //Especific validator
           // ---
           // CONTROL TYPE= date
@@ -1128,7 +1173,7 @@ angular.module('edu-field.tpl').run([
   '$templateCache',
   function ($templateCache) {
     'use strict';
-    $templateCache.put('directives/edu-field-autocomplete-tpl.html', '<div class="form-group {{options.col}}" ng-class="{\'has-error\':  $invalid, \'has-success\': !$invalid && $dirty}" style=position:relative><label for={{id}}>{{options.label}} {{options.required ? \'*\' : \'\'}}</label><edu-complete id_={{id}} name={{name}} onblur=onBlur() onfocus=onFocus() autofocus required placeholder={{options.placeholder}} pause={{autocpause}} selectedobject=value disabled readonly url={{options.autocurldata}} urldataloadall={{options.autocurldataloadall}} localdata=options.autoclocaldata searchfields={{options.autocsearchfields}} datafield={{options.autocfieldvalue}} titlefield={{options.autocfieldtitle}} descriptionfield={{options.autocdescriptionfield}} imagefield={{options.autocfieldimg}} minlength={{options.autocminlength}} inputclass="form-control input-{{options.inputSize}}"><div class="help-block has-error" ng-show=$invalid style=position:absolute;top:50px><small class=error ng-show=$invalidRequired>Campo obligatorio. Introduzca un valor</small> <small class=error ng-show=$invalidMinlength>Debe tener al menos {{options.min}} caracteres</small> <small class=error ng-show=$invalidMaxlength>No puede tener m\xe1s de {{options.max}} caracteres</small> <small class=error ng-show=$invalidPattern>Introduzca un valor v\xe1lido</small></div></div>');
+    $templateCache.put('directives/edu-field-autocomplete-tpl.html', '<div class="form-group {{options.col}}" ng-class="{\'has-error\':  $invalid, \'has-success\': !$invalid && $dirty}" style=position:relative><label for={{id}}>{{options.label}} {{options.required ? \'*\' : \'\'}}</label><edu-complete id_={{id}} name={{name}} onblur=onBlur() onfocus=onFocus() onchange=xx() autofocus required placeholder={{options.placeholder}} pause={{autocpause}} selectedobject=value disabled readonly url={{options.autocurldata}} urldataloadall={{options.autocurldataloadall}} localdata=options.autoclocaldata searchfields={{options.autocsearchfields}} datafield={{options.autocfieldvalue}} titlefield={{options.autocfieldtitle}} descriptionfield={{options.autocdescriptionfield}} imagefield={{options.autocfieldimg}} minlength={{options.autocminlength}} inputclass="form-control input-{{options.inputSize}}"><div class="help-block has-error" ng-show=$invalid style=position:absolute;top:50px><small class=error ng-show=$invalidRequired>Campo obligatorio. Introduzca un valor</small> <small class=error ng-show=$invalidMinlength>Debe tener al menos {{options.min}} caracteres</small> <small class=error ng-show=$invalidMaxlength>No puede tener m\xe1s de {{options.max}} caracteres</small> <small class=error ng-show=$invalidPattern>Introduzca un valor v\xe1lido</small></div></div>');
     $templateCache.put('directives/edu-field-button-tpl.html', '<div class="form-group {{options.col}}" style=position:relative style="border-style: dotted;height:40px;vertical-align:text-bottom"><label for={{id}}>{{options.labelButton}} {{options.required ? \'*\' : \'\'}}</label><div class=form-control style="border: 0px solid #ccc; -webkit-box-shadow: inset 0 0px 0px rgba(0,0,0,.075); box-shadow: inset 0 0px 0px rgba(0,0,0,.075)"><button id={{id}} name={{name}} ng-click=options.onClick() class="btn btn-{{options.state}} btn-{{options.size}}" ng-disabled=options.disabled><i class={{options.icon}}></i><span>{{options.label}}</span></button></div></div>');
     $templateCache.put('directives/edu-field-checkbox-tpl.html', '<div class="checkbox {{options.col}}" ng-class="{\'has-error\':  $invalid, \'has-success\': !$invalid && $dirty}" style=position:relative><label style=margin-top:20px;margin-bottom:20px><input type=checkbox id={{id}} name=name autofocus ng-false-value="\'N\'" ng-true-value="\'S\'" ng-readonly=options.readonly ng-disabled=options.disabled ng-model=value ng-blur=onBlur() ng-focus=onFocus() ng-change=onChange()> {{options.label}} {{options.required ? \'*\' : \'\'}}</label><div class="help-block has-error" ng-show=$invalid style=position:absolute;top:50px><small class=error ng-show=$invalidRequired>Campo obligatorio. Introduzca un valor</small></div></div>');
     $templateCache.put('directives/edu-field-cif-tpl.html', '<div class="form-group {{options.col}}" ng-class="{\'has-error\':  $invalid, \'has-success\': !$invalid && $dirty}" style=position:relative><label for={{id}}>{{options.label}} {{options.required ? \'*\' : \'\'}}</label><div class=input-group><span class=input-group-btn><button class="btn btn-{{options.typebutton || \'default\'}} btn-{{options.inputSize || \'default\'}}" type=button>CIF</button></span><div class=input-group><input style=min-width:250px class="form-control input-{{options.inputSize || \'default\'}}" id={{id}} name={{name}} autofocus placeholder={{options.placeholder}} ng-required=options.required ng-readonly=options.readonly ng-disabled=options.disabled ng-minlength=options.min ng-maxlength=options.max ng-pattern="nifniecifValidator(\'cif\')" ng-model=value ng-blur=onBlur() ng-focus=onFocus() ng-change=onChange()></div></div><div class="help-block has-error" ng-show=$invalid style=position:absolute;top:50px><small class=error ng-show=$invalidRequired>Campo obligatorio. Introduzca un CIF</small> <small class=error ng-show=$invalidMinlength>Debe tener al menos {{options.min}} caracteres</small> <small class=error ng-show=$invalidMaxlength>No puede tener m\xe1s de {{options.max}} caracteres</small> <small class=error ng-show=$invalidPattern>Introduzca un NIF/NIE v\xe1lido</small></div></div>');

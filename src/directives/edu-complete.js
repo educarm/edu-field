@@ -9,7 +9,7 @@ eduFieldDirectives.directive('eduComplete', function ($parse, $http, $sce, $time
 			"onblur":"&onblur",
 			"onfocus":"&onfocus",
 			"autofocus":"=autofocus",
-			//"onchange":"&onchange",
+			
 			"required":"=required",
             "placeholder": "@placeholder",
             "selectedObject": "=selectedobject",
@@ -30,7 +30,7 @@ eduFieldDirectives.directive('eduComplete', function ($parse, $http, $sce, $time
 		    "readonly": "@readonly"
         },
 template:  '<div class="eduComplete-holder">'+
-		   '	<input id="{{id}}" name="{{name}}" ng-disabled="{{disabled}}" ng-readonly={{readonly}} autofocus="{{autofocus}}" ng-blur="onblur()" ng-focus="onfocus()" ng-change="onchange()" ng-required="{{required}}" ng-model="searchStr" type="text" placeholder="{{placeholder}}" class="{{inputClass}}" onmouseup="this.select();" ng-focus="resetHideResults()" ng-blur="hideResults()" />' +
+		   '	<input id="{{id}}" name="{{name}}" ng-disabled="{{disabled}}" ng-readonly={{readonly}} autofocus="{{autofocus}}" ng-blur="onblur()"  ng-focus="onfocus()"  ng-required="{{required}}" ng-model="searchStr" type="text" placeholder="{{placeholder}}" class="{{inputClass}}" onmouseup="this.select();" ng-focus="resetHideResults()" ng-blur="hideResults()" />' +
            '	<div id="{{id}}_dropdown" class="eduComplete-dropdown" ng-if="showDropdown">'+
 		   '		<div class="eduComplete-searching" ng-show="searching">Buscando...</div>'+
 		   '		<div class="eduComplete-searching" ng-show="!searching && (!results || results.length == 0)">No hay resultados</div>'+
@@ -81,7 +81,9 @@ template:  '<div class="eduComplete-holder">'+
             isNewSearchNeeded = function(newTerm, oldTerm) {
                 return newTerm.length >= $scope.minLength && newTerm != oldTerm
             }
-
+            
+			
+			
             $scope.processResults = function(responseData, str) {
                 if (responseData && responseData.length > 0) {
                     $scope.results = [];
@@ -220,6 +222,8 @@ template:  '<div class="eduComplete-holder">'+
                 } else {
                     event.preventDefault();
                 }
+				
+				//$scope.onchange();
             }
 			
 			//cuando hay cambios en el value del control autocomplete
@@ -285,6 +289,9 @@ template:  '<div class="eduComplete-holder">'+
 				$scope.selectedObject = result.data;
                 $scope.showDropdown = false;
                 $scope.results = [];
+				
+				//$scope.value=result;
+				//$scope.onchange(result);
             }
 
             var inputField = elem.find('input');
@@ -331,8 +338,19 @@ template:  '<div class="eduComplete-holder">'+
                     $scope.$apply();
                 }
             });
+			
+			$scope.onXX=function(){
+				console.log("edu-complete.js link--> onXX");
+			}
 
-        }
+        },
+		
+		controller: function fieldController($scope,Upload,FileUploader) {
+			$scope.onXX=function(){
+				console.log("edu-complete.js controller--> onXX");
+			}
+		}	
+		
     };
 });
 

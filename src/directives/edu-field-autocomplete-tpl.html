@@ -10,6 +10,7 @@
 			 name="{{name}}"
 			 onblur="onBlur()"
 			 onfocus="onFocus()"
+			 onchange="xx()"
 			 autofocus="options.autofocus"
 		     required="options.required"
              placeholder="{{options.placeholder}}"
@@ -26,7 +27,8 @@
              descriptionfield="{{options.autocdescriptionfield}}"
              imagefield="{{options.autocfieldimg}}"
 			 minlength="{{options.autocminlength}}"
-             inputclass="form-control input-{{options.inputSize}}"/>
+             inputclass="form-control input-{{options.inputSize}}"
+			 />
 			  
 			 <div class="help-block has-error" ng-show="$invalid" style="position:absolute;top:50px">
 				<small class="error" ng-show="$invalidRequired">Campo obligatorio. Introduzca un valor</small>
@@ -36,3 +38,4 @@
 			 </div>
 			  
 </div>
+
