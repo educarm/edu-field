@@ -1,3 +1,1 @@
-^\s*var\s*([a-zA-Z]+)=\s*function\(([a-zA-Z]+)\s*,*\s*([a-zA-Z]+)\s*,*\s*([a-zA-Z]+)\s*,*\s*([a-zA-Z]+)\s*,*\s*([a-zA-Z]+)\)
 
-        \/\*\*\r\n        \* \1\r\n\        * Descripcion\r\n        \* \@param  \{\} nombreparam\r\n        \* \@return\r\n        \*/\r\n        var \1=function
