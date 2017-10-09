@@ -3,11 +3,11 @@
 		{{options.label}}
 		{{options.required ? '*' : ''}}
 	</label>
-	<input type="text"
+	<input currency type="text"
 		class="form-control  input-{{options.inputSize}}"
 		id="{{id}}"
 		placeholder="{{options.placeholder}}"
-		edu-focus="options.autofocus"
+		autofocus="options.autofocus"
 		ng-required="options.required"
 		ng-disabled="options.disabled"
 		ng-readonly="options.readonly"

@@ -15,6 +15,26 @@
         }
     };
 })*/
+
+eduFieldDirectives.directive('eduFocus', function($timeout) {
+    return {
+        link: function ( scope, element, attrs ) {
+            scope.$watch( attrs.eduFocus, function ( val ) {
+                if ( angular.isDefined( val ) && val ) {
+                    $timeout( function () { element[0].focus(); } );
+                }
+            }, true);
+
+            element.bind('blur', function () {
+                if ( angular.isDefined( attrs.ngFocusLost ) ) {
+                    scope.$apply( attrs.ngFocusLost );
+
+                }
+            });
+        }
+    };
+});
+
 eduFieldDirectives.directive('datepickerLocaldate', ['$parse', function ($parse) {
     var directive = {
         restrict: 'A',
@@ -172,7 +192,56 @@ eduFieldDirectives.directive(
                 },
             };
     });
+    /*eduFieldDirectives.directive('currency', ['$parse', function ($parse) {
+		var directive = {
+			restrict: 'A',
+			require: ['ngModel'],
+			link: link
+		};
+		return directive;
 
+		function link(scope, element, attr, ngModelCtrl) {
+			ngModelCtrl.$formatters.unshift(function (modelValue) {
+				//return dateFilter(modelValue, 'yyyy-MM-ddTHH:mm');
+				return Number(modelValue).toLocaleString("es-ES", {minimumFractionDigits: 2}) + ' €';
+			});
+			
+			ngModelCtrl.$parsers.unshift(function(viewValue) {
+				return Number(viewValue.replace('.','').replace('€',''));
+			});
+		}
+	}]);*/
+	eduFieldDirectives
+	 .filter('toEuros', function() {
+	  return function(input,fractionDigit) {
+		var fractD=fractionDigit?fractionDigit:2;
+		var amount= Number(input).toLocaleString("es-ES", {minimumFractionDigits: fractD}) + ' €';
+		if(amount=='0,00 €' || amount=='NaN €'){
+			return; 
+		}else{
+			return amount;
+		}  
+		
+	  };
+	});
+	
+	eduFieldDirectives.directive('currency', ['$filter', function ($filter) {
+    return {
+        require: '?ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            if (!ctrl) return;
+
+            ctrl.$formatters.unshift(function (a) {
+                return $filter('toEuros')(ctrl.$modelValue)
+            });
+
+            elem.bind('blur', function(event) {
+                var plainNumber = elem.val().replace(/[^\d|\-+|\.+€]/g, '');
+                elem.val($filter('toEuros')(plainNumber));
+            });
+        }
+    };
+}]);
 
 
 eduFieldDirectives.directive('eduField', function formField($http, $compile, $templateCache,$timeout) {
@@ -186,6 +255,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				break;
 			case 'button':
 				templateUrl = 'directives/edu-field-button-tpl.html';
+				break;
+			case 'currency':
+				templateUrl = 'directives/edu-field-currency-tpl.html';
 				break;
 			case 'hidden':
 				templateUrl = 'directives/edu-field-hidden-tpl.html';
@@ -283,6 +355,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				stringPattern = '';
 				break;
 			case 'button':
+				stringPattern = '';
+				break;
+			case 'currency':
 				stringPattern = '';
 				break;
 			case 'hidden':
@@ -386,6 +461,8 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 		
 		link: function fieldLink($scope, $element, $attr) {
 			
+			
+			
 			if (!$scope.hasOwnProperty('options')) {
 				throw new Error('options are required!');
             }
@@ -426,10 +503,6 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 			}
 			
 			$scope.onChange=function(subitem) {
-				if($scope.options.type=='autocomplete'){
-					console.log('onChange()- edu-field.js -- subitem:'+subitem);
-					return;
-				}
 				
 				if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChange == 'function'){
 					var item={};
@@ -446,7 +519,10 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 						value=$scope.value[subitem];
 						item=subitem;
 						
-					}
+					}else if($scope.options.type=='autocomplete'){
+						value=$scope.value;
+						item=subitem;
+				    }
 					$scope.options.fieldListeners.onChange(value,item);
 				}
 			}
@@ -606,14 +682,15 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 			
 			
 			$scope.onChange=function(subitem) {
-				if($scope.options.type=='autocomplete'){
-					console.log('onChange()- edu-field.js -- subitem:'+subitem);
-					return;
-				}
+				
 				
 				if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChange == 'function'){
 					var item={};
 					var value="";
+					
+					
+					
+					
 					if($scope.options.type=='select'){
 						for(var i=0;i<$scope.optionsSelect.length;i++){
 							if($scope.optionsSelect[i][$scope.options.optionvalue]==$scope.value){
@@ -626,7 +703,12 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 						value=$scope.value[subitem];
 						item=subitem;
 						
-					}
+					}else if($scope.options.type=='autocomplete'){
+						value=$scope.value;
+						item=subitem;
+					    console.log('onChange()- edu-field.js -- subitem:'+subitem);
+					
+				    }
 					$scope.options.fieldListeners.onChange(value,item);
 				}
 			}

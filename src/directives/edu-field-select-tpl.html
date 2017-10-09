@@ -7,9 +7,9 @@
 	<select ng-show="options.groupBy" ng-class="{'loadinggif':options.loading}"
 			class="form-control input-{{options.inputSize}}"
 			id="{{id}}"
-			autofocus="options.autofocus"
-			dependent-control="options.dependentControl"
 			
+			dependent-control="options.dependentControl"
+			edu-focus="options.autofocus"
 			ng-blur="onBlur()"
 			ng-focus="onFocus()"
 			ng-change="onChange()"
@@ -26,9 +26,9 @@
 	<select ng-show="!options.groupBy" ng-class="{'loadinggif':options.loading}"
 			class="form-control input-{{options.inputSize}}"
 			id="{{id}}"
-			autofocus="options.autofocus"
-			dependent-control="options.dependentControl"
 			
+			dependent-control="options.dependentControl"
+			edu-focus="options.autofocus"
 			ng-blur="onBlur()"
 			ng-focus="onFocus()"
 			ng-change="onChange()"

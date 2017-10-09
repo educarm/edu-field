@@ -3,6 +3,7 @@
 eduFieldDirectives.directive('eduComplete', function ($parse, $http, $sce, $timeout) {
     return {
         restrict: 'EA',
+		priority:0,
         scope: {
             "id": "@id_",
 			"name": "@name",
@@ -15,9 +16,11 @@ eduFieldDirectives.directive('eduComplete', function ($parse, $http, $sce, $time
             "selectedObject": "=selectedobject",
             "url": "@url",
 			"urldataloadall":"@urldataloadall",
+			
             "dataField": "@datafield",
             "titleField": "@titlefield",
             "descriptionField": "@descriptionfield",
+			
             "imageField": "@imagefield",
             "imageUri": "@imageuri",
             "inputClass": "@inputclass",
@@ -30,11 +33,12 @@ eduFieldDirectives.directive('eduComplete', function ($parse, $http, $sce, $time
 		    "readonly": "@readonly"
         },
 template:  '<div class="eduComplete-holder">'+
-		   '	<input id="{{id}}" name="{{name}}" ng-disabled="{{disabled}}" ng-readonly={{readonly}} autofocus="{{autofocus}}" ng-blur="onblur()"  ng-focus="onfocus()"  ng-required="{{required}}" ng-model="searchStr" type="text" placeholder="{{placeholder}}" class="{{inputClass}}" onmouseup="this.select();" ng-focus="resetHideResults()" ng-blur="hideResults()" />' +
+           'Value:{{autofocus}}'+
+		   '	<input id="{{id}}" name="{{name}}" ng-disabled="{{disabled}}" ng-readonly={{readonly}} edu-focus="{{autofocus}}"  ng-blur="onblur()"  ng-focus="onfocus()"  ng-required="{{required}}" ng-model="searchStr" type="text" placeholder="{{placeholder}}" class="{{inputClass}}" onmouseup="this.select();" ng-focus="resetHideResults()" ng-blur="hideResults()" />' +
            '	<div id="{{id}}_dropdown" class="eduComplete-dropdown" ng-if="showDropdown">'+
 		   '		<div class="eduComplete-searching" ng-show="searching">Buscando...</div>'+
 		   '		<div class="eduComplete-searching" ng-show="!searching && (!results || results.length == 0)">No hay resultados</div>'+
-		   '		<div class="eduComplete-row" ng-repeat="result in results" ng-click="selectResult(result)" ng-mouseover="hoverRow()" ng-class="{\'eduComplete-selected-row\': $index == currentIndex}">'+
+		   '		<div class="eduComplete-row" ng-repeat="result in results" ng-click="selectResult(result)"  ng-mouseover="hoverRow()" ng-class="{\'eduComplete-selected-row\': $index == currentIndex}">'+
 		   '			<div ng-if="imageField" class="eduComplete-image-holder">'+
 		   '				<img ng-if="result.image && result.image != \'\'" ng-src="{{result.image}}" class="eduComplete-image"/>'+
 		   '				<div ng-if="!result.image && result.image != \'\'" class="eduComplete-image-default"></div>'+
@@ -223,7 +227,6 @@ template:  '<div class="eduComplete-holder">'+
                     event.preventDefault();
                 }
 				
-				//$scope.onchange();
             }
 			
 			//cuando hay cambios en el value del control autocomplete
@@ -291,7 +294,7 @@ template:  '<div class="eduComplete-holder">'+
                 $scope.results = [];
 				
 				//$scope.value=result;
-				//$scope.onchange(result);
+				$scope.$parent.onChange(result);
             }
 
             var inputField = elem.find('input');
