@@ -35,6 +35,27 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 						}
 				];		
      $scope.fields=[
+					  {key: 'selectremoto1', type: 'select',col:'col-md-12',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
+				      
+					  {key: 'texto6',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto1',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+					  {key: 'texto61',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto2',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+					  {key: 'ckeckbox2',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+					  
+					  {key: 'ckeckbox21',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+					  {key: 'ckeckbox22',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+					  {key: 'ckeckbox23',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+				      
+					  {key: 'texto62',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto3',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+					  {key: 'ckeckbox3',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+					  {key: 'texto4',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto4',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+					  
+					  {key: 'texto5',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto5',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+					  {key: 'texto51',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto6',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+					  {key: 'texto52',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto7',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+	                  
+	 
+	 
+	 
 	                  {key: 'oculto',type: 'hidden',value:"campo oculto",name:"nombre",id:"id" },
 					  {key: 'moneda',type: 'currency',col:'col-md-4',min:1,max:12,label: 'Moneda',placeholder: 'Moneda',autofocus:false,required: false },
 					
@@ -161,6 +182,17 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					{key: 'password',type: 'password',pattern:"/^123456$/",col:'col-md-4',label: 'Password (123456)',placeholder: 'Password',autofocus:false,required: true },
 				   
 					{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+					{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+				{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+				{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+				{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+				{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+				{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+				
+					
+					
+					
+					
 					{key: 'radio',type: 'radio',col:'col-md-4',inputSizeClass:"input-sm",label: 'Radio',options:[{"name":"perro","value":"1"},{"name":"gato","value":"2"}],placeholder: 'Checkbox',autofocus:'',required: true },
 					{key: 'rango',type: 'range',col:'col-md-6',label: 'Slider',min:100,max:500,placeholder: 'Slider',autofocus:false,required: true },
 					
