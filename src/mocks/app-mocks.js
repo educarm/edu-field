@@ -2,7 +2,7 @@ angular.module('e2e-mocks', ['ngMockE2E'])
 .run(function($httpBackend,$http,$log,$filter,filterFilter) {
     // Do your mock
     var baseApiUrl = 'api/v1';
-    var centros=null;
+   
 	var municipios=null;
     var orderBy = $filter('orderBy');
     
@@ -95,7 +95,7 @@ angular.module('e2e-mocks', ['ngMockE2E'])
       console.log("llamada a POST api/v1/centros data:"+angular.toJson(data));	
       var centro = angular.fromJson(data);
       centros.push(centro);
-      $cookies.eduCrudCentros = centros;
+      
       return [200, centro, {}];
     });
     
@@ -109,7 +109,7 @@ angular.module('e2e-mocks', ['ngMockE2E'])
         }
         var centro = angular.fromJson(data);
         centros.push(centro);
-        $cookies.eduCrudCentros = centros;
+       
         return [200, centro, {}];
     });
     
@@ -123,7 +123,7 @@ angular.module('e2e-mocks', ['ngMockE2E'])
                 centros.splice(i, 1);
             }
         }
-        $cookies.eduCrudCentros = centros;
+       
         return [200, centro, {}];
       });
     
@@ -164,13 +164,19 @@ angular.module('e2e-mocks', ['ngMockE2E'])
     };
     
     var queryStringToJSON=function(queryString) {
-        var pairs = queryString.split('&');
-    
-        var result = {};
-        pairs.forEach(function(pair) {
-            pair = pair.split('=');
-            result[pair[0]] = decodeURIComponent(pair[1] || '');
-        });
+		var result = {};
+		if(typeof(queryString)=='undefined' || queryString==null || queryString==''){
+			result.limit=100;
+			result.offset=0;
+			result.filter='';
+			result.order='ASC';
+		}else{
+			var pairs = queryString.split('&');
+			pairs.forEach(function(pair) {
+				pair = pair.split('=');
+				result[pair[0]] = decodeURIComponent(pair[1] || '');
+			});
+		}
 
         return JSON.parse(JSON.stringify(result));
     }

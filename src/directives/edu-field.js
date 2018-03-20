@@ -16,6 +16,34 @@
     };
 })*/
 
+eduFieldDirectives.factory('dataFactoryField', [ '$resource', function ( $resource) {
+    return function (uri,actions) {
+	    var defActions={
+						getAll: {method:'GET', params:{}, withCredentials: true, isArray:true},
+						getCount: {method:'GET', url: uri + '/count', params:{}, withCredentials: true, isArray:false},
+						get: {method:'GET', params:{}, withCredentials: true, isArray:false},
+						insert: {method:'POST', params:{}, withCredentials: true, isArray:false},
+						update: {method:'PUT', params:{}, withCredentials: true, isArray:false},
+						remove: {method:'DELETE', params:{}, withCredentials: true, isArray:false}
+						
+		};
+		
+		if (typeof actions!=='undefined' && actions!==''){
+			for(keyAction in actions){
+				for(keyDefAction in defActions){
+					if(keyAction==keyDefAction){
+						defActions[keyDefAction]=actions[keyAction];
+					}
+				}
+			}
+		}
+    	return $resource(	uri ,
+							{},
+							defActions
+		);        
+    };
+}]);
+
 eduFieldDirectives.directive('eduFocus', function($timeout) {
     return {
         link: function ( scope, element, attrs ) {
@@ -491,7 +519,14 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 			$scope.$invalidMaxlength=false;
 			$scope.$invalidMin=false;
 			$scope.$invalidMax=false;
-		  
+			
+			if($scope.options.type=='grid'){
+				//height scrollable-table
+				$timeout(function () {
+					$("#input-grid-"+ $scope.options.key +" .scrollableContainer").css("height",$scope.options.height+'px');
+				});
+				
+		    }
 			
 			// ---
 			// CALLBACKS
@@ -606,7 +641,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 		
 		
 		
-		controller: function fieldController($scope,Upload,FileUploader) {
+		controller: function fieldController($scope,Upload,FileUploader,dataFactoryField) {
 			
 			// component control
 			$scope.options.fieldControl={};
@@ -713,16 +748,128 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				}
 			}
 			
-			
-			
+			// ----------------------------------------------------------//
+			// CONTROL TYPE= grid
+		    // ----------------------------------------------------------//
+			if($scope.options.type=='grid'){
+				
+				for (var fieldKey in $scope.options.listFields) {
+					if (typeof $scope.options.listFields[fieldKey].renderer !== 'function') {
+						$scope.options.listFields[fieldKey].orderByValue = $scope.options.listFields[fieldKey].column;
+						$scope.options.listFields[fieldKey].renderer = function (input, row, column,type) {
+							return input;
+						};
+					}
+				}
+				
+				
+				
+				var apiField=null;
+				
+            	if( typeof $scope.options.uri!=='undefined' && $scope.options.uri!==''){
+					apiField=dataFactoryField($scope.options.uri,(typeof $scope.options.actions!=='undefined'?$scope.options.actions:''));
+            	};
+				
+				$scope.options.loading=true;
+				apiField.getAll({},function (data) {  
+					$scope.options.loading=false;
+					$scope.gridRows=data
+					
+				},function(data){
+					$scope.options.loading=false;
+					$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
+				});
+				
+				
+				$scope.gridEdit=function(item){
+					var dataCopy={};
+					angular.copy(item,dataCopy);
+					item.$dataCopy=dataCopy;
+					
+					item.$visible=true;
+					item.$inserted=false;
+				}	
+				
+				$scope.gridCancel=function(item){
+					angular.extend(item, item.$dataCopy)
+					item.$visible=false;
+					item.$inserted=false;
+				}
+				
+				$scope.gridDelete=function(item,index){
+					$scope.options.showOverlayInputGridFormDelete=true;
+					$scope.itemForDelete={item:item,index:index};
+				}
+				
+				$scope.gridNew=function(){
+					var newItem={};
+					for( var i=0; i<$scope.options.listFields.length;i++){
+						newItem[$scope.options.listFields[i].column]='';
+					}
+					$scope.gridRows.unshift(newItem);
+					
+					newItem.$visible=true;
+					newItem.$inserted=true;
+					
+				}
+				
+				
+				$scope.gridSave=function(item){
+					console.log('gridLocalSave: '+angular.toJson(item));
+					var dataTemp={};
+					angular.copy(item,dataTemp);
+					delete dataTemp.$dataCopy;
+					delete dataTemp.$visible;
+					delete dataTemp.$inserted;
+					
+					if(item.$inserted){
+						
+						apiField.insert(item,function (data) { 
+                            
+            	        },function(data){
+						   //$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
+						});
+					}else{
+						apiField.update(item,function (data) {  
+                             
+            	        },function(data){
+							//$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
+						});
+					}
+					
+				}
+				
+				$scope.inputGridFormDeleteContinue=function(){
+					
+					
+					var oId={};
+					oId.id=$scope.itemForDelete.item[$scope.options.fieldKey];
+					
+					apiField.delete(oId,function (data) { 
+                            $scope.gridRows.splice($scope.itemForDelete.index, 1);
+					},function(data){
+					  // $scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
+					});
+					
+					$scope.options.showOverlayInputGridFormDelete=false;
+				}
+				
+				$scope.inputGridFormDeleteCancel=function(){
+					$scope.options.showOverlayInputGridFormDelete=false;
+				}
+		    
+				
+				
+				
+			}
 			
 			
 			
 			//Especific validator
 			
-			// ---
+			// ----------------------------------------------------------//
 			// CONTROL TYPE= date
-		    // ---
+		    // ----------------------------------------------------------//
 			if($scope.options.type=='date'){
 				$scope.options.dateOptions= {
 										"startingDay": 1,
@@ -736,11 +883,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				};
 			}
 			
-			
-			
-			// ---
+			// ----------------------------------------------------------//
 			// CONTROL TYPE= iban
-		    // ---
+		    // ----------------------------------------------------------//
 			$scope.ibanValidator = (function() {
 				return {
 					test: function(value) {
@@ -749,9 +894,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				};
 			})();
 			
-			// ---
+			// ----------------------------------------------------------//
 			// CONTROL TYPE= nif nie cif
-		    // ---
+		    // ----------------------------------------------------------//
 		    $scope.nifniecifValidator = (function() {
 				return {
 					test: function(value) {
@@ -763,7 +908,6 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				};
 			})();
 
-			
 			// ---
 			// CONTROL TYPE= ss
 		    // ---

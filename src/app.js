@@ -15,43 +15,89 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 	 $scope.municipios=[
 						{
 							"value":"ABANILLA",
-							"name": "Abanilla"	
+							"name": "Abanilla",
+                            "poblacion":34566							
 						},{
 							"value":"ABARAN",
-							"name": "Abarán"	
+							"name": "Abarán",
+                            "poblacion":1566	
 						},{
 							"value":"MURCIA",
-							"name": "Murcia"	
+							"name": "Murcia",
+                            "poblacion":45586	
 						},{
 							"value":"CARTAGENA",
-							"name": "Cartagena"
+							"name": "Cartagena",
+                            "poblacion":7896434
 						},{
 							"value":"ALCANTARILLA",
-							"name": "Alcantarilla"
+							"name": "Alcantarilla",
+                            "poblacion":123456790
 						},
 						{
 							"value":"ALBUDEITE",
-							"name": "Albudeite"
+							"name": "Albudeite",
+                            "poblacion":789543
 						}
 				];		
+				
+				
+		var itemsG=$scope.municipios;	
+        var listFieldsG= [
+				 {label: 'Value', column: 'value', weight: '30',type:'text'},
+                 {label: 'Name', column: 'name', weight: '40',type:'text'},
+				  {label: 'Población', column: 'poblacion', weight: '30',type:'number'}
+				 
+        ]	
+				
      $scope.fields=[
+	                  //row one
 					  {key: 'selectremoto1', type: 'select',col:'col-md-12',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
 				      
+					  //row two
 					  {key: 'texto6',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto1',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  {key: 'texto61',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto2',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  {key: 'ckeckbox2',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
 					  
+					  //row three
 					  {key: 'ckeckbox21',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
 					  {key: 'ckeckbox22',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
 					  {key: 'ckeckbox23',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
 				      
+					  //row for
 					  {key: 'texto62',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto3',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  {key: 'ckeckbox3',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
 					  {key: 'texto4',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto4',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  
-					  {key: 'texto5',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto5',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
-					  {key: 'texto51',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto6',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
-					  {key: 'texto52',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto7',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+					  //row five
+					  {key: 'grid',type: 'grid',height:'180',col:'col-md-12',label: 'Grid1',readonly:false,
+					    fieldKey:'vcodcen',
+						uri:'api/v1/centros/:id',
+						//gridRows:itemsG,
+						listFields:[
+									{label: 'Código', column: 'vcodcen', weight: '10',type:'number'},
+									 {label: 'Presupuesto', column: 'presupuesto', weight: '10',type:'currency'},
+									 {label: 'Tit. públ.', column: 'vtitularidad', weight: '10',type:'checkbox'},
+									 {label: 'Denominación', column: 'vdencen', weight: '30',type:'text'},
+									 {label: 'Domicilio', column: 'vdomcen', weight: '20',type:'text'},
+									 {label: 'Localidad', column: 'vloccen', weight: '10',type:'select',options:[
+																													{value:'ABANILLA',descripcion:'Abanilla'},
+																													{value:'CARAVACA DE LA CRUZ',descripcion:'Caravaca de la Cruz'},
+																													{value:'CEHEGIN',descripcion:'Cehegín'},
+																													{value:'LORCA',descripcion:'Lorca'},
+																													{value:'CARTAGENA',descripcion:'Cartagena'},
+																													{value:'CIEZA',descripcion:'Cieza'},
+																													{value:'JUMILLA',descripcion:'Jumilla'},
+																													{value:'TOTANA',descripcion:'Totana'},
+									 ]},
+									 {label: 'Municipio', column: 'vmuncen', weight: '20',type:'text',notOrder:true}
+								]
+					   },
+					  
+					  //row six
+					  {key: 'texto5',type: 'text',default:'texto por defecto',col:'col-md-6',label: 'Texto5',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+					  {key: 'texto51',type: 'text',default:'texto por defecto',col:'col-md-6',label: 'Texto6',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+					  {key: 'texto52',type: 'text',default:'texto por defecto',col:'col-md-6',label: 'Texto7',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 	                  
 	 
 	 

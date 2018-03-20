@@ -33,7 +33,6 @@ eduFieldDirectives.directive('eduComplete', function ($parse, $http, $sce, $time
 		    "readonly": "@readonly"
         },
 template:  '<div class="eduComplete-holder">'+
-           'Value:{{autofocus}}'+
 		   '	<input id="{{id}}" name="{{name}}" ng-disabled="{{disabled}}" ng-readonly={{readonly}} edu-focus="{{autofocus}}"  ng-blur="onblur()"  ng-focus="onfocus()"  ng-required="{{required}}" ng-model="searchStr" type="text" placeholder="{{placeholder}}" class="{{inputClass}}" onmouseup="this.select();" ng-focus="resetHideResults()" ng-blur="hideResults()" />' +
            '	<div id="{{id}}_dropdown" class="eduComplete-dropdown" ng-if="showDropdown">'+
 		   '		<div class="eduComplete-searching" ng-show="searching">Buscando...</div>'+
@@ -135,8 +134,8 @@ template:  '<div class="eduComplete-holder">'+
                             title: text,
                             description: description,
                             image: image,
-							data:data
-                            //originalObject: responseData[i]
+							data:data,
+                            allData: responseData[i]
                         }
                         $scope.results[$scope.results.length] = resultRow;
 						
@@ -231,7 +230,7 @@ template:  '<div class="eduComplete-holder">'+
 			
 			//cuando hay cambios en el value del control autocomplete
 			$scope.$watch('selectedObject', function(value) {  
-			  if(typeof value!=='undefined'){//coloca en el input text que ve el usuario el titulo o nombre que corresponde al valor que hay en la propiedad value del control autocomplete
+			  if(typeof value!=='undefined' && value!=''){//coloca en el input text que ve el usuario el titulo o nombre que corresponde al valor que hay en la propiedad value del control autocomplete
 				 var titleField="";
 				 var str=$scope.selectedObject;
 				 if ($scope.titleField && $scope.titleField != "") {
