@@ -5,7 +5,14 @@ angular.module('e2e-mocks', ['ngMockE2E'])
    
 	var municipios=null;
     var orderBy = $filter('orderBy');
-    
+	
+	
+	// GET all instalaciones from temas array with filters
+    $httpBackend.whenGET(/api\/v1\/instalaciones(\?([a-z0-9$_\.\+!\*\'\(\),;:@&=-]|%[0-9a-f]{2})*)*/).respond(function(method, url,data,headers) {
+		console.log("llamada a GET /api\/v1\/instalaciones?algo=algo "+method + " params:"+ url.split('?')[1]+ " url:"+url);
+        return [200, getAll(url,instalaciones), {}];
+	});
+	
    
     // GET all temas from temas array with filters
     $httpBackend.whenGET(/services\/temasservice\/temas(\?([a-z0-9$_\.\+!\*\'\(\),;:@&=-]|%[0-9a-f]{2})*)*/).respond(function(method, url,data,headers) {

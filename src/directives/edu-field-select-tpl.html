@@ -37,9 +37,10 @@
 			
 			ng-disabled="options.disabled"
 			ng-init="value = options.options[options.default]"
-			ng-options="option.value as option.name for option in optionsSelect">
+			>
 		 
 		<option value="">{{options.emptyOptionText}}</option> 
+		<option ng-repeat="option in optionsSelect" value="{{option.value}}">{{option.value}}</option>
                  
 	</select>
 	

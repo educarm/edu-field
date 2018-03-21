@@ -749,8 +749,20 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 			}
 			
 			// ----------------------------------------------------------//
-			// CONTROL TYPE= grid
+			// CONTROL TYPE= checkbox
 		    // ----------------------------------------------------------//
+			if($scope.options.type=='checkbox'){
+				if(!$scope.options.false_value){
+					$scope.options.false_value="'N'";
+				}
+				if(!$scope.options.true_value){
+					$scope.options.true_value="'S'";
+				}
+			}
+			
+			//-----------------------------------------------------------//
+			// CONTROL TYPE= grid
+			//-----------------------------------------------------------//
 			if($scope.options.type=='grid'){
 				
 				for (var fieldKey in $scope.options.listFields) {
@@ -770,8 +782,19 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					apiField=dataFactoryField($scope.options.uri,(typeof $scope.options.actions!=='undefined'?$scope.options.actions:''));
             	};
 				
+				
+				//get all element with foreing key like  fieldFk
 				$scope.options.loading=true;
-				apiField.getAll({},function (data) {  
+				
+				var filterFK='';
+				var oParamGrid={};
+				
+				if($scope.options.hasOwnProperty("fieldFk") && typeof $scope.options.fieldFk!=undefined && $scope.options.hasOwnProperty("valueFk") && typeof $scope.options.valueFk!=undefined){
+					filterFK= '[' + $scope.options.fieldFk + ']=' + $scope.options.valueFk;
+					oParamGrid.filter=filterFK;
+				}
+						
+				apiField.getAll(oParamGrid,function (data) {  
 					$scope.options.loading=false;
 					$scope.gridRows=data
 					
@@ -780,7 +803,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
 				});
 				
-				
+				// get one element for edit
 				$scope.gridEdit=function(item){
 					var dataCopy={};
 					angular.copy(item,dataCopy);
@@ -790,17 +813,20 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					item.$inserted=false;
 				}	
 				
+				// button grid cancel
 				$scope.gridCancel=function(item){
 					angular.extend(item, item.$dataCopy)
 					item.$visible=false;
 					item.$inserted=false;
 				}
 				
+				// button grid delete
 				$scope.gridDelete=function(item,index){
 					$scope.options.showOverlayInputGridFormDelete=true;
 					$scope.itemForDelete={item:item,index:index};
 				}
 				
+				// button grid add new
 				$scope.gridNew=function(){
 					var newItem={};
 					for( var i=0; i<$scope.options.listFields.length;i++){
@@ -813,7 +839,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					
 				}
 				
-				
+				// button grid save
 				$scope.gridSave=function(item){
 					console.log('gridLocalSave: '+angular.toJson(item));
 					var dataTemp={};

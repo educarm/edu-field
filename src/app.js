@@ -70,17 +70,16 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					  {key: 'texto4',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto4',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  
 					  //row five
-					  {key: 'grid',type: 'grid',height:'180',col:'col-md-12',label: 'Grid1',readonly:false,
+					  {key: 'grid',type: 'grid',height:'180',col:'col-md-6',label: 'Grid1',readonly:false,
 					    fieldKey:'vcodcen',
-						uri:'api/v1/centros/:id',
+						uri:'api\/v1\/instalaciones/:id',
+						fieldFk:'codcen',
+		                valueFk:'30000018',
 						//gridRows:itemsG,
 						listFields:[
-									{label: 'Código', column: 'vcodcen', weight: '10',type:'number'},
-									 {label: 'Presupuesto', column: 'presupuesto', weight: '10',type:'currency'},
-									 {label: 'Tit. públ.', column: 'vtitularidad', weight: '10',type:'checkbox'},
-									 {label: 'Denominación', column: 'vdencen', weight: '30',type:'text'},
-									 {label: 'Domicilio', column: 'vdomcen', weight: '20',type:'text'},
-									 {label: 'Localidad', column: 'vloccen', weight: '10',type:'select',options:[
+									{label: 'Código', column: 'codigo', weight: '20',type:'text'},
+									 {label: 'Descripción', column: 'descripcion', weight: '60',type:'text'},
+									 {label: 'Localidad', column: 'vloccen', weight: '20',type:'select',options:[
 																													{value:'ABANILLA',descripcion:'Abanilla'},
 																													{value:'CARAVACA DE LA CRUZ',descripcion:'Caravaca de la Cruz'},
 																													{value:'CEHEGIN',descripcion:'Cehegín'},
@@ -89,8 +88,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 																													{value:'CIEZA',descripcion:'Cieza'},
 																													{value:'JUMILLA',descripcion:'Jumilla'},
 																													{value:'TOTANA',descripcion:'Totana'},
-									 ]},
-									 {label: 'Municipio', column: 'vmuncen', weight: '20',type:'text',notOrder:true}
+									 ]}
 								]
 					   },
 					  
