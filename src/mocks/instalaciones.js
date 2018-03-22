@@ -7,7 +7,7 @@ instalaciones=[
 },{
     "codigo":"02",
 	"descripcion": "Cancha tenis",
-	"codcen":"30000018",
+	"codcen":"30000161",
     "vloccen":"ABARAN"			
 },{
     "codigo":"03",
@@ -17,7 +17,7 @@ instalaciones=[
 },{
     "codigo":"04",
 	"descripcion": "Campo de fútbol",
-	"codcen":"30000018",
+	"codcen":"30000161",
     "vloccen":"CARTAGENA"			
 },{
     "codigo":"02",

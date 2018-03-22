@@ -202,6 +202,31 @@ eduFieldDirectives.directive(
                 },
             };
     });
+	
+	eduFieldDirectives.directive(
+        'replaceBlank',
+        function() {
+            return {
+                require: 'ngModel',
+                link: function(scope, elm, attrs, ngModelCtrl) {
+                    ngModelCtrl.$formatters.unshift(function (modelValue) {
+						if(typeof(modelValue)!='undefined'){
+							return modelValue.replace(new RegExp(' ', 'g'), 'aeiou');
+						}else{
+							return modelValue
+						}
+                    });
+                    
+                    ngModelCtrl.$parsers.unshift(function(viewValue) {
+						if(typeof(viewValue)!='undefined'){
+							return viewValue.replace(new RegExp('aeiou', 'g'), ' ');
+						}else{
+							return viewValue
+						}
+                    });
+                },
+            };
+    });
 	eduFieldDirectives.directive(
         'dateTimeInput',
         function(dateFilter) {
@@ -683,6 +708,10 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				if($scope.options.type=="select"){
 					$scope.refreshSelect(value);
 				}
+				if($scope.options.type=="grid"){
+					$scope.options.valueFk=value;
+					$scope.refreshGrid();
+				}
 			}
 			
 			$scope.internalControl.clean = function(value) {
@@ -782,26 +811,30 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					apiField=dataFactoryField($scope.options.uri,(typeof $scope.options.actions!=='undefined'?$scope.options.actions:''));
             	};
 				
-				
-				//get all element with foreing key like  fieldFk
-				$scope.options.loading=true;
-				
-				var filterFK='';
-				var oParamGrid={};
-				
-				if($scope.options.hasOwnProperty("fieldFk") && typeof $scope.options.fieldFk!=undefined && $scope.options.hasOwnProperty("valueFk") && typeof $scope.options.valueFk!=undefined){
-					filterFK= '[' + $scope.options.fieldFk + ']=' + $scope.options.valueFk;
-					oParamGrid.filter=filterFK;
-				}
-						
-				apiField.getAll(oParamGrid,function (data) {  
-					$scope.options.loading=false;
-					$scope.gridRows=data
+				$scope.refreshGrid=function(){
+					//get all element with foreing key like  fieldFk
+					$scope.options.loading=true;
 					
-				},function(data){
-					$scope.options.loading=false;
-					$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
-				});
+					var filterFK='';
+					var oParamGrid={};
+					if($scope.options.valueFk!=''){
+						if($scope.options.hasOwnProperty("fieldFk") && typeof $scope.options.fieldFk!=undefined && $scope.options.hasOwnProperty("valueFk") && typeof $scope.options.valueFk!=undefined){
+							filterFK= '[' + $scope.options.fieldFk + ']=' + $scope.options.valueFk;
+							oParamGrid.filter=filterFK;
+						}
+								
+						apiField.getAll(oParamGrid,function (data) {  
+							$scope.options.loading=false;
+							$scope.gridRows=data
+							
+						},function(data){
+							$scope.options.loading=false;
+							$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
+						});
+					}
+				}
+				
+			
 				
 				// get one element for edit
 				$scope.gridEdit=function(item){
@@ -1091,9 +1124,15 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
                 $scope.optionsSelect = data;
                 for (var i = 0; i < $scope.optionsSelect.length; i++) {
 				 			  
-                  if (!$scope.optionsSelect[i].hasOwnProperty('value')) {
-                    $scope.optionsSelect[i].value = $scope.optionsSelect[i][$scope.options.optionvalue];
-                  }
+					if (!$scope.optionsSelect[i].hasOwnProperty('value')) {
+						var val= $scope.optionsSelect[i][$scope.options.optionvalue];
+						//if(typeof(val)=='string'){
+						//	$scope.optionsSelect[i].value=val.replace(new RegExp(' ', 'g'), 'aeiou');
+						//}else{
+							$scope.optionsSelect[i].value=val;
+						//}
+						//$scope.optionsSelect[i].value = $scope.optionsSelect[i][$scope.options.optionvalue].replace(' ','|');
+					}
                   if (!$scope.optionsSelect[i].hasOwnProperty('name')) {
                     if ($scope.options.selectconcatvaluename) {
                       $scope.optionsSelect[i].name = $scope.optionsSelect[i][$scope.options.optionvalue] + ' - ' + $scope.optionsSelect[i][$scope.options.optionname];
@@ -1121,7 +1160,13 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
                 if (typeof $scope.optionsSelect != 'undefined') {
                   for (var i = 0; i < $scope.optionsSelect.length; i++) {
 				    if (!$scope.optionsSelect[i].hasOwnProperty('value')) {
-                        $scope.optionsSelect[i].value = $scope.optionsSelect[i][$scope.options.optionvalue];
+						var val= $scope.optionsSelect[i][$scope.options.optionvalue];
+						//if(typeof(val)=='string'){
+						//	$scope.optionsSelect[i].value=val.replace(new RegExp(' ', 'g'), 'aeiou');
+						//}else{
+							$scope.optionsSelect[i].value=val;
+						//}
+                        //$scope.optionsSelect[i].value = $scope.optionsSelect[i][$scope.options.optionvalue].replace(' ','|');
                     }
 					if (!$scope.optionsSelect[i].hasOwnProperty('name')) {
 						if ($scope.options.selectconcatvaluename) {
@@ -1149,7 +1194,13 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
                   $scope.optionsSelect = data;
                   for (var i = 0; i < $scope.optionsSelect.length; i++) {
                     if (!$scope.optionsSelect[i].hasOwnProperty('value')) {
-                      $scope.optionsSelect[i].value = $scope.optionsSelect[i][$scope.options.optionvalue];
+						var val= $scope.optionsSelect[i][$scope.options.optionvalue];
+						//if(typeof(val)=='string'){
+						//	$scope.optionsSelect[i].value=val.replace(new RegExp(' ', 'g'), 'aeiou');
+						//}else{
+							$scope.optionsSelect[i].value=val;
+						//}
+						//$scope.optionsSelect[i].value = $scope.optionsSelect[i][$scope.options.optionvalue].replace(' ','|');
                     }
                     if (!$scope.optionsSelect[i].hasOwnProperty('name')) {
                       if ($scope.options.selectconcatvaluename) {
@@ -1179,7 +1230,13 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
                 if (typeof $scope.optionsSelect != 'undefined' && !$scope.optionsSelect[0].hasOwnProperty('value')) {
                   for (var i = 0; i < $scope.optionsSelect.length; i++) {
 				    if (!$scope.optionsSelect[i].hasOwnProperty('value')) {
-                        $scope.optionsSelect[i].value = $scope.optionsSelect[i][$scope.options.optionvalue];
+						var val= $scope.optionsSelect[i][$scope.options.optionvalue];
+						//if(typeof(val)=='string'){
+						//	$scope.optionsSelect[i].value=val.replace(new RegExp(' ', 'g'), 'aeiou');
+						//}else{
+							$scope.optionsSelect[i].value=val;
+						//}
+                        //$scope.optionsSelect[i].value = $scope.optionsSelect[i][$scope.options.optionvalue].replace(' ','|');
                     }
 					if (!$scope.optionsSelect[i].hasOwnProperty('name')) {
 						if ($scope.options.selectconcatvaluename) {

@@ -280,7 +280,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 																																																				},optionname:"name",optionvalue:"value",selectconcatvaluename:true,disabled:false,readonly:false},
 					{key: 'selectremoto', type: 'select',col:'col-md-4',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
 					
-					{key: 'CODIGO_TEMA',
+					{key: 'CODIGO_TEMA',emptyOptionText:'Seleccione una opción',
 						fieldListeners:{
 							onChange:function(value,item){
 								// There are a method 'clean' for empty select options.  Example:
@@ -290,7 +290,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 							}
 						
 						},
-						type: 'select',col:'col-md-6',label: 'Tema',selecttypesource:'url', selectsource:'services/temasservice/temas?limit=100000&offset=0&order=asc&orderby=CODIGO' ,optionvalue:'CODIGO',optionname:'TEMA',selectconcatvaluename:true,placeholder: '',autofocus:false,required: false,disabled:false },						
+						type: 'select',col:'col-md-6',label: 'Tema',selecttypesource:'url', selectsource:'services/temasservice/temas?limit=100000&offset=0&order=asc&orderby=CODIGO' ,optionvalue:'CODIGO',optionname:'TEMA',selectconcatvaluename:false,placeholder: 'xxx',autofocus:false,required: false,disabled:false },						
 					
 					{key: 'CODIGO_SUBTEMA',type: 'select',autoload:false,col:'col-md-6',label: 'Subtema depende de tema',selecttypesource:'url', selectsource:'services/subtemasservice/subtemas?limit=100000&offset=0&order=asc&orderby=DESCRIPCION',optionvalue:'SUBTEMA',optionname:'DESCRIPCION',selectconcatvaluename:true,placeholder: '',autofocus:false,required: false,disabled:false },
 											
