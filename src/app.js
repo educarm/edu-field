@@ -237,7 +237,12 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					
 					
 					
-					{key: 'radio',type: 'radio',col:'col-md-4',inputSizeClass:"input-sm",label: 'Radio',options:[{"name":"perro","value":"1"},{"name":"gato","value":"2"}],placeholder: 'Checkbox',autofocus:'',required: true },
+					{key: 'radio',type: 'radio',col:'col-md-4',inputSizeClass:"input-sm",label: 'Radio',required:true,options:[{"name":"perro","value":"1"},{"name":"gato","value":"2"}],
+						fieldListeners:{
+							onChange:function(value){
+								console.log("onChange radio button value:"+value);
+							}
+						},placeholder: 'Checkbox',autofocus:'',required: true },
 					{key: 'rango',type: 'range',col:'col-md-6',label: 'Slider',min:100,max:500,placeholder: 'Slider',autofocus:false,required: true },
 					
 					

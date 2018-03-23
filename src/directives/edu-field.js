@@ -582,7 +582,10 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					}else if($scope.options.type=='autocomplete'){
 						value=$scope.value;
 						item=subitem;
+				    }else{
+						value=$scope.value;	
 				    }
+					
 					$scope.options.fieldListeners.onChange(value,item);
 				}
 			}
@@ -666,7 +669,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 		
 		
 		
-		controller: function fieldController($scope,Upload,FileUploader,dataFactoryField) {
+		controller: function fieldController($scope,$http, Upload,FileUploader,dataFactoryField) {
 			
 			// component control
 			$scope.options.fieldControl={};
@@ -709,7 +712,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					$scope.refreshSelect(value);
 				}
 				if($scope.options.type=="grid"){
-					$scope.options.valueFk=value;
+					if(value){
+						$scope.options.valueFk=value;
+					}
 					$scope.refreshGrid();
 				}
 			}
@@ -794,12 +799,85 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 			//-----------------------------------------------------------//
 			if($scope.options.type=='grid'){
 				
-				for (var fieldKey in $scope.options.listFields) {
-					if (typeof $scope.options.listFields[fieldKey].renderer !== 'function') {
-						$scope.options.listFields[fieldKey].orderByValue = $scope.options.listFields[fieldKey].column;
-						$scope.options.listFields[fieldKey].renderer = function (input, row, column,type) {
-							return input;
-						};
+				function configField(){
+					$scope.field=null;
+					for(var k=0,field;field=$scope.options.listFields[k];k++){
+						$scope.field=field;
+						//for transform content input before render
+						for (var property in field) {
+							if (typeof field.renderer !== 'function') {
+								field.orderByValue = field.column;
+								field.renderer = function (input, row, column,type) {
+									return input;
+								};
+							}
+						}
+							
+						// if item in listField is checkbox, by default, false and true value are 'N' and 'S'
+						if(field.type=='checkbox'){
+							if(!field.false_value){
+								field.false_value="'N'";
+							}
+							if(!field.true_value){
+								field.true_value="'S'";
+							}
+						}
+						
+						if(field.type=='select'){
+							if(field.selecttypesource=='url'){
+								if(field.hasOwnProperty('selectsource') && field.selectsource!=''){
+								//****************************************************************************
+									$http.get(field.selectsource).success(function (data, status, headers, config) {
+										$scope.field.selectOptions = data;
+										
+										//for each option, adjust properties value an name
+										for (var i = 0,option; option=$scope.field.selectOptions[i]; i++) {
+													  
+											if (!option.hasOwnProperty('value')) {
+												option.value= option[$scope.field.optionvalue];
+											}
+											
+											if (!option.hasOwnProperty('name')) {
+												if ($scope.field.selectconcatvaluename) {
+													option.name = option[$scope.field.optionvalue] + ' - ' + option[$scope.field.optionname];
+												} else {
+													option.name = option[$scope.field.optionname];
+												}
+												
+											} else {
+												if ($scope.field.selectconcatvaluename) {
+													option.name = option['value'] + ' - ' + option['name'];
+												} else {
+													option.name = option[$scope.field.optionname];
+												}
+											}
+										}
+										
+										//guarda la descripción de la opción del select correspondiente con el código en select.option.value
+										//para poder mostarla cuando la fila esté en edición
+										if($scope.gridRows){
+											for(var i=0,row;row=$scope.gridRows[i];i++){
+												row.$optionSelectedName={};
+												for(var key in row){
+													if(key==$scope.field.column){
+														row.$optionSelectedName[key]=_.find($scope.field.selectOptions,{'value':row[key]}).name;
+													}
+													
+												}
+												
+											}
+										}
+										
+									}).error(function (data, status, headers, config) {
+										  console.log("Error getting options select:" + data);
+									}); 
+
+
+								//****************************************************************************
+								}
+							}
+						}	
+						
 					}
 				}
 				
@@ -826,6 +904,8 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 						apiField.getAll(oParamGrid,function (data) {  
 							$scope.options.loading=false;
 							$scope.gridRows=data
+							
+							configField();
 							
 						},function(data){
 							$scope.options.loading=false;
@@ -877,20 +957,30 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					console.log('gridLocalSave: '+angular.toJson(item));
 					var dataTemp={};
 					angular.copy(item,dataTemp);
+					delete dataTemp.$optionSelectedName;
 					delete dataTemp.$dataCopy;
 					delete dataTemp.$visible;
 					delete dataTemp.$inserted;
 					
 					if(item.$inserted){
-						
-						apiField.insert(item,function (data) { 
-                            
+						dataTemp[$scope.options.fieldFk]=$scope.options.valueFk;
+						apiField.insert(dataTemp,function (data) { 
+                            item.$visible=false;
+							if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onSaveSuccess == 'function'){
+								$scope.options.fieldListeners.onSaveSuccess(data);
+							}
+							
             	        },function(data){
 						   //$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
 						});
 					}else{
-						apiField.update(item,function (data) {  
-                             
+						var oId = getOid(dataTemp);
+						
+						apiField.update(oId,dataTemp,function (data) {  
+                            item.$visible=false;
+							if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onUpdateSuccess == 'function'){
+								$scope.options.fieldListeners.onUpdateSuccess(data);
+							}
             	        },function(data){
 							//$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
 						});
@@ -917,7 +1007,13 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					$scope.options.showOverlayInputGridFormDelete=false;
 				}
 		    
-				
+				function getOid(row){
+					var vid=row[$scope.options.fieldKey];
+					var oId={};
+					oId['id']=vid;
+			   
+					return oId;
+				}
 				
 				
 			}
@@ -989,8 +1085,8 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				if(file){
 					$scope.value=file.$ngfName || file.name;
 					if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onAfterAddingFile == 'function'){
-					$scope.options.fieldListeners.onAfterAddingFile(file);
-			  }
+						$scope.options.fieldListeners.onAfterAddingFile(file);
+					}
 				}
 			}
 			$scope.uploading=false;

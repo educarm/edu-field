@@ -106,7 +106,7 @@
 							<!-- input checkbox -->
 							<div ng-switch-when="checkbox">
 								<span ng-show="!item.$visible">
-									<input type="checkbox" ng-model="item[field.column]" ng-false-value="'N'" ng-true-value="'S'" onclick="javascript: return false;" >
+									<input type="checkbox" ng-model="item[field.column]" ng-false-value="{{options.false_value}}" ng-true-value="{{options.true_value}}" onclick="javascript: return false;" >
 								</span>
 								<span ng-show="item.$visible">
 									<input style="width:100%"  type="checkbox" ng-model="item[field.column]" ng-false-value="'N'" ng-true-value="'S'" >
@@ -118,13 +118,15 @@
 								
 								
 								<span ng-show="!item.$visible">
-									{{field.renderer(item[field.column], entry, field.column,field.type)}}
+									{{item.$optionSelectedName[field.column]}}
 								</span>
 								<span ng-show="item.$visible">
+									
 									<select style="width:100%"  ng-model="item[field.column]"> 
 										<option></option>
-										<option ng-repeat="option in field.options" value="{{option.value}}">{{option.descripcion}}</option>
+										<option ng-repeat="option in field.selectOptions" value="{{option.value}}">{{option.name}}</option>
 									</select>
+									
 								</span>
 							</div>
 							
