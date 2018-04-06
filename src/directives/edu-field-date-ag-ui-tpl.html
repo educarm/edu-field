@@ -9,6 +9,10 @@
 		datepicker-localdate
 		ng-click="(options.disabled || options.readonly)?angular.noop():internalControl.showCalendar($event)"
 		datepicker-popup="{{options.format || 'dd-MM-yyyy'}}"
+		ng-blur="onBlur()"
+		ng-focus="onFocus()"
+		ng-change="onChange()"
+		ng-keypress="onKeypress($event)" 
 		ng-model="value"
 		ng-required="options.required"
 		ng-disabled="options.disabled"

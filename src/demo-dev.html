@@ -18,6 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="css/edu-complete.css">
 	<link rel="stylesheet" type="text/css" href="css/input-loading.css">
 	
+	
 	<script src="js/iban.js"></script>
 	<script src="js/nifnieccc.js"></script>
 	
@@ -34,11 +35,13 @@
 		</div>
 		
 		<div class="panel-body">
+		<form name="formname">
 			<ng-form name="formname">
 				<div ng-repeat="field in fields">
 					<div edu-field options="field" value="result[field.key]"> </div>
 				</div>
 			</ng-form>
+		</form>
 		</div>
     
 	</div>

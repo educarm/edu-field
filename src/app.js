@@ -52,10 +52,10 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 				
      $scope.fields=[
 	                  //row one
-					  {key: 'selectremoto1', type: 'select',col:'col-md-12',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
+					  {key: 'xxselectremoto1', type: 'select',col:'col-md-12',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
 				      
 					  //row two
-					  {key: 'texto6',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto1',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+					  {key: 'texto6',type: 'text',default:'texto por defecto',uppercase:true,col:'col-md-4',label: 'Texto1',uppercase:true,placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  {key: 'texto61',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto2',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  {key: 'ckeckbox2',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
 					  
@@ -226,15 +226,6 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					{key: 'password',type: 'password',pattern:"/^123456$/",col:'col-md-4',label: 'Password (123456)',placeholder: 'Password',autofocus:false,required: true },
 				   
 					{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
-					{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
-				{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
-				{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
-				{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
-				{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
-				{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
-				
-					
-					
 					
 					
 					{key: 'radio',type: 'radio',col:'col-md-4',inputSizeClass:"input-sm",label: 'Radio',required:true,options:[{"name":"perro","value":"1"},{"name":"gato","value":"2"}],
@@ -246,7 +237,22 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					{key: 'rango',type: 'range',col:'col-md-6',label: 'Slider',min:100,max:500,placeholder: 'Slider',autofocus:false,required: true },
 					
 					
-					{key: 'fecha',type: 'date',col:'col-md-4',lines: 5,inputSize:'sm',label:'Fecha',placeholder: 'Fecha',autofocus:false,required: true,showButtonCalendar:true,format:'dd/MM/yyyy',disabled:false,readonly:false}, 
+					{key: 'fecha',type: 'date',col:'col-md-4',lines: 5,inputSize:'sm',label:'Fechaxx',placeholder: 'Fecha',autofocus:false,required: true,showButtonCalendar:true,format:'dd/MM/yyyy',disabled:false,readonly:false,
+						fieldListeners:{
+							onChange:function(value,subitem){
+								console.log("onChange date:"+value+ ' ' +subitem);
+							},
+							onFocus:function(value,subitem){
+								console.log("onFocus date:"+value+ ' ' +subitem);
+							},
+							onBlur:function(value,subitem){
+								console.log("onBlur Date"+value+ ' ' +subitem);
+							},
+							onKeypress:function(event){
+								console.log("pulsada la tecla con código:"+event.keyCode);
+							}
+						}
+					}, 
 					{key: 'fechahora',type: 'date-time',col:'col-md-4',label:'Fecha Hora',placeholder: 'Fecha Hora',autofocus:false,required: true,disabled:false},					 
 					{key: 'mes',type: 'month',col:'col-md-4',label: 'Fecha mes',placeholder: 'Fecha mes',autofocus:false,required: true },
 					{key: 'semana',type: 'week',col:'col-md-4',label: 'Semana',placeholder: 'Semana',autofocus:false,required: true },
@@ -254,7 +260,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					
 					{key: 'autocompletelocal',type: 'autocomplete',inputSize:"sm",autofocus:true,col:'col-md-4',required:true,label: 'Autocomplete datos locales',autoclocaldata:$scope.municipios,autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300,disabled:false,readonly:false},
 				   
-				   {key: 'autocompleteremoto',type: 'autocomplete',col:'col-md-4',required:true,label: 'Autocomplete datos remotos',autocurldata: 'api/v1/municipios?filter=',autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"name",autocfieldvalue:"value",autocpause:300,disabled:false,readonly:false,
+				   {key: 'autocompleteremoto',type: 'autocomplete',widthdropdown:'400px',col:'col-md-4',required:true,label: 'Autocomplete datos remotos',autocurldata: 'api/v1/municipios?filter=',autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"name",autocfieldvalue:"value",autocpause:300,disabled:false,readonly:false,
 						fieldListeners:{
 						    
 							onChange:function(value,item){
@@ -263,7 +269,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 						}
 				   },											   
 					
-					{key: 'autocompleteremotoloadall',type:'autocomplete',col:'col-md-4',required:true,label: 'Autocomplete datos remotos load all',autocurldataloadall: 'api/v1/municipios',autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300,disabled:false,readonly:false},											   
+					{key: 'autocompleteremotoloadall',type:'autocomplete',widthdropdown:'600px',col:'col-md-4',required:true,label: 'Autocomplete datos remotos load all',autocurldataloadall: 'api/v1/municipios',autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300,disabled:false,readonly:false},											   
 				    
 					
 					{key: 'button2',type: 'button',col:'col-md-3',label:'show loading select',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 

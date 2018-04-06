@@ -15,6 +15,31 @@
         }
     };
 })*/
+eduFieldDirectives.directive('capitalize', function() {
+    return {
+      require: 'ngModel',
+      link: function(scope, element, attrs, modelCtrl) {
+		  if(attrs.capitalize=='true'){
+			var capitalize = function(inputValue) {
+			  if (inputValue == undefined) inputValue = '';
+			  var capitalized = inputValue.toUpperCase();
+			  if (capitalized !== inputValue) {
+				// see where the cursor is before the update so that we can set it back
+				var selection = element[0].selectionStart;
+				modelCtrl.$setViewValue(capitalized);
+				modelCtrl.$render();
+				// set back the cursor after rendering
+				element[0].selectionStart = selection;
+				element[0].selectionEnd = selection;
+			  }
+			  return capitalized;
+			}
+			modelCtrl.$parsers.push(capitalize);
+			capitalize(scope[attrs.ngModel]); // capitalize initial value
+		  }
+      }
+    };
+});
 
 eduFieldDirectives.factory('dataFactoryField', [ '$resource', function ( $resource) {
     return function (uri,actions) {
@@ -798,7 +823,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 			// CONTROL TYPE= grid
 			//-----------------------------------------------------------//
 			if($scope.options.type=='grid'){
-				
+				$scope.options.state='list';
 				function configField(){
 					$scope.field=null;
 					for(var k=0,field;field=$scope.options.listFields[k];k++){
@@ -924,6 +949,12 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					
 					item.$visible=true;
 					item.$inserted=false;
+					if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChangeState == 'function'){
+						$scope.options.fieldListeners.onChangeState($scope.options.state,'edit');
+						$scope.options.state='edit';
+					}else{
+						$scope.options.state='edit';
+					}
 				}	
 				
 				// button grid cancel
@@ -931,12 +962,24 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					angular.extend(item, item.$dataCopy)
 					item.$visible=false;
 					item.$inserted=false;
+					if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChangeState == 'function'){
+						$scope.options.fieldListeners.onChangeState($scope.options.state,'list');
+						$scope.options.state='list';
+					}else{
+						$scope.options.state='list';
+					}
 				}
 				
 				// button grid delete
 				$scope.gridDelete=function(item,index){
 					$scope.options.showOverlayInputGridFormDelete=true;
 					$scope.itemForDelete={item:item,index:index};
+					if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChangeState == 'function'){
+						$scope.options.fieldListeners.onChangeState($scope.options.state,'list');
+						$scope.options.state='list';
+					}else{
+						$scope.options.state='list';
+					}
 				}
 				
 				// button grid add new
@@ -949,6 +992,13 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					
 					newItem.$visible=true;
 					newItem.$inserted=true;
+					
+					if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChangeState == 'function'){
+						$scope.options.fieldListeners.onChangeState($scope.options.state,'new');
+						$scope.options.state='new';
+					}else{
+						$scope.options.state='new';
+					}
 					
 				}
 				
@@ -969,7 +1019,13 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 							if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onSaveSuccess == 'function'){
 								$scope.options.fieldListeners.onSaveSuccess(data);
 							}
-							
+							if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChangeState == 'function'){
+								$scope.options.fieldListeners.onChangeState($scope.options.state,'list');
+								$scope.options.state='list';
+							}else{
+								$scope.options.state='list';
+							}
+							$scope.refreshGrid();		
             	        },function(data){
 						   //$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
 						});
@@ -980,6 +1036,12 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
                             item.$visible=false;
 							if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onUpdateSuccess == 'function'){
 								$scope.options.fieldListeners.onUpdateSuccess(data);
+							}
+							if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChangeState == 'function'){
+								$scope.options.fieldListeners.onChangeState($scope.options.state,'list');
+								$scope.options.state='list';
+							}else{
+								$scope.options.state='list';
 							}
             	        },function(data){
 							//$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);

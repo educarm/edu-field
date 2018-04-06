@@ -5,7 +5,7 @@
 	</label>
 	
 		
-			<input type="text"
+			<input capitalize="{{options.uppercase}}"  type="text"
 			   class="form-control  input-{{options.inputSize}}"
 			   id="{{id}}"
 			   name="{{name}}"
@@ -22,7 +22,8 @@
 			   ng-blur="onBlur()"
 			   ng-focus="onFocus()"
 			   ng-change="onChange()"
-			   ng-keypress="onKeypress($event)">
+			   ng-keypress="onKeypress($event)" 
+			   >
 
 		   
 	<div class="help-block has-error" ng-show="$invalid"  style="position:absolute;top:50px">

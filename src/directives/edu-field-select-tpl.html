@@ -4,7 +4,7 @@
 		{{options.label}}
 		{{options.required ? '*' : ''}}
 	</label>
-	<select ng-show="options.groupBy" ng-class="{'loadinggif':options.loading}"
+	<select ng-if="options.groupBy" ng-class="{'loadinggif':options.loading}"
 			class="form-control input-{{options.inputSize}}"
 			id="{{id}}"
 			
@@ -23,7 +23,7 @@
 		<option value="">{{options.emptyOptionText}}</option> 
                  
 	</select>
-	<select ng-show="!options.groupBy" ng-class="{'loadinggif':options.loading}"
+	<select ng-if="!options.groupBy" ng-class="{'loadinggif':options.loading}"
 			class="form-control input-{{options.inputSize}}"
 			id="{{id}}"
 			

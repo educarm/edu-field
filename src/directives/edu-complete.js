@@ -30,11 +30,12 @@ eduFieldDirectives.directive('eduComplete', function ($parse, $http, $sce, $time
             "minLengthUser": "@minlength",
             "matchClass": "@matchclass",
 			"disabled":"@disabled",
-		    "readonly": "@readonly"
+		    "readonly": "@readonly",
+			"widthdropdown":"=widthdropdown"
         },
 template:  '<div class="eduComplete-holder">'+
 		   '	<input id="{{id}}" name="{{name}}" ng-disabled="{{disabled}}" ng-readonly={{readonly}} edu-focus="{{autofocus}}"  ng-blur="onblur()"  ng-focus="onfocus()"  ng-required="{{required}}" ng-model="searchStr" type="text" placeholder="{{placeholder}}" class="{{inputClass}}" onmouseup="this.select();" ng-focus="resetHideResults()" ng-blur="hideResults()" />' +
-           '	<div id="{{id}}_dropdown" class="eduComplete-dropdown" ng-if="showDropdown">'+
+           '	<div id="{{id}}_dropdown" class="eduComplete-dropdown" ng-if="showDropdown"  ng-style="widthdropdown2"> '+
 		   '		<div class="eduComplete-searching" ng-show="searching">Buscando...</div>'+
 		   '		<div class="eduComplete-searching" ng-show="!searching && (!results || results.length == 0)">No hay resultados</div>'+
 		   '		<div class="eduComplete-row" ng-repeat="result in results" ng-click="selectResult(result)"  ng-mouseover="hoverRow()" ng-class="{\'eduComplete-selected-row\': $index == currentIndex}">'+
@@ -58,6 +59,8 @@ template:  '<div class="eduComplete-holder">'+
             $scope.searching = false;
             $scope.pause = 500;
             $scope.minLength = 3;
+			
+			$scope.widthdropdown2={width:$scope.widthdropdown};
 			
 			if($scope.urldataloadall && $scope.urldataloadall !=""){
 				
