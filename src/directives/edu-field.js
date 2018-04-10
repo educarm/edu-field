@@ -607,11 +607,12 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					}else if($scope.options.type=='autocomplete'){
 						value=$scope.value;
 						item=subitem;
+					
 				    }else{
 						value=$scope.value;	
 				    }
 					
-					$scope.options.fieldListeners.onChange(value,item);
+					$scope.options.fieldListeners.onChange(value,item,$scope.options.showPopupCalendar);
 				}
 			}
 			
@@ -680,7 +681,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 						value=($scope.value)?$scope.value:'';
 					}
 					
-					$scope.options.fieldListeners.onBlur(value,item);
+					$scope.options.fieldListeners.onBlur(value,$scope.options.showPopupCalendar);
 				}
 				
 			}	

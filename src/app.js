@@ -228,7 +228,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					{key: 'ckeckbox',type: 'checkbox',inputSizeClass:"input-lg",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
 					
 					
-					{key: 'radio',type: 'radio',col:'col-md-4',inputSizeClass:"input-sm",label: 'Radio',required:true,options:[{"name":"perro","value":"1"},{"name":"gato","value":"2"}],
+					{key: 'radio',type: 'radio',col:'col-md-4',inputSizeClass:"input-sm",label: 'Radio',name:'mamifero',required:true,options:[{"name":"perro","value":"1"},{"name":"gato","value":"2"}],
 						fieldListeners:{
 							onChange:function(value){
 								console.log("onChange radio button value:"+value);
@@ -239,14 +239,14 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					
 					{key: 'fecha',type: 'date',col:'col-md-4',lines: 5,inputSize:'sm',label:'Fechaxx',placeholder: 'Fecha',autofocus:false,required: true,showButtonCalendar:true,format:'dd/MM/yyyy',disabled:false,readonly:false,
 						fieldListeners:{
-							onChange:function(value,subitem){
-								console.log("onChange date:"+value+ ' ' +subitem);
+							onChange:function(value,subitem,showCalendar){
+								console.log("onChange date:"+value+ ' ' +subitem+ ' showCalendar:'+showCalendar);
 							},
-							onFocus:function(value,subitem){
-								console.log("onFocus date:"+value+ ' ' +subitem);
+							onFocus:function(value){
+								console.log("onFocus date:"+value);
 							},
-							onBlur:function(value,subitem){
-								console.log("onBlur Date"+value+ ' ' +subitem);
+							onBlur:function(value,showCalendar){
+								console.log("onBlur Date"+value+ ' showCalendar:'+showCalendar);
 							},
 							onKeypress:function(event){
 								console.log("pulsada la tecla con código:"+event.keyCode);
