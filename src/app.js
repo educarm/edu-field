@@ -55,7 +55,13 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					  {key: 'xxselectremoto1', type: 'select',col:'col-md-12',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
 				      
 					  //row two
-					  {key: 'texto6',type: 'text',default:'texto por defecto',uppercase:true,col:'col-md-4',label: 'Texto1',uppercase:true,placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+					  {key: 'texto6',type: 'text',default:'texto por defecto',
+					  fieldListeners:{
+							onChange:function(value,subitem){
+								console.log("onChange iban:"+value);
+							}
+						},
+						uppercase:true,col:'col-md-4',label: 'Texto1',uppercase:true,placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  {key: 'texto61',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto2',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  {key: 'ckeckbox2',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
 					  

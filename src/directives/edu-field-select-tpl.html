@@ -4,9 +4,9 @@
 		{{options.label}}
 		{{options.required ? '*' : ''}}
 	</label>
-	<select ng-if="options.groupBy" ng-class="{'loadinggif':options.loading}"
+	<select ng-show="options.groupBy" ng-class="{'loadinggif':options.loading}"
 			class="form-control input-{{options.inputSize}}"
-			id="{{id}}"
+			id="1-{{id}}"
 			
 			dependent-control="options.dependentControl"
 			edu-focus="options.autofocus"
@@ -23,9 +23,9 @@
 		<option value="">{{options.emptyOptionText}}</option> 
                  
 	</select>
-	<select ng-if="!options.groupBy" ng-class="{'loadinggif':options.loading}"
+	<select ng-show="!options.groupBy" ng-class="{'loadinggif':options.loading}"
 			class="form-control input-{{options.inputSize}}"
-			id="{{id}}"
+			id="2-{{id}}"
 			
 			dependent-control="options.dependentControl"
 			edu-focus="options.autofocus"
@@ -41,7 +41,6 @@
 			>
 		 
 		<option value="">{{options.emptyOptionText}}</option> 
-		<!--<option ng-repeat="option in optionsSelect" value="{{option.value}}">{{option.name}}</option>-->
                  
 	</select>
 	
