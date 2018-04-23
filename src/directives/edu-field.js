@@ -328,6 +328,10 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 		var templateUrl = '';
 
 		switch(type) {
+			
+			case 'image':
+				templateUrl = 'directives/edu-field-image-tpl.html';
+				break;
 		    case 'textbutton':
 				templateUrl = 'directives/edu-field-textbutton-tpl.html';
 				break;
@@ -429,9 +433,8 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 		var stringPattern = '';
 
 		switch(type) {
+			case 'image':
 		    case 'textbutton':
-				stringPattern = '';
-				break;
 			case 'button':
 				stringPattern = '';
 				break;

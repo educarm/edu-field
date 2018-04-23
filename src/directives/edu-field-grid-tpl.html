@@ -7,7 +7,7 @@
 		border: 1px solid #DCDCDC;
 	}
 </style>
-<div class="form-group   {{options.col}}" ng-class="{'has-error':  $invalid, 'has-success': !$invalid && $dirty}" >
+<div class="form-group   {{options.col}}" ng-class="{'has-error':  $invalid, 'has-success': !$invalid && $dirty}"  ng-hide="options.hidden">
 	<label for="input-grid-{{options.key}}">
 		{{options.label}}
 		{{options.required ? '*' : ''}}

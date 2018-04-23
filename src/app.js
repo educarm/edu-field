@@ -52,18 +52,20 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 				
      $scope.fields=[
 	                  //row one
-					  {key: 'xxselectremoto1', type: 'select',col:'col-md-12',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
+					  {key: 'texto61',name:'texto61',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto2',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
+					  {key: 'xxselectremoto1',name:'xxselectremoto1', type: 'select',col:'col-md-12',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
 				      
 					  //row two
-					  {key: 'texto6',type: 'text',default:'texto por defecto',
+					  {key: 'texto6',name:'texto6',type: 'text',default:'texto por defecto',
 					  fieldListeners:{
 							onChange:function(value,subitem){
 								console.log("onChange iban:"+value);
+								
 							}
 						},
 						uppercase:true,col:'col-md-4',label: 'Texto1',uppercase:true,placeholder: 'Texto',autofocus:false,required:false,readonly:false },
-					  {key: 'texto61',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto2',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
-					  {key: 'ckeckbox2',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+					  
+					  {key: 'ckeckbox2',name:'checkbox2',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
 					  
 					  //row three
 					  {key: 'ckeckbox21',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
@@ -113,11 +115,12 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					{key: 'literal',type: 'literal',col:'col-md-12',label:'campo literal',text:"*Nota: campo literal para que podamos colocar textos en cualquier parte del formulario",id:"id" },
 					{key: 'button',type: 'button',col:'col-md-3',label:'button',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 
 																									console.log("botón clickado");
-																										if($scope.fields[10].fieldControl.filesInQueue()>0){
+																										/*if($scope.fields[10].fieldControl.filesInQueue()>0){
 																				
 																											$scope.fields[10].fieldControl.clearQueue();
 																											var c=$scope.fields[10].fieldControl.filesInQueue();
-																										}
+																										}*/
+																										
 																								   } 
 					},
 					
@@ -275,12 +278,29 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 						}
 				   },											   
 					
-					{key: 'autocompleteremotoloadall',type:'autocomplete',widthdropdown:'600px',col:'col-md-4',required:true,label: 'Autocomplete datos remotos load all',autocurldataloadall: 'api/v1/municipios',autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"",autocfieldvalue:"value",autocpause:300,disabled:false,readonly:false},											   
+					{key: 'autocompleteremotoloadall',
+							type:'autocomplete',
+							widthdropdown:'600px',
+							col:'col-md-4',
+							required:true,
+							label: 'Autocomplete datos remotos load all',			 
+							autocurldataloadall: 'api/v1/municipios',
+							autocsearchfields:"name",
+							autocminlength:3,
+							autocfieldtitle:"value,name",
+							autocfielddescription:"",
+							autocfieldvalue:"value",
+							autocpause:300,
+							disabled:false,
+							readonly:false,
+							whenNotFoundReturnSearchString:true
+					},											   
 				    
 					
 					{key: 'button2',type: 'button',col:'col-md-3',label:'show loading select',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 
 																									console.log("botón clickado");
-																										$scope.fields[28].loading=true;
+																										//$scope.fields[28].loading=true;
+																										$scope.fields[42].hidden=!$scope.fields[42].hidden;
 																								   } 
 					},
 					{key: 'button3',type: 'button',col:'col-md-3',label:'hide loading select',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 

@@ -31,7 +31,8 @@ eduFieldDirectives.directive('eduComplete', function ($parse, $http, $sce, $time
             "matchClass": "@matchclass",
 			"disabled":"@disabled",
 		    "readonly": "@readonly",
-			"widthdropdown":"=widthdropdown"
+			"widthdropdown":"=widthdropdown",
+			"whenNotFoundReturnSearchString":"=whennotfoundreturnsearchstring"
         },
 template:  '<div class="eduComplete-holder">'+
 		   '	<input id="{{id}}" name="{{name}}" ng-disabled="{{disabled}}" ng-readonly={{readonly}} edu-focus="{{autofocus}}"  ng-blur="onblur()"  ng-focus="onfocus()"  ng-required="{{required}}" ng-model="searchStr" type="text" placeholder="{{placeholder}}" class="{{inputClass}}" onmouseup="this.select();" ng-focus="resetHideResults()" ng-blur="hideResults()" />' +
@@ -147,6 +148,11 @@ template:  '<div class="eduComplete-holder">'+
 
                 } else {
                     $scope.results = [];
+					
+					//if search string not found, return this how value
+					if($scope.whenNotFoundReturnSearchString){
+						$scope.selectedObject=str;
+					}
                 }
             }
 
