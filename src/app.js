@@ -51,6 +51,72 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
         ]	
 				
      $scope.fields=[
+	                 //row zero
+					 {key: 'iban1',type: 'iban',col:'col-md-3',inputSize:"",showButton:false,typebutton:"warning",
+						fieldListeners:{
+							onChange:function(value,subitem){
+								console.log("onChange iban:"+value);
+							},
+							onFocus:function(value,subitem){
+								console.log("onFocus iban:"+value);
+							},
+							onBlur:function(value,subitem){
+								console.log("onBlur iban:"+value);
+							},
+							onKeypress:function(event){
+								console.log("pulsada la tecla con código:"+event.keyCode);
+							}
+						},label: 'Nº cuenta cliente',placeholder: 'IBAN',autofocus:false,required: true,name:"nombre"  },
+						
+						{key: 'iban2',type: 'iban',col:'col-md-3',inputSize:"",showButton:false,typebutton:"warning",
+						fieldListeners:{
+							onChange:function(value,subitem){
+								console.log("onChange iban:"+value);
+							},
+							onFocus:function(value,subitem){
+								console.log("onFocus iban:"+value);
+							},
+							onBlur:function(value,subitem){
+								console.log("onBlur iban:"+value);
+							},
+							onKeypress:function(event){
+								console.log("pulsada la tecla con código:"+event.keyCode);
+							}
+						},label: 'Nº cuenta cliente',placeholder: 'IBAN',autofocus:false,required: true,name:"nombre"  },
+						
+						{key: 'iban3',type: 'iban',col:'col-md-3',inputSize:"",showButton:false,typebutton:"warning",
+						fieldListeners:{
+							onChange:function(value,subitem){
+								console.log("onChange iban:"+value);
+							},
+							onFocus:function(value,subitem){
+								console.log("onFocus iban:"+value);
+							},
+							onBlur:function(value,subitem){
+								console.log("onBlur iban:"+value);
+							},
+							onKeypress:function(event){
+								console.log("pulsada la tecla con código:"+event.keyCode);
+							}
+						},label: 'Nº cuenta cliente',placeholder: 'IBAN',autofocus:false,required: true,name:"nombre"  },
+						
+						{key: 'iban4',type: 'iban',col:'col-md-3',inputSize:"",showButton:false,typebutton:"warning",
+						fieldListeners:{
+							onChange:function(value,subitem){
+								console.log("onChange iban:"+value);
+							},
+							onFocus:function(value,subitem){
+								console.log("onFocus iban:"+value);
+							},
+							onBlur:function(value,subitem){
+								console.log("onBlur iban:"+value);
+							},
+							onKeypress:function(event){
+								console.log("pulsada la tecla con código:"+event.keyCode);
+							}
+						},label: 'Nº cuenta cliente',placeholder: 'IBAN',autofocus:false,required: true,name:"nombre"  },
+	 
+	 
 	                  //row one
 					  {key: 'texto61',name:'texto61',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto2',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  {key: 'xxselectremoto1',name:'xxselectremoto1', type: 'select',col:'col-md-12',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
