@@ -176,6 +176,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 	 
 	                  {key: 'oculto',type: 'hidden',value:"campo oculto",name:"nombre",id:"id" },
 					  {key: 'moneda',type: 'currency',col:'col-md-4',min:1,max:12,label: 'Moneda',placeholder: 'Moneda',autofocus:false,required: false },
+					 {key: 'moneda1',type: 'currency',col:'col-md-4',min:1,max:12,label: 'Moneda1',placeholder: 'Moneda',autofocus:false,required: false },
 					
 					//{key: 'fecha',type: 'date-ag-ui',col:'col-md-2',lines: 5,label:'Fecha',placeholder: 'Fecha',autofocus:false,required: true,showPopupCalendar:true,format:"dd/MM/yyyy"}, 
 					{key: 'literal',type: 'literal',col:'col-md-12',label:'campo literal',text:"*Nota: campo literal para que podamos colocar textos en cualquier parte del formulario",id:"id" },

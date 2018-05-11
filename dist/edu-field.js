@@ -1,5 +1,5 @@
 /*
- edu-field v0.0.50
+ edu-field v0.0.51
  (c) Educarm, http://www.educarm.es
  License: MIT
 */
@@ -735,31 +735,12 @@ eduFieldDirectives.directive('dateTimeInput', [
     };
   }
 ]);
-/*eduFieldDirectives.directive('currency', ['$parse', function ($parse) {
-		var directive = {
-			restrict: 'A',
-			require: ['ngModel'],
-			link: link
-		};
-		return directive;
-
-		function link(scope, element, attr, ngModelCtrl) {
-			ngModelCtrl.$formatters.unshift(function (modelValue) {
-				//return dateFilter(modelValue, 'yyyy-MM-ddTHH:mm');
-				return Number(modelValue).toLocaleString("es-ES", {minimumFractionDigits: 2}) + ' €';
-			});
-			
-			ngModelCtrl.$parsers.unshift(function(viewValue) {
-				return Number(viewValue.replace('.','').replace('€',''));
-			});
-		}
-	}]);*/
 eduFieldDirectives.filter('toEuros', function () {
   return function (input, fractionDigit) {
     var fractD = fractionDigit ? fractionDigit : 2;
     var amount = Number(input).toLocaleString('es-ES', { minimumFractionDigits: fractD }) + ' \u20ac';
-    //if(amount=='0,00 €' || amount=='NaN €'){
-    if (amount == 'NaN \u20ac') {
+    if (amount == '0,00 \u20ac' || amount == 'NaN \u20ac') {
+      //if(amount=='NaN €'){
       return;
     } else {
       return amount;
@@ -775,7 +756,11 @@ eduFieldDirectives.directive('currency', [
         if (!ctrl)
           return;
         ctrl.$formatters.unshift(function (a) {
-          return $filter('toEuros')(ctrl.$modelValue);
+          if (ctrl.$modelValue) {
+            return $filter('toEuros')(ctrl.$modelValue.toString().replace(',', '.'));
+          } else {
+            return $filter('toEuros')('');
+          }
         });
         elem.bind('keydown', function (event) {
           if (event.which == 188 || event.keyCode == 188) {
