@@ -19,7 +19,7 @@
 		<table border="1" width="100%" height="100%" class="input-grid">
 			<thead>
 				<tr>
-					<th width="60px" title="Nuevo elemento">
+					<th width="60px" title="Nuevo elemento" ng-show="options.showButtons!=false">
 						<button ng-click="gridNew()" class="btn btn-sm btn-info" ng-disabled="options.state!='list'">
 							<span class="fa fa-plus">
 						</button>
@@ -43,7 +43,7 @@
 				<tr ng-repeat="item in gridRows" ng-click="options.gridOnRowClick(item)">
 				    <td style="white-space: nowrap">
 						<!-- form -->
-						<form  ng-show="item.$visible" class="form-buttons form-inline" shown="item.$inserted">
+						<form  ng-show="item.$visible && options.showButtons!=false" class="form-buttons form-inline" shown="item.$inserted">
 							  <button ng-click="gridSave(item)" ng-disabled="item.$waiting" class="btn btn-sm btn-warning">
 								 <span class="fa fa-save">
 							  </button>
@@ -51,7 +51,7 @@
 								 <span class="fa fa-undo">
 							  </button>
 						</form>
-						<div class="buttons" ng-show="!item.$visible">
+						<div class="buttons" ng-show="!item.$visible && options.showButtons!=false">
 							  <button class="btn btn-sm btn-primary" ng-click="gridEdit(item)"> <span class="fa fa-edit"></button>
 							  <button class="btn btn-sm btn-danger" ng-click="gridDelete(item,$index)"> <span class="fa fa-remove"></button>
 						</div>  

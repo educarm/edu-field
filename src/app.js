@@ -50,7 +50,32 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 				 
         ]	
 				
-     $scope.fields=[
+     $scope.fields=[ 
+					 {key: 'ckeckbox2',name:'checkbox2',type: 'checkbox',inputSize:"md",col:'col-md-2',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+					
+					{key: 'areatexto',type: 'textarea',col:'col-md-6',rows: 5,label: 'Área de texto',placeholder: 'Área de texto',autofocus:false,required: true,minlength:5,maxlength:100,disabled:false,readonly:false	},
+    	            
+	                {key: 'button',type: 'button',col:'col-md-1',label:'button',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 
+																									console.log("botón clickado");
+																										/*if($scope.fields[10].fieldControl.filesInQueue()>0){
+																				
+																											$scope.fields[10].fieldControl.clearQueue();
+																											var c=$scope.fields[10].fieldControl.filesInQueue();
+																										}*/
+																										
+																								   } 
+					},
+					{key: 'button',type: 'button',col:'col-md-2',label:'button',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 
+																									console.log("botón clickado");
+																										/*if($scope.fields[10].fieldControl.filesInQueue()>0){
+																				
+																											$scope.fields[10].fieldControl.clearQueue();
+																											var c=$scope.fields[10].fieldControl.filesInQueue();
+																										}*/
+																										
+																								   } 
+					},
+					
 	                 //row zero
 					 {key: 'iban1',type: 'iban',col:'col-md-3',inputSize:"",showButton:false,typebutton:"warning",
 						fieldListeners:{
@@ -144,7 +169,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					  {key: 'texto4',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto4',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  
 					  //row five
-					  {key: 'grid',type: 'grid',height:'180',col:'col-md-6',label: 'Grid1',readonly:false,
+					  {key: 'grid',type: 'grid',height:'180',col:'col-md-6',label: 'Grid1',readonly:false,'showButtons':false,
 					    fieldKey:'vcodcen',
 						uri:'api\/v1\/instalaciones/:id',
 						fieldFk:'codcen',
