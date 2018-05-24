@@ -13,7 +13,7 @@
 		{{options.required ? '*' : ''}}
 	</label>
 	
-	<div style="overflow:auto;height:{{(options.height*1+40)}}px" id="input-grid-{{options.key}}"  style="position:relative">
+	<div style="overflow:auto;height:{{(options.height*1+40)}}px"  ng-style="options.width?{width:options.width+px}:''" id="input-grid-{{options.key}}"  style="position:relative">
 	    
 		<scrollable-table watch="options.gridRows" >
 		<table border="1" width="100%" height="100%" class="input-grid">
@@ -41,9 +41,9 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="item in gridRows" ng-click="options.gridOnRowClick(item)">
-				    <td style="white-space: nowrap">
+				    <td style="white-space: nowrap"  ng-show="options.showButtons!=false">
 						<!-- form -->
-						<form  ng-show="item.$visible && options.showButtons!=false" class="form-buttons form-inline" shown="item.$inserted">
+						<form  ng-show="item.$visible" class="form-buttons form-inline" shown="item.$inserted">
 							  <button ng-click="gridSave(item)" ng-disabled="item.$waiting" class="btn btn-sm btn-warning">
 								 <span class="fa fa-save">
 							  </button>
@@ -51,7 +51,7 @@
 								 <span class="fa fa-undo">
 							  </button>
 						</form>
-						<div class="buttons" ng-show="!item.$visible && options.showButtons!=false">
+						<div class="buttons" ng-show="!item.$visible">
 							  <button class="btn btn-sm btn-primary" ng-click="gridEdit(item)"> <span class="fa fa-edit"></button>
 							  <button class="btn btn-sm btn-danger" ng-click="gridDelete(item,$index)"> <span class="fa fa-remove"></button>
 						</div>  

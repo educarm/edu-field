@@ -53,9 +53,9 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
      $scope.fields=[ 
 					 {key: 'ckeckbox2',name:'checkbox2',type: 'checkbox',inputSize:"md",col:'col-md-2',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
 					
-					{key: 'areatexto',type: 'textarea',col:'col-md-6',rows: 5,label: 'Área de texto',placeholder: 'Área de texto',autofocus:false,required: true,minlength:5,maxlength:100,disabled:false,readonly:false	},
+					{key: 'areatexto2',type: 'textarea',col:'col-md-6',rows: 5,label: 'Área de texto',placeholder: 'Área de texto',autofocus:false,required: true,minlength:5,maxlength:100,disabled:false,readonly:false	},
     	            
-	                {key: 'button',type: 'button',col:'col-md-1',label:'button',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 
+	                {key: 'button6',type: 'button',col:'col-md-1',label:'button',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 
 																									console.log("botón clickado");
 																										/*if($scope.fields[10].fieldControl.filesInQueue()>0){
 																				
@@ -65,7 +65,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 																										
 																								   } 
 					},
-					{key: 'button',type: 'button',col:'col-md-2',label:'button',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 
+					{key: 'button7',type: 'button',col:'col-md-2',label:'button',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 
 																									console.log("botón clickado");
 																										/*if($scope.fields[10].fieldControl.filesInQueue()>0){
 																				
@@ -156,7 +156,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 						},
 						uppercase:true,col:'col-md-4',label: 'Texto1',uppercase:true,placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  
-					  {key: 'ckeckbox2',name:'checkbox2',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
+					  {key: 'ckeckbox24',name:'checkbox2',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
 					  
 					  //row three
 					  {key: 'ckeckbox21',type: 'checkbox',inputSize:"md",col:'col-md-4',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
@@ -169,7 +169,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					  {key: 'texto4',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto4',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  
 					  //row five
-					  {key: 'grid',type: 'grid',height:'180',col:'col-md-6',label: 'Grid1',readonly:false,'showButtons':false,
+					  {key: 'grid',type: 'grid',height:'180',col:'col-md-12',label: 'Grid1',readonly:false,'showButtons':false,
 					    fieldKey:'vcodcen',
 						uri:'api\/v1\/instalaciones/:id',
 						fieldFk:'codcen',
@@ -205,7 +205,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					
 					//{key: 'fecha',type: 'date-ag-ui',col:'col-md-2',lines: 5,label:'Fecha',placeholder: 'Fecha',autofocus:false,required: true,showPopupCalendar:true,format:"dd/MM/yyyy"}, 
 					{key: 'literal',type: 'literal',col:'col-md-12',label:'campo literal',text:"*Nota: campo literal para que podamos colocar textos en cualquier parte del formulario",id:"id" },
-					{key: 'button',type: 'button',col:'col-md-3',label:'button',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 
+					{key: 'button1',type: 'button',col:'col-md-3',label:'button',icon:'fa fa-external-link-square fa-2x',state:"danger",size:"",disabled:false,onClick:function(){ 
 																									console.log("botón clickado");
 																										/*if($scope.fields[10].fieldControl.filesInQueue()>0){
 																				

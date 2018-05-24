@@ -16,10 +16,11 @@
     };
 })*/
 
-/**
- * Anularjs Module for pop up timepicker
- */
+
 eduFieldDirectives
+ /**
+ * Angularjs Module for pop up timepicker
+ */
 .factory('timepickerState', function() {
   var pickers = [];
   return {
@@ -514,7 +515,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 		var templateUrl = '';
 
 		switch(type) {
-			
+			case 'tritoggle':
+				templateUrl = 'directives/edu-field-tritoggle-tpl.html';
+				break;
 			case 'image':
 				templateUrl = 'directives/edu-field-image-tpl.html';
 				break;
