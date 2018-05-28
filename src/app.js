@@ -144,7 +144,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 	 
 	                  //row one
 					  {key: 'texto61',name:'texto61',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto2',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
-					  {key: 'xxselectremoto1',name:'xxselectremoto1', type: 'select',col:'col-md-12',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
+					  //{key: 'xxselectremoto1',name:'xxselectremoto1', type: 'select',col:'col-md-12',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
 				      
 					  //row two
 					  {key: 'texto6',name:'texto6',type: 'text',default:'texto por defecto',
@@ -169,25 +169,26 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					  {key: 'texto4',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto4',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  
 					  //row five
-					  {key: 'grid',type: 'grid',height:'180',col:'col-md-12',label: 'Grid1',readonly:false,'showButtons':false,
+					  {key: 'grid',type: 'grid',height:'180',width:'2500',col:'col-md-4',label: 'Grid1',readonly:false,'showButtons':false,
 					    fieldKey:'vcodcen',
-						uri:'api\/v1\/instalaciones/:id',
+						uri:'api/v1/centros/:id',
 						fieldFk:'codcen',
 		                valueFk:'30000018',
-						//gridRows:itemsG,
 						listFields:[
-									{label: 'Código', column: 'codigo', weight: '20',type:'text'},
-									 {label: 'Descripción', column: 'descripcion', weight: '60',type:'text'},
-									 {label: 'Localidad', column: 'vloccen', weight: '20',type:'select',options:[
-																													{value:'ABANILLA',descripcion:'Abanilla'},
-																													{value:'CARAVACA DE LA CRUZ',descripcion:'Caravaca de la Cruz'},
-																													{value:'CEHEGIN',descripcion:'Cehegín'},
-																													{value:'LORCA',descripcion:'Lorca'},
-																													{value:'CARTAGENA',descripcion:'Cartagena'},
-																													{value:'CIEZA',descripcion:'Cieza'},
-																													{value:'JUMILLA',descripcion:'Jumilla'},
-																													{value:'TOTANA',descripcion:'Totana'},
-									 ]}
+										
+						
+						
+									{label: 'vcodcen', column: 'vcodcen', weight: '20',type:'text'},
+									{label: 'vdencen', column: 'vdencen', weight: '60',type:'text'},
+									{label: 'vdomcen', column: 'vdomcen', weight: '20',type:'text'},
+									{label: 'vloccen', column: 'vloccen', weight: '20',type:'text'},
+									{label: 'vmuncen', column: 'vloccen', weight: '20',type:'text'},
+									{label: 'vcpcen', column: 'vloccen', weight: '20',type:'text'},
+									{label: 'vtelcen', column: 'vtelcen', weight: '20',type:'text'},
+									{label: 'vfax', column: 'vfax', weight: '20',type:'text'},
+									{label: 'vemail', column: 'vemail', weight: '20',type:'text'},
+									{label: 'vweb', column: 'vweb', weight: '20',type:'text'},
+									{label: 'vweb', column: 'vweb', weight: '20',type:'text'}	
 								]
 					   },
 					  
@@ -433,7 +434,12 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					];
 					
 					
+					setTimeout(function(){
+						_.find($scope.fields,{'key':'grid'}).fieldControl.refresh();
+					},400);
 										
 
-}])
+        }
+
+])
 

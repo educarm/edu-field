@@ -13,10 +13,10 @@
 		{{options.required ? '*' : ''}}
 	</label>
 	
-	<div style="overflow:auto;height:{{(options.height*1+40)}}px"  ng-style="options.width?{width:options.width+px}:''" id="input-grid-{{options.key}}"  style="position:relative">
-	    
-		<scrollable-table watch="options.gridRows" >
-		<table border="1" width="100%" height="100%" class="input-grid">
+	<div style="overflow-x:scroll; height:{{(options.height*1+40)}}px; position:relative;" class="form-control" id="input-grid-{{options.key}}"  >
+	    <!-- $scope.widthTableGrid=$scope.options.width?options.width+'px':'100%'  -->
+		<scrollable-table watch="gridRows" >
+		<table border="1" ng-style="widthTableGrid" height="100%" class="input-grid">
 			<thead>
 				<tr>
 					<th width="60px" title="Nuevo elemento" ng-show="options.showButtons!=false">

@@ -40,7 +40,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     margin-bottom: 0;
-    width: 100%;
+    width: 100%; 
     border: none;
     /*border-collapse: separate;*/
 }

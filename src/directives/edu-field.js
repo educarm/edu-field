@@ -1016,6 +1016,10 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 			// CONTROL TYPE= grid
 			//-----------------------------------------------------------//
 			if($scope.options.type=='grid'){
+				//si se define la opción width, ajusta el ancho de la tabla a él
+				$scope.widthTableGrid={'width':$scope.options.width?$scope.options.width+'px':'100%'};
+				 
+				// por defecto, en modo listado 
 				$scope.options.state='list';
 				function configField(){
 					$scope.field=null;
@@ -1127,7 +1131,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 							
 						},function(data){
 							$scope.options.loading=false;
-							$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
+							//$scope.internalControl.showOverlayFormSuccessError('0',data.data || data.message,20005);
 						});
 					}
 				}
