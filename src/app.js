@@ -169,7 +169,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					  {key: 'texto4',type: 'text',default:'texto por defecto',col:'col-md-4',label: 'Texto4',placeholder: 'Texto',autofocus:false,required:false,readonly:false },
 					  
 					  //row five
-					  {key: 'grid',type: 'grid',height:'180',width:'2500',col:'col-md-4',label: 'Grid1',readonly:false,'showButtons':false,
+					  {key: 'grid',type: 'grid',height:'180',width:'2500',col:'col-md-4',label: 'Grid1',readonly:false,'showButtons':true,
 					    fieldKey:'vcodcen',
 						uri:'api/v1/centros/:id',
 						fieldFk:'codcen',

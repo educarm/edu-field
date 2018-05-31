@@ -431,33 +431,37 @@ eduFieldDirectives.directive(
 	eduFieldDirectives
 	 .filter('toEuros', function() {
 	  return function(input,fractionDigit) {
+		
 		var fractD=fractionDigit?fractionDigit:2;
 		var amount= Number(input).toLocaleString("es-ES", {minimumFractionDigits: fractD}) + ' €';
 		if(amount=='0,00 €' || amount=='NaN €'){
 		//if(amount=='NaN €'){
 			return; 
 		}else{
+			console.log('toEuros2:'+amount);
 			return amount;
 		}  
-		
 	  };
 	});
 	
 	eduFieldDirectives.directive('currency', ['$filter', function ($filter) {
+		
     return {
         require: '?ngModel',
         link: function (scope, elem, attrs, ctrl) {
             if (!ctrl) return;
-
+			
             ctrl.$formatters.unshift(function (a) {
-				
 				if(ctrl.$modelValue){
-					return $filter('toEuros')(ctrl.$modelValue.toString().replace(',','.'));
+					return function(){
+						return $filter('toEuros')(ctrl.$modelValue.toString().replace(',','.'));
+					}
 				}else{
 					return $filter('toEuros')('');
-				}
-				
+				}	
             });
+			
+			
 			
 			elem.bind('keydown', function(event) {
 				
@@ -1169,13 +1173,18 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				
 				// button grid delete
 				$scope.gridDelete=function(item,index){
-					$scope.options.showOverlayInputGridFormDelete=true;
-					$scope.itemForDelete={item:item,index:index};
-					if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChangeState == 'function'){
-						$scope.options.fieldListeners.onChangeState($scope.options.state,'list');
+					if($scope.options.state=='new'){
+						$scope.gridRows.splice(index, 1);
 						$scope.options.state='list';
 					}else{
-						$scope.options.state='list';
+						$scope.options.showOverlayInputGridFormDelete=true;
+						$scope.itemForDelete={item:item,index:index};
+						if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChangeState == 'function'){
+							$scope.options.fieldListeners.onChangeState($scope.options.state,'list');
+							$scope.options.state='list';
+						}else{
+							$scope.options.state='list';
+						}
 					}
 				}
 				

@@ -47,9 +47,14 @@
 							  <button ng-click="gridSave(item)" ng-disabled="item.$waiting" class="btn btn-sm btn-warning">
 								 <span class="fa fa-save">
 							  </button>
-							  <button type="button" ng-disabled="item.$waiting"  ng-click="gridCancel(item)" class="btn btn-sm btn-default">
+							  
+							  <button type="button" ng-show="options.state!='new'" ng-disabled="item.$waiting"  ng-click="gridCancel(item)" class="btn btn-sm btn-default">
 								 <span class="fa fa-undo">
 							  </button>
+							  
+							   <button class="btn btn-sm btn-danger"  ng-show="options.state=='new'" ng-click="gridDelete(item,$index)"> <span class="fa fa-remove"></button>
+							  
+							  
 						</form>
 						<div class="buttons" ng-show="!item.$visible">
 							  <button class="btn btn-sm btn-primary" ng-click="gridEdit(item)"> <span class="fa fa-edit"></button>
