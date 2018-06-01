@@ -1380,21 +1380,21 @@ eduFieldDirectives.directive('eduField', [
             };
             // button grid delete
             $scope.gridDelete = function (item, index) {
+              //if state is equal to new, delete register only of local data
               if ($scope.options.state == 'new') {
                 $scope.gridRows.splice(index, 1);
-                $scope.options.state = 'list';
               } else {
                 $scope.options.showOverlayInputGridFormDelete = true;
                 $scope.itemForDelete = {
                   item: item,
                   index: index
                 };
-                if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChangeState == 'function') {
-                  $scope.options.fieldListeners.onChangeState($scope.options.state, 'list');
-                  $scope.options.state = 'list';
-                } else {
-                  $scope.options.state = 'list';
-                }
+              }
+              if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChangeState == 'function') {
+                $scope.options.fieldListeners.onChangeState($scope.options.state, 'list');
+                $scope.options.state = 'list';
+              } else {
+                $scope.options.state = 'list';
               }
             };
             // button grid add new
