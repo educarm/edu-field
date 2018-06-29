@@ -193,6 +193,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 						fieldListeners:{
 							onBeforeSave:function(row,insertion){
 								console.log("grid onBeforeSave: "+row);
+								return row
 							},
 							onAfterSave:function(row,insertion){
 								console.log("grid onAfterSave: "+row);
@@ -201,7 +202,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 								console.log("grid onSaveSuccess:"+row);
 							},
 							onChangeState:function(state_old,state_new){
-								console.log("grid onChangeState new: "+state_old + ", old: " +state_new);
+								console.log("grid onChangeState old: "+state_old + ", new: " +state_new);
 							}
 						}
 					   },

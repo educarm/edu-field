@@ -1426,7 +1426,7 @@ eduFieldDirectives.directive('eduField', [
               if (item.$inserted) {
                 dataTemp[$scope.options.fieldFk] = $scope.options.valueFk;
                 if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onBeforeSave == 'function') {
-                  $scope.options.fieldListeners.onBeforeSave(dataTemp, true);
+                  dataTemp = $scope.options.fieldListeners.onBeforeSave(dataTemp, true);
                 }
                 apiField.insert(dataTemp, function (data) {
                   item.$visible = false;
