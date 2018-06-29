@@ -189,7 +189,21 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 									{label: 'vemail', column: 'vemail', weight: '20',type:'text'},
 									{label: 'vweb', column: 'vweb', weight: '20',type:'text'},
 									{label: 'vweb', column: 'vweb', weight: '20',type:'text'}	
-								]
+								],
+						fieldListeners:{
+							onBeforeSave:function(row,insertion){
+								console.log("grid onBeforeSave: "+row);
+							},
+							onAfterSave:function(row,insertion){
+								console.log("grid onAfterSave: "+row);
+							},
+							onSaveSuccess:function(row){
+								console.log("grid onSaveSuccess:"+row);
+							},
+							onChangeState:function(state_old,state_new){
+								console.log("grid onChangeState new: "+state_old + ", old: " +state_new);
+							}
+						}
 					   },
 					  
 					  //row six
@@ -408,7 +422,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 																																																						
 																																																					}
 																																																				},optionname:"name",optionvalue:"value",selectconcatvaluename:true,disabled:false,readonly:false},
-					{key: 'selectremoto', type: 'select',col:'col-md-4',required:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
+					{key: 'selectremoto', type: 'select',col:'col-md-4',required:true,multiple:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
 					
 					{key: 'CODIGO_TEMA',emptyOptionText:'Seleccione una opción',
 						fieldListeners:{

@@ -26,7 +26,27 @@
 	<select ng-show="!options.groupBy" ng-class="{'loadinggif':options.loading}"
 			class="form-control input-{{options.inputSize}}"
 			id="2-{{id}}"
+			dependent-control="options.dependentControl"
+			edu-focus="options.autofocus"
+			ng-blur="onBlur()"
+			ng-focus="onFocus()"
+			ng-change="onChange()"
+			ng-model="value"
+     		ng-required="options.required"
 			
+			ng-disabled="options.disabled"
+			
+			ng-options="option.value as option.name for option in optionsSelect">
+			>
+		 
+		<option value="">{{options.emptyOptionText}}</option> 
+                 
+	</select>
+	
+	<select ng-show="!options.groupBy && options.multiple==true" ng-class="{'loadinggif':options.loading}"
+			class="form-control input-{{options.inputSize}}"
+			id="2-{{id}}"
+			multiple
 			dependent-control="options.dependentControl"
 			edu-focus="options.autofocus"
 			ng-blur="onBlur()"

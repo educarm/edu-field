@@ -1129,8 +1129,8 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 								
 						apiField.getAll(oParamGrid,function (data) {  
 							$scope.options.loading=false;
-							$scope.gridRows=data
-							
+							$scope.gridRows=data;
+							$scope.options.gridRows=$scope.gridRows;
 							configField();
 							
 						},function(data){
@@ -1156,6 +1156,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					}else{
 						$scope.options.state='edit';
 					}
+					
 				}	
 				
 				// button grid cancel
@@ -1222,8 +1223,18 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					
 					if(item.$inserted){
 						dataTemp[$scope.options.fieldFk]=$scope.options.valueFk;
+						
+						if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onBeforeSave == 'function'){
+							$scope.options.fieldListeners.onBeforeSave(dataTemp,true);
+						}
+						
 						apiField.insert(dataTemp,function (data) { 
                             item.$visible=false;
+							
+							if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onAfterSave == 'function'){
+								$scope.options.fieldListeners.onAfterSave(dataTemp,true);
+							}
+							
 							if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onSaveSuccess == 'function'){
 								$scope.options.fieldListeners.onSaveSuccess(data);
 							}
@@ -1239,9 +1250,16 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 						});
 					}else{
 						var oId = getOid(dataTemp);
-						
+						if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onBeforeSave == 'function'){
+								$scope.options.fieldListeners.onBeforeSave(dataTemp,false);
+						}
 						apiField.update(oId,dataTemp,function (data) {  
                             item.$visible=false;
+							
+							if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onAfterSave == 'function'){
+								$scope.options.fieldListeners.onAfterSave(dataTemp,false);
+							}
+							
 							if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onUpdateSuccess == 'function'){
 								$scope.options.fieldListeners.onUpdateSuccess(data);
 							}
