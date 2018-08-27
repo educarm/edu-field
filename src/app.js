@@ -170,16 +170,19 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					  
 					  //row five
 					  {key: 'grid',type: 'grid',height:'180',width:'2500',col:'col-md-4',label: 'Grid1',readonly:false,'showButtons':true,
+					    buttonSaveDisabled:true,
+						//buttonUndoDisabled:false,
+						buttonDeleteDisabled:true,
+						buttonEditDisabled:false,
+						buttonNewDisabled:true,
 					    fieldKey:'vcodcen',
 						uri:'api/v1/centros/:id',
 						fieldFk:'codcen',
 		                valueFk:'30000018',
 						listFields:[
 										
-						
-						
-									{label: 'vcodcen', column: 'vcodcen', weight: '20',type:'text'},
-									{label: 'vdencen', column: 'vdencen', weight: '60',type:'text'},
+									{label: 'vcodcen', column: 'vcodcen', weight: '20',type:'text',disabled:true},
+									{label: 'vdencen', column: 'vdencen', weight: '60',type:'text',disabled:true},
 									{label: 'vdomcen', column: 'vdomcen', weight: '20',type:'text'},
 									{label: 'vloccen', column: 'vloccen', weight: '20',type:'text'},
 									{label: 'vmuncen', column: 'vloccen', weight: '20',type:'text'},
