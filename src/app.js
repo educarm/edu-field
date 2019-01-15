@@ -357,7 +357,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 					{key: 'rango',type: 'range',col:'col-md-6',label: 'Slider',min:100,max:500,placeholder: 'Slider',autofocus:false,required: true },
 					
 					
-					{key: 'fecha',type: 'date',col:'col-md-4',lines: 5,inputSize:'sm',label:'Fechaxx',placeholder: 'Fecha',autofocus:false,required: true,showButtonCalendar:true,format:'dd/MM/yyyy',disabled:false,readonly:false,
+					{key: 'fecha',type: 'date',col:'col-md-4',lines: 5,inputSize:'sm',label:'Fechaxxy',minDate:'2019-01-14',maxDate:'2019-01-19',placeholder: 'Fecha',autofocus:false,required: true,showButtonCalendar:true,format:'dd/MM/yyyy',disabled:false,readonly:false,
 						fieldListeners:{
 							onChange:function(value,subitem,showCalendar){
 								console.log("onChange date:"+value+ ' ' +subitem+ ' showCalendar:'+showCalendar);

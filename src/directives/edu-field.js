@@ -1324,6 +1324,14 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					$event.stopPropagation();
 					$scope.options.showPopupCalendar=true;
 				};
+				
+				if(typeof $scope.options.minDate){
+					$scope.options.minDateObj=new Date($scope.options.minDate)
+				}
+				
+				if(typeof $scope.options.maxDate){
+					$scope.options.maxDateObj=new Date($scope.options.maxDate)
+				}
 			}
 			
 			// ----------------------------------------------------------//
