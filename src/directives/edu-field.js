@@ -1269,6 +1269,9 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 							}else{
 								$scope.options.state='list';
 							}
+							
+							updateElementInArray($scope.gridRows,dataTemp);
+							
             	        },function(data){
 							//$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
 						});
@@ -1301,6 +1304,16 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					oId['id']=vid;
 			   
 					return oId;
+				}
+				
+				function updateElementInArray(rows,item){
+					for(var i=0;i<rows.length;i++){
+						var vid=rows[i][$scope.options.fieldKey];
+						if (vid==item[$scope.options.fieldKey]){
+							$scope.gridRows.splice(i, 1,item);							
+							break;
+						}
+					}
 				}
 				
 				

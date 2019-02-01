@@ -1,5 +1,5 @@
 /*
- edu-field v0.0.57
+ edu-field v0.0.58
  (c) Educarm, http://www.educarm.es
  License: MIT
 */
@@ -1464,6 +1464,7 @@ eduFieldDirectives.directive('eduField', [
                   } else {
                     $scope.options.state = 'list';
                   }
+                  updateElementInArray($scope.gridRows, dataTemp);
                 }, function (data) {
                 });
               }
@@ -1485,6 +1486,15 @@ eduFieldDirectives.directive('eduField', [
               var oId = {};
               oId['id'] = vid;
               return oId;
+            }
+            function updateElementInArray(rows, item) {
+              for (var i = 0; i < rows.length; i++) {
+                var vid = rows[i][$scope.options.fieldKey];
+                if (vid == item[$scope.options.fieldKey]) {
+                  $scope.gridRows.splice(i, 1, item);
+                  break;
+                }
+              }
             }
           }
           //Especific validator
