@@ -51,6 +51,9 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
         ]	
 				
      $scope.fields=[ 
+					{key: 'selectremotoxx', type: 'select',col:'col-md-4',required:true,multiple:true,label: 'Select datos remotos',emptyOptionText:'',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
+					
+					
 					 {key: 'ckeckbox2',name:'checkbox2',type: 'checkbox',inputSize:"md",col:'col-md-2',label: 'Checkbox',placeholder: 'Checkbox',autofocus:false,disabled:false,required: true,default:'N'},
 					
 					{key: 'areatexto2',type: 'textarea',col:'col-md-6',rows: 5,label: 'Área de texto',placeholder: 'Área de texto',autofocus:false,required: true,minlength:5,maxlength:100,disabled:false,readonly:false	},
@@ -420,12 +423,13 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 																								   } 
 					}, 
 					{key: 'selectlocal',type: 'select',inputSize:"sm",loading:false,col:'col-md-4',required:true,label: 'Select datos locales',selecttypesource:'array',selectsource: $scope.municipios,groupBy:"value",
-																																																				fieldListeners:{
-																																																					onChange:function(value,item){
-																																																						console.log("cambio selelct:"+value);
-																																																						
-																																																					}
-																																																				},optionname:"name",optionvalue:"value",selectconcatvaluename:true,disabled:false,readonly:false},
+																																																								fieldListeners:{
+																																																									onChange:function(value,item){
+																																																										console.log("cambio selelct:"+value);
+																																																										
+																																																									}
+																																																								},optionname:"name",optionvalue:"value",selectconcatvaluename:true,disabled:false,readonly:false
+																																																							},
 					{key: 'selectremoto', type: 'select',col:'col-md-4',required:true,multiple:true,label: 'Select datos remotos',emptyOptionText:'Seleccione una opción',selecttypesource:'url',selectsource: 'api/v1/municipios',optionname:"name",optionvalue:"value",selectconcatvaluename:true},
 					
 					{key: 'CODIGO_TEMA',emptyOptionText:'Seleccione una opción',

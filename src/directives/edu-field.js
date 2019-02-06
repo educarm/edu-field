@@ -1175,7 +1175,6 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				// button grid delete
 				$scope.gridDelete=function(item,index){
 					//if state is equal to new, delete register only of local data
-					
 					if($scope.options.state=='new'){
 						$scope.gridRows.splice(index, 1);
 					}else{
@@ -1285,11 +1284,19 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					var oId={};
 					oId.id=$scope.itemForDelete.item[$scope.options.fieldKey];
 					
-					apiField.delete(oId,function (data) { 
-                            $scope.gridRows.splice($scope.itemForDelete.index, 1);
-					},function(data){
-					  // $scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
-					});
+					if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onBeforeDelete == 'function'){
+						$scope.options.fieldListeners.onBeforeDelete(oId.id);
+					}else{
+						apiField.delete(oId,function (data) { 
+								$scope.gridRows.splice($scope.itemForDelete.index, 1);
+						},function(data){
+						  // $scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
+						});
+					}
+					
+					if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onAfterDelete == 'function'){
+						$scope.options.fieldListeners.onAfterDelete(oId.id);
+					}
 					
 					$scope.options.showOverlayInputGridFormDelete=false;
 				}
