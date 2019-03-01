@@ -178,6 +178,7 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 						buttonDeleteDisabled:true,
 						buttonEditDisabled:false,
 						buttonNewDisabled:true,
+						buttonNewHidden:true,
 					    fieldKey:'vcodcen',
 						uri:'api/v1/centros/:id',
 						fieldFk:'codcen',

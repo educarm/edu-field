@@ -20,7 +20,7 @@
 			<thead>
 				<tr>
 					<th width="60px" title="Nuevo elemento" ng-show="options.showButtons!=false">
-						<button ng-click="gridNew()" class="btn btn-sm btn-info" ng-disabled="options.state!='list' || options.buttonNewDisabled">
+						<button ng-click="gridNew()" class="btn btn-sm btn-info" ng-hide="options.buttonNewHidden" ng-disabled="options.state!='list' || options.buttonNewDisabled">
 							<span class="fa fa-plus">
 						</button>
 					</th>
@@ -65,7 +65,40 @@
 					
 					<td ng-repeat="field in options.listFields" ng-click="options.gridOnRowClick()">
 					    <div ng-switch on="field.type">
-							
+							<!-- input autocomplete  -->
+							<div ng-switch-when="autocomplete">
+								<span ng-show="!item.$visible">
+									{{item.$optionSelectedName[field.column]}}
+								</span>
+								<span ng-show="item.$visible">
+									<edu-complete 
+										 id_="{{id}}"
+										 name="{{name}}"
+										 onblur="onBlur()"
+										 onfocus="onFocus()"
+										
+										 edu-focus="options.autofocus"
+										 required="options.required"
+										 placeholder="{{options.placeholder}}"
+										 pause="{{autocpause}}"
+										 selectedobject="value"
+										 disabled="{{options.disabled}}"
+										 readonly="{{options.readonly}}"
+										 url="{{options.autocurldata}}"
+										 urldataloadall="{{options.autocurldataloadall}}"
+										 localdata="options.autoclocaldata"
+										 searchfields="{{options.autocsearchfields}}"
+										 datafield="{{options.autocfieldvalue}}"
+										 titlefield="{{options.autocfieldtitle}}"
+										 descriptionfield="{{options.autocfielddescription}}"
+										 imagefield="{{options.autocfieldimg}}"
+										 minlength="{{options.autocminlength}}"
+										 inputclass="form-control input-{{options.inputSize}}"
+										 widthdropdown="options.widthdropdown"
+										 whennotfoundreturnsearchstring="options.whenNotFoundReturnSearchString"
+									/>
+								</span>
+							</div>
 							<!-- input text -->
 							<div  ng-switch-when="text" >
 								<span  ng-show="!item.$visible">
