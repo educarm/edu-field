@@ -184,7 +184,16 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 						fieldFk:'codcen',
 		                valueFk:'30000018',
 						listFields:[
-										
+								    {label: 'vtitularidad',column: 'vtitularidad',weight:'10',type: 'select'
+									,selectOptions: [{name:'SÍ',value:'S'},{name:'NO',value:'N'}]
+									,fieldListeners:{
+										onChange:function(value,subitem){
+											console.log('onChange:'+value+' ' + subitem);
+										}
+									
+									}
+									},
+							
 									{label: 'vcodcen', column: 'vcodcen', weight: '20',type:'text',disabled:true},
 									{label: 'vdencen', column: 'vdencen', weight: '60',type:'text',disabled:true},
 									{label: 'vdomcen', column: 'vdomcen', weight: '20',type:'text'},
@@ -386,7 +395,9 @@ app.controller('appController', ['$scope','$http', function ($scope,$http) {
 				   
 				   {key: 'autocompleteremoto',type: 'autocomplete',widthdropdown:'400px',col:'col-md-4',required:true,label: 'Autocomplete datos remotos',autocurldata: 'api/v1/municipios?filter=',autocsearchfields:"name",autocminlength:3,autocfieldtitle:"value,name",autocfielddescription:"name",autocfieldvalue:"value",autocpause:300,disabled:false,readonly:false,
 						fieldListeners:{
-						    
+						    onChangeSearchString:function(value){
+								console.log("Cambio cadena de búsqueda:"+value);
+							},
 							onChange:function(value,item){
 								console.log("Cambio selección :"+value + " item:"+ angular.toJson(item));
 							}

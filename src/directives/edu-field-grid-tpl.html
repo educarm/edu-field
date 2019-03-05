@@ -160,7 +160,7 @@
 								</span>
 								<span ng-show="item.$visible">
 									
-									<select style="width:100%" ng-disabled="field.disabled"   ng-model="item[field.column]"   class="form-control"> 
+									<select style="width:100%" ng-disabled="field.disabled" ng-change="onChange(item,field,field.column,item[field.column])"   ng-model="item[field.column]"   class="form-control"> 
 										<option></option>
 										<option ng-repeat="option in field.selectOptions" value="{{option.value}}">{{option.name}}</option>
 									</select>

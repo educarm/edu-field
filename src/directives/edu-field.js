@@ -18,6 +18,17 @@
 
 
 eduFieldDirectives
+.directive('ngFocusOut', function( $timeout ) {
+    return function( $scope, elem, attrs ) {
+        $scope.$watch(attrs.ngFocusOut, function( newval ) {
+            if ( newval ) {
+                $timeout(function() {
+                    elem[0].focusout();
+                }, 0, false);
+            }
+        });
+    };
+})
  /**
  * Angularjs Module for pop up timepicker
  */
@@ -984,7 +995,14 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				}
 			}
 			
-			$scope.onChange=function(subitem) {
+			$scope.onChangeSearchString=function(text){
+				console.log('onChangeSearchString:'+text);
+				if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChangeSearchString == 'function'){
+					$scope.options.fieldListeners.onChangeSearchString(text);
+				}
+			}
+			
+			$scope.onChange=function(subitem,field,column,value) {
 				
 				if ($scope.options.hasOwnProperty('fieldListeners') && typeof $scope.options.fieldListeners.onChange == 'function'){
 					var item={};
@@ -1010,6 +1028,15 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				    }
 					
 					$scope.options.fieldListeners.onChange(value,item,$scope.options.showPopupCalendar);
+				}
+				if($scope.options.type=='grid'){
+						if(field.type=='select'){
+							subitem.$optionSelectedName[column]=_.find(field.selectOptions,{'value':value}).name;
+						}
+						if (field.hasOwnProperty('fieldListeners') && typeof field.fieldListeners.onChange == 'function'){
+							field.fieldListeners.onChange(value,subitem);
+						}
+					
 				}
 			}
 			
@@ -1280,20 +1307,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 											}
 										}
 										
-										//guarda la descripción de la opción del select correspondiente con el código en select.option.value
-										//para poder mostarla cuando la fila esté en edición
-										if($scope.gridRows){
-											for(var i=0,row;row=$scope.gridRows[i];i++){
-												row.$optionSelectedName={};
-												for(var key in row){
-													if(key==$scope.field.column){
-														row.$optionSelectedName[key]=_.find($scope.field.selectOptions,{'value':row[key]}).name;
-													}
-													
-												}
-												
-											}
-										}
+										
 										
 									}).error(function (data, status, headers, config) {
 										  console.log("Error getting options select:" + data);
@@ -1301,6 +1315,21 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 
 
 								//****************************************************************************
+								}
+							}
+							
+							//guarda la descripción de la opción del select correspondiente con el código en select.option.value
+							//para poder mostarla cuando la fila esté en edición
+							if($scope.gridRows){
+								for(var i=0,row;row=$scope.gridRows[i];i++){
+									row.$optionSelectedName={};
+									for(var key in row){
+										if(key==$scope.field.column){
+											row.$optionSelectedName[key]=_.find($scope.field.selectOptions,{'value':row[key]}).name;
+										}
+										
+									}
+									
 								}
 							}
 						}	
@@ -1577,6 +1606,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 							break;
 						}
 					}
+
 				}
 				
 				
