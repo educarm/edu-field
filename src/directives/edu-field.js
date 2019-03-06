@@ -18,17 +18,7 @@
 
 
 eduFieldDirectives
-.directive('ngFocusOut', function( $timeout ) {
-    return function( $scope, elem, attrs ) {
-        $scope.$watch(attrs.ngFocusOut, function( newval ) {
-            if ( newval ) {
-                $timeout(function() {
-                    elem[0].focusout();
-                }, 0, false);
-            }
-        });
-    };
-})
+
  /**
  * Angularjs Module for pop up timepicker
  */
@@ -1495,6 +1485,11 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 					
 				}
 				
+				//Overlay for notifications
+				$scope.options.overlayFormSuccessErrorInputGrid={  show:false,
+																   type:'danger',
+																   message:''
+																}
 				// button grid save
 				$scope.gridSave=function(item){
 					console.log('gridLocalSave: '+angular.toJson(item));
@@ -1530,7 +1525,8 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 							}
 							$scope.refreshGrid();		
             	        },function(data){
-						   //$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
+						   $scope.options.overlayFormSuccessErrorInputGrid.message='No ha sido posible insertar el registro: '+data.data;
+						   $scope.options.overlayFormSuccessErrorInputGrid.show=true;
 						});
 					}else{
 						var oId = getOid(dataTemp);
@@ -1554,10 +1550,11 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 								$scope.options.state='list';
 							}
 							
-							updateElementInArray($scope.gridRows,dataTemp);
+							//updateElementInArray($scope.gridRows,dataTemp);
 							
             	        },function(data){
-							//$scope.internalControl.showOverlayFormSuccessError('0',data.data,20005);
+							$scope.options.overlayFormSuccessErrorInputGrid.message='No ha sido posible realizar la modificación: '+data.data;
+						   $scope.options.overlayFormSuccessErrorInputGrid.show=true;
 						});
 					}
 					

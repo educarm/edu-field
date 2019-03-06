@@ -223,6 +223,31 @@
 			</div>
 		</div>
 	</div>
+	
+													   
+													   
+	                                                   
+	<!-- overlay-edu-grid form success/error -->
+	<div class="overlay-edu-crud"  ng-show="options.overlayFormSuccessErrorInputGrid.show" >
+		<div class="panel panel-{{options.overlayFormSuccessErrorInputGrid.type|| 'info'}} centrado-edu-grid"  style="min-width:{{options.overlayFormSuccessErrorInputGrid.width||200}}px">
+			<div class="panel-heading" >
+					<span ng-if="options.overlayFormSuccessErrorInputGrid.type=='success'" class="glyphicon glyphicon-ok pull-right"></span>
+					<span ng-if="options.overlayFormSuccessErrorInputGrid.type=='danger'" class="glyphicon glyphicon-remove pull-right"></span>
+					<br/>
+			</div>
+			<div class="panel-body" >
+				<h4>{{options.overlayFormSuccessErrorInputGrid.message}}</h4>
+				
+			</div>
+			<div class="panel-footer" >
+				<div class="row">
+					<div class="col-md-offset-3 col-md-9">  
+						<button ng-click="options.overlayFormSuccessErrorInputGrid.show=false" class="btn btn-sm btn-primary" >{{options.snippets.overlayFormSuccessErrorInputGrid || 'Aceptar'}}</button> 
+					</div> 
+				</div>
+			</div>
+		</div>
+	</div>
 
 		
 </div>
