@@ -58,7 +58,7 @@
 						</form>
 						<div class="buttons" ng-show="!item.$visible">
 							  <button class="btn btn-sm btn-primary" ng-disabled="options.buttonEditDisabled" ng-click="gridEdit(item)"> <span class="fa fa-edit"></button>
-							  <button class="btn btn-sm btn-danger" ng-disabled="options.buttonDeleteDisabled" ng-click="gridDelete(item,$index)"> <span class="fa fa-remove"></button>
+							  <button class="btn btn-sm btn-danger" ng-disabled="options.buttonDeleteDisabled"  ng-hide="options.buttonDeleteHidden"  ng-click="gridDelete(item,$index)"> <span class="fa fa-remove"></button>
 						</div>  
 						
 					</td>
