@@ -16,7 +16,7 @@
 	<div style="overflow-x:scroll; height:{{(options.height*1+40)}}px; position:relative;" class="form-control" id="input-grid-{{options.key}}"  >
 	    <!-- $scope.widthTableGrid=$scope.options.width?options.width+'px':'100%'  -->
 		<scrollable-table watch="gridRows" >
-		<table border="1" ng-style="widthTableGrid" height="100%" class="input-grid">
+		<table border="1" ng-style="widthTableGrid" class="input-grid">
 			<thead>
 				<tr>
 					<th width="60px" title="Nuevo elemento" ng-show="options.showButtons!=false">
@@ -52,7 +52,7 @@
 								 <span class="fa fa-undo">
 							  </button>
 							  
-							   <button class="btn btn-sm btn-danger"  ng-show="options.state=='new'" ng-disabled="options.buttonDeleteDisabled" ng-click="gridDelete(item,$index)"> <span class="fa fa-remove"></button>
+							   <button class="btn btn-sm btn-danger"  ng-show="options.state=='new'" ng-hide="options.buttonDeleteHidden" ng-disabled="options.buttonDeleteDisabled" ng-click="gridDelete(item,$index)"> <span class="fa fa-remove"></button>
 							  
 							  
 						</form>

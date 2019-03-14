@@ -85,7 +85,8 @@ angular.module('e2e-mocks', ['ngMockE2E'])
      // GET all centers from centers array with filters
     $httpBackend.whenGET(/api\/v1\/centros(\?([a-z0-9$_\.\+!\*\'\(\),;:@&=-]|%[0-9a-f]{2})*)*/).respond(function(method, url,data,headers) {
         
-        return [200, [centros[0],centros[1],centros[2],centros[3],centros[4],centros[5],centros[6],centros[7],centros[8],centros[9]], {}];
+       return [200, [centros[0],centros[1],centros[2]], {}];
+	  
     });
 
      
