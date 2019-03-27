@@ -1245,6 +1245,14 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				$scope.options.state='list';
 				function configField(){
 					$scope.field=null;
+					
+					//Añade a cada row el objeto que va a guardar las descripciones correspondientes a los values para los input tipo select
+					for(var i=0,row;row=$scope.gridRows[i];i++){
+						row.$optionSelectedName={};
+					};
+					
+					
+					
 					for(var k=0,field;field=$scope.options.listFields[k];k++){
 						$scope.field=field;
 						//for transform content input before render
@@ -1312,12 +1320,12 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 							//para poder mostarla cuando la fila esté en edición
 							if($scope.gridRows){
 								for(var i=0,row;row=$scope.gridRows[i];i++){
-									row.$optionSelectedName={};
+									
+									
 									for(var key in row){
 										if(key==$scope.field.column){
 											row.$optionSelectedName[key]=_.find($scope.field.selectOptions,{'value':row[key]}).name;
-										}
-										
+										}	
 									}
 									
 								}
@@ -1358,7 +1366,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 									//para poder mostarla cuando la fila esté en edición
 									if($scope.gridRows){
 										for(var i=0,row;row=$scope.gridRows[i];i++){
-											row.$optionSelectedName={};
+											
 											for(var key in row){
 												if(key==$scope.field.column){
 													row.$optionSelectedName[key]=_.find($scope.field.selectOptions,{'value':row[key]}).name;
@@ -1392,7 +1400,7 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 				
 				$scope.refreshGrid=function(){
 					//get all element with foreing key like  fieldFk
-					$scope.options.loading=true;
+					$scope.options.inputGridLoading=true;
 					
 					var filterFK='';
 					var oParamGrid={};
@@ -1403,13 +1411,13 @@ eduFieldDirectives.directive('eduField', function formField($http, $compile, $te
 						}
 								
 						apiField.getAll(oParamGrid,function (data) {  
-							$scope.options.loading=false;
+							$scope.options.inputGridLoading=false;
 							$scope.gridRows=data;
 							$scope.options.gridRows=$scope.gridRows;
 							configField();
 							
 						},function(data){
-							$scope.options.loading=false;
+							$scope.options.inputGridLoading=false;
 							//$scope.internalControl.showOverlayFormSuccessError('0',data.data || data.message,20005);
 						});
 					}
